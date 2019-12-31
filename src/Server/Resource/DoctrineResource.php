@@ -1,35 +1,35 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Resource;
+namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ODM\MongoDB\Query\Builder as MongoDBQueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ODM\MongoDB\Query\Builder as MongoDBQueryBuilder;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Stdlib\Hydrator;
-use Zend\EventManager\EventInterface;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
-use ZF\Apigility\Doctrine\Server\Query\Provider\QueryProviderInterface;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Apigility\Doctrine\Server\Exception\InvalidArgumentException;
-use ZF\Apigility\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
-use ZF\Rest\AbstractResourceListener;
-use Zend\EventManager\EventManager;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\StaticEventManager;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\Hydrator\HydratorAwareInterface;
-use Zend\Stdlib\Hydrator\HydratorInterface;
-use Traversable;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
+use Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
+use Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface;
+use Laminas\ApiTools\Rest\AbstractResourceListener;
+use Laminas\EventManager\EventInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\StaticEventManager;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Stdlib\Hydrator\HydratorAwareInterface;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
 use ReflectionClass;
+use Traversable;
 
 /**
  * Class DoctrineResource
  *
- * @package ZF\Apigility\Doctrine\Server\Resource
+ * @package Laminas\ApiTools\Doctrine\Server\Resource
  */
 class DoctrineResource extends AbstractResourceListener implements
     ObjectManagerAwareInterface,
@@ -116,7 +116,7 @@ class DoctrineResource extends AbstractResourceListener implements
     /**
      * @var array
      */
-    protected $eventIdentifier = array('ZF\Apigility\Doctrine\DoctrineResource');
+    protected $eventIdentifier = array('Laminas\ApiTools\Doctrine\DoctrineResource');
 
     /**
      * @var array|QueryProviderInterface
@@ -124,7 +124,7 @@ class DoctrineResource extends AbstractResourceListener implements
     protected $queryProviders;
 
     /**
-     * @param array|\ZF\Apigility\Doctrine\Server\Query\Provider\QueryProviderInterface[]
+     * @param array|\Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface[]
      *
      * @throws InvalidArgumentException if parameter is not an array or \Traversable object
      */
@@ -503,7 +503,7 @@ class DoctrineResource extends AbstractResourceListener implements
     /**
      * Fetch all or a subset of resources
      *
-     * @see    Apigility/Doctrine/Server/Resource/AbstractResource.php
+     * @see    ApiTools/Doctrine/Server/Resource/AbstractResource.php
      * @param  array $data
      * @return ApiProblem|mixed
      */
@@ -544,10 +544,10 @@ class DoctrineResource extends AbstractResourceListener implements
         // Add event to set extra HAL data
         $entityClass = $this->getEntityClass();
         StaticEventManager::getInstance()->attach(
-            'ZF\Rest\RestController',
+            'Laminas\ApiTools\Rest\RestController',
             'getList.post',
             function (EventInterface $e) use ($queryProvider, $entityClass, $data) {
-                /** @var \ZF\Hal\Collection $halCollection */
+                /** @var \Laminas\ApiTools\Hal\Collection $halCollection */
                 $halCollection = $e->getParam('collection');
                 $collection = $halCollection->getCollection();
 
@@ -668,7 +668,7 @@ class DoctrineResource extends AbstractResourceListener implements
      * @param $entity
      * @param $data mixed The original data supplied to the resource method, if any
      *
-     * @return \Zend\EventManager\ResponseCollection
+     * @return \Laminas\EventManager\ResponseCollection
      */
     protected function triggerDoctrineEvent($name, $entity, $data = null)
     {
