@@ -1,18 +1,20 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use ZF\Apigility\Admin\Exception;
-use ZF\Apigility\Admin\Model\RpcServiceModelFactory;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ApiTools\Admin\Exception;
+use Laminas\ApiTools\Admin\Model\RpcServiceModelFactory;
+use Laminas\ServiceManager\ServiceManager;
 
 class DoctrineRestServiceModelFactory extends RpcServiceModelFactory
 {
-    const TYPE_DEFAULT = 'ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceModel';
+    const TYPE_DEFAULT = 'Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceModel';
 
     /**
      * @var ServiceManager

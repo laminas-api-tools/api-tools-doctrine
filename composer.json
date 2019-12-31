@@ -1,49 +1,57 @@
 {
-    "name": "zfcampus/zf-apigility-doctrine",
-    "type": "library",
-    "description": "Doctrine in Apigility",
+    "name": "laminas-api-tools/api-tools-doctrine",
+    "description": "Doctrine in Laminas API Tools",
+    "license": "BSD-3-Clause",
     "keywords": [
-        "apigility",
+        "laminas",
+        "api-tools",
         "doctrine",
         "api"
     ],
-    "homepage": "http://www.apigility.com/",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "Tom Anderson",
-            "email": "tom.h.anderson@gmail.com"
-        }
-    ],
+    "homepage": "https://api-tools.getlaminas.org",
+    "support": {
+        "docs": "https://api-tools.getlaminas.org/documentation",
+        "issues": "https://github.com/laminas-api-tools/api-tools-doctrine/issues",
+        "source": "https://github.com/laminas-api-tools/api-tools-doctrine",
+        "rss": "https://github.com/laminas-api-tools/api-tools-doctrine/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=5.4 || ^7.0",
+        "laminas-api-tools/api-tools": "^1.1",
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "phpro/zf-doctrine-hydration-module": "^2.0"
+    },
     "require-dev": {
         "doctrine/doctrine-mongo-odm-module": "~0.10 || ^1.0",
         "doctrine/doctrine-orm-module": "^0.10",
         "doctrine/mongodb-odm": "^1",
+        "laminas-api-tools/api-tools-admin": "~1.4",
+        "laminas/laminas-form": "~2.4",
+        "laminas/laminas-i18n": "~2.4",
+        "laminas/laminas-log": "~2.4",
+        "laminas/laminas-serializer": "~2.4",
+        "laminas/laminas-stdlib": "~2.4",
+        "laminas/laminas-test": "~2.4",
         "phpunit/phpunit": "^4.7",
-        "squizlabs/php_codesniffer": "^2.3.0",
-        "zendframework/zend-form": "~2.4",
-        "zendframework/zend-log": "~2.4",
-        "zendframework/zend-serializer": "~2.4",
-        "zendframework/zend-test": "~2.4",
-        "zendframework/zend-stdlib": "~2.4",
-        "zfcampus/zf-apigility-admin": "~1.4",
-        "zendframework/zend-i18n": "~2.4"
-    },
-    "require": {
-        "php": ">=5.4 || ^7.0",
-        "phpro/zf-doctrine-hydration-module": "^2.0",
-        "zfcampus/zf-apigility": "^1.1"
+        "squizlabs/php_codesniffer": "^2.3.0"
     },
     "suggest": {
-        "doctrine/doctrine-orm-module": "For ORM mapping",
-        "doctrine/doctrine-mongo-odm-module": "For Mongo ODM mapping",
         "api-skeletons/zf-doctrine-hydrator": "Hydrator strategies for Doctrine in Apipgility",
-        "api-skeletons/zf-oauth2-doctrine": "OAuth2 Doctrine Adapter for Apigility"
+        "api-skeletons/zf-oauth2-doctrine": "OAuth2 Doctrine Adapter for Laminas API Tools",
+        "doctrine/doctrine-mongo-odm-module": "For Mongo ODM mapping",
+        "doctrine/doctrine-orm-module": "For ORM mapping"
     },
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "ZF\\Apigility\\Doctrine\\": "src/"
+            "Laminas\\ApiTools\\Doctrine\\": "src/"
         }
+    },
+    "replace": {
+        "zfcampus/zf-apigility-doctrine": "self.version"
     }
 }

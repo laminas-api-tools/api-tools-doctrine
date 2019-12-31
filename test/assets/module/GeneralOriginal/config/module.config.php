@@ -1,11 +1,11 @@
 <?php
 
-namespace ZFTestApigilityGeneral;
+namespace LaminasTestApiToolsGeneral;
 
 return array(
     'service_manager' => array(
         'invokables' => array(
-            'ZFTestApigilityGeneral\Listener\EventCatcher' => 'ZFTestApigilityGeneral\Listener\EventCatcher',
+            'LaminasTestApiToolsGeneral\Listener\EventCatcher' => 'LaminasTestApiToolsGeneral\Listener\EventCatcher',
         ),
     ),
 );

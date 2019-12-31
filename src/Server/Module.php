@@ -1,27 +1,29 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Server;
+namespace Laminas\ApiTools\Doctrine\Server;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
-use Zend\ModuleManager\ModuleManager;
+use Laminas\ModuleManager\Feature\AutoloaderProviderInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
+use Laminas\ModuleManager\ModuleManager;
 
 class Module implements ConfigProviderInterface, AutoloaderProviderInterface, DependencyIndicatorInterface
 {
     /**
-     * Return an array for passing to Zend\Loader\AutoloaderFactory.
+     * Return an array for passing to Laminas\Loader\AutoloaderFactory.
      *
      * @return array
      */
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
+            'Laminas\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__,
                 ),
@@ -50,17 +52,17 @@ class Module implements ConfigProviderInterface, AutoloaderProviderInterface, De
         $serviceListener = $sm->get('ServiceListener');
 
         $serviceListener->addServiceManager(
-            'ZfApigilityDoctrineQueryProviderManager',
-            'zf-apigility-doctrine-query-provider',
-            'ZF\Apigility\Doctrine\Server\Query\Provider\QueryProviderInterface',
-            'getZfApigilityDoctrineQueryProviderConfig'
+            'LaminasApiToolsDoctrineQueryProviderManager',
+            'api-tools-doctrine-query-provider',
+            'Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface',
+            'getLaminasApiToolsDoctrineQueryProviderConfig'
         );
 
         $serviceListener->addServiceManager(
-            'ZfApigilityDoctrineQueryCreateFilterManager',
-            'zf-apigility-doctrine-query-create-filter',
-            'ZF\Apigility\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface',
-            'getZfApigilityDoctrineQueryCreateFilterConfig'
+            'LaminasApiToolsDoctrineQueryCreateFilterManager',
+            'api-tools-doctrine-query-create-filter',
+            'Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface',
+            'getLaminasApiToolsDoctrineQueryCreateFilterConfig'
         );
     }
 
