@@ -1,16 +1,16 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Query\Provider;
+namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\ResourceEvent;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Rest\ResourceEvent;
 use OAuth2\Request as OAuth2Request;
 use OAuth2\Server as OAuth2Server;
 
 /**
  * Class FetchAllOrm
  *
- * @package ZF\Apigility\Doctrine\Server\Query\Provider
+ * @package Laminas\ApiTools\Doctrine\Server\Query\Provider
  */
 class DefaultOrm extends AbstractQueryProvider
 {
