@@ -8,7 +8,7 @@ return array(
                 'port' => '27017',
                 'user' => '',
                 'password' => '',
-                'dbname' => 'zf_apigility_doctrine_server_test',
+                'dbname' => 'laminas_api-tools_doctrine_server_test',
             ),
         ),
     ),
