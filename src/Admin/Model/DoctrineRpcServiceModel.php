@@ -1,21 +1,23 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use Zend\Filter\FilterChain;
-use Zend\View\Model\ViewModel;
-use Zend\View\Renderer\PhpRenderer;
-use Zend\View\Resolver;
-use ZF\Apigility\Admin\Exception;
-use ZF\Configuration\ConfigResource;
-use ZF\Configuration\ModuleUtils;
-use ZF\Rest\Exception\PatchException;
-use ZF\Rest\Exception\CreationException;
-use ZF\Apigility\Admin\Model\ModuleEntity;
+use Laminas\ApiTools\Admin\Exception;
+use Laminas\ApiTools\Admin\Model\ModuleEntity;
+use Laminas\ApiTools\Configuration\ConfigResource;
+use Laminas\ApiTools\Configuration\ModuleUtils;
+use Laminas\ApiTools\Rest\Exception\CreationException;
+use Laminas\ApiTools\Rest\Exception\PatchException;
+use Laminas\Filter\FilterChain;
+use Laminas\View\Model\ViewModel;
+use Laminas\View\Renderer\PhpRenderer;
+use Laminas\View\Resolver;
 
 class DoctrineRpcServiceModel
 {
@@ -68,10 +70,10 @@ class DoctrineRpcServiceModel
     {
         $data   = array('controller_service_name' => $controllerServiceName);
         $config = $this->configResource->fetch(true);
-        if (isset($config['zf-rpc'])
-            && isset($config['zf-rpc'][$controllerServiceName])
+        if (isset($config['api-tools-rpc'])
+            && isset($config['api-tools-rpc'][$controllerServiceName])
         ) {
-            $rpcConfig = $config['zf-rpc'][$controllerServiceName];
+            $rpcConfig = $config['api-tools-rpc'][$controllerServiceName];
             if (isset($rpcConfig['route_name'])) {
                 $data['route_name']  = $rpcConfig['route_name'];
                 $data['route_match'] = $this->getRouteMatchStringFromModuleConfig($data['route_name'], $config);
@@ -83,8 +85,8 @@ class DoctrineRpcServiceModel
             return false;
         }
 
-        if (isset($config['zf-content-negotiation'])) {
-            $contentNegotiationConfig = $config['zf-content-negotiation'];
+        if (isset($config['api-tools-content-negotiation'])) {
+            $contentNegotiationConfig = $config['api-tools-content-negotiation'];
             if (isset($contentNegotiationConfig['controllers'])
                 && isset($contentNegotiationConfig['controllers'][$controllerServiceName])
             ) {
@@ -95,7 +97,7 @@ class DoctrineRpcServiceModel
                 && isset($contentNegotiationConfig['accept_whitelist'][$controllerServiceName])
             ) {
                 // @codeCoverageIgnoreStart
-                // Is this handled differently in recent versions of Apigility // FIXME: verify this\
+                // Is this handled differently in recent versions of Laminas API Tools // FIXME: verify this\
                 $data['accept_whitelist'] = $contentNegotiationConfig['accept_whitelist'][$controllerServiceName];
             }
                 // @codeCoverageIgnoreEnd
@@ -104,7 +106,7 @@ class DoctrineRpcServiceModel
                 && isset($contentNegotiationConfig['content_type_whitelist'][$controllerServiceName])
             ) {
                 // @codeCoverageIgnoreStart
-                // Is this handled differently in recent versions of Apigility // FIXME: verify this\
+                // Is this handled differently in recent versions of Laminas API Tools // FIXME: verify this\
                 $data['content_type_whitelist'] = $contentNegotiationConfig['content_type_whitelist'][$controllerServiceName];
             }
                 // @codeCoverageIgnoreEnd
@@ -124,7 +126,7 @@ class DoctrineRpcServiceModel
     public function fetchAll($version = null)
     {
         $config = $this->configResource->fetch(true);
-        if (!isset($config['zf-rpc-doctrine-controller'])) {
+        if (!isset($config['api-tools-rpc-doctrine-controller'])) {
             // @codeCoverageIgnoreStart
             return array();
             // @codeCoverageIgnoreEnd
@@ -135,7 +137,7 @@ class DoctrineRpcServiceModel
 
         // @codeCoverageIgnoreStart
         // Initialize pattern if a version was passed and it's valid
-        // Ignored from code coverage because Apigility sets the version
+        // Ignored from code coverage because Laminas API Tools sets the version
         // and it's no longer handled here: FIXME: verify this
         if (null !== $version) {
             if (!in_array($version, $this->moduleEntity->getVersions())) {
@@ -153,7 +155,7 @@ class DoctrineRpcServiceModel
             );
         }
 
-        foreach (array_keys($config['zf-rpc-doctrine-controller']) as $controllerService) {
+        foreach (array_keys($config['api-tools-rpc-doctrine-controller']) as $controllerService) {
             if (!$pattern) {
                 $services[] = $this->fetch($controllerService);
                 continue;
@@ -347,7 +349,7 @@ class DoctrineRpcServiceModel
                     ),
                 )
             ),
-            'zf-versioning' => array(
+            'api-tools-versioning' => array(
                 'uri' => array (
                     $routeName
                 )
@@ -360,7 +362,7 @@ class DoctrineRpcServiceModel
     }
 
     /*
-     * Create the zf-rpc configuration for the controller service
+     * Create the api-tools-rpc configuration for the controller service
      *
      * @param  string               $controllerService
      * @param  string               $routeName
@@ -370,7 +372,7 @@ class DoctrineRpcServiceModel
      */
     public function createDoctrineRpcConfig($controllerService, $options)
     {
-        $config = array('zf-rpc-doctrine-controller' => array(
+        $config = array('api-tools-rpc-doctrine-controller' => array(
             $controllerService => $options
         ));
 
@@ -378,7 +380,7 @@ class DoctrineRpcServiceModel
     }
 
     /*
-     * Create the zf-rpc configuration for the controller service
+     * Create the api-tools-rpc configuration for the controller service
      *
      * @param  string               $controllerService
      * @param  string               $routeName
@@ -388,7 +390,7 @@ class DoctrineRpcServiceModel
      */
     public function createRpcConfig($controllerService, $routeName, array $httpMethods = array('GET'), $callable = null)
     {
-        $config = array('zf-rpc' => array(
+        $config = array('api-tools-rpc' => array(
             $controllerService => array(
                 'http_methods' => $httpMethods,
                 'route_name'   => $routeName,
@@ -417,7 +419,7 @@ class DoctrineRpcServiceModel
         }
         // @codeCoverageIgnoreEnd
 
-        $config = array('zf-content-negotiation' => array(
+        $config = array('api-tools-content-negotiation' => array(
             'controllers' => array(
                 $controllerService => $selector,
             ),
@@ -474,7 +476,7 @@ class DoctrineRpcServiceModel
     public function updateHttpMethods($controllerService, array $httpMethods)
     {
         $config = $this->configResource->fetch(true);
-        $config['zf-rpc'][$controllerService]['http_methods'] = $httpMethods;
+        $config['api-tools-rpc'][$controllerService]['http_methods'] = $httpMethods;
         $this->configResource->overwrite($config);
 
         return true;
@@ -490,7 +492,7 @@ class DoctrineRpcServiceModel
     public function updateSelector($controllerService, $selector)
     {
         $config = $this->configResource->fetch(true);
-        $config['zf-content-negotiation']['controllers'][$controllerService] = $selector;
+        $config['api-tools-content-negotiation']['controllers'][$controllerService] = $selector;
         $this->configResource->overwrite($config);
 
         return true;
@@ -514,7 +516,7 @@ class DoctrineRpcServiceModel
         }
         $headerType .= '_whitelist';
         $config = $this->configResource->fetch(true);
-        $config['zf-content-negotiation'][$headerType][$controllerService] = $whitelist;
+        $config['api-tools-content-negotiation'][$headerType][$controllerService] = $whitelist;
         $this->configResource->overwrite($config);
 
         return true;
@@ -532,7 +534,7 @@ class DoctrineRpcServiceModel
         $key = array('router', 'routes', $routeName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-versioning', 'uri', array_search($routeName, $config['zf-versioning']['uri']));
+        $key = array('api-tools-versioning', 'uri', array_search($routeName, $config['api-tools-versioning']['uri']));
         $this->configResource->deleteKey($key);
     }
 
@@ -543,19 +545,19 @@ class DoctrineRpcServiceModel
      */
     public function deleteDoctrineRpcConfig($serviceName)
     {
-        $key = array('zf-rpc', $serviceName);
+        $key = array('api-tools-rpc', $serviceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-rpc-doctrine-controller', $serviceName);
+        $key = array('api-tools-rpc-doctrine-controller', $serviceName);
         $this->configResource->deleteKey($key);
 
         $key = array('controllers', 'invokables', $serviceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-content-negotiation', 'accept_whitelist', $serviceName);
+        $key = array('api-tools-content-negotiation', 'accept_whitelist', $serviceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-content-negotiation', 'content_type_whitelist', $serviceName);
+        $key = array('api-tools-content-negotiation', 'content_type_whitelist', $serviceName);
         $this->configResource->deleteKey($key);
     }
 
@@ -567,13 +569,13 @@ class DoctrineRpcServiceModel
      */
     public function deleteContentNegotiationConfig($serviceName)
     {
-        $key = array('zf-content-negotiation', 'controllers', $serviceName);
+        $key = array('api-tools-content-negotiation', 'controllers', $serviceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-content-negotiation', 'accept-whitelist', $serviceName);
+        $key = array('api-tools-content-negotiation', 'accept-whitelist', $serviceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-content-negotiation', 'content-type-whitelist', $serviceName);
+        $key = array('api-tools-content-negotiation', 'content-type-whitelist', $serviceName);
         $this->configResource->deleteKey($key);
     }
 

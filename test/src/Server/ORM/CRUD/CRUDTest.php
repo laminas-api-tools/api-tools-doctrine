@@ -1,17 +1,17 @@
 <?php
-// Because of the code-generating of Apigility this script
+// Because of the code-generating of Laminas API Tools this script
 // is used to setup the tests.  Use ~/test/bin/reset-tests
 // to reset the output of this test if the unit tests
 // fail the application.
 
-namespace ZFTest\Apigility\Doctrine\Server\ORM\CRUD;
+namespace LaminasTest\ApiTools\Doctrine\Server\ORM\CRUD;
 
-use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Http\Request;
 use Db\Entity\Artist as ArtistEntity;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
+use Doctrine\ORM\Tools\SchemaTool;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\Http\Request;
 
-class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class CRUDTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {

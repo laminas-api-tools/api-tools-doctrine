@@ -1,11 +1,7 @@
-vendor
-composer.lock
-composer.phar
-test/data
-test/code-coverage
-test/assets/module/*
 !test/assets/module/*Original
+/composer.lock
+/vendor/
+test/assets/module/*
 test/build
-.buildpath
-.project
-.settings/
+test/code-coverage
+test/data
