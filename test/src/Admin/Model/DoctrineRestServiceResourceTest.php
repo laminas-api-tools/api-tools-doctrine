@@ -1,14 +1,16 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Admin\Model;
+namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
 use Doctrine\ORM\Tools\SchemaTool;
-use ZFTest\Apigility\Doctrine\TestCase;
-use ZFTest\Util\ServiceManagerFactory;
+use LaminasTest\ApiTools\Doctrine\TestCase;
+use LaminasTest\ApiTools\Util\ServiceManagerFactory;
 
 class DoctrineRestServiceResourceTest extends TestCase
 {
@@ -57,11 +59,11 @@ class DoctrineRestServiceResourceTest extends TestCase
         $found = $em->getRepository('Db\Entity\Artist')->find($artist->getId());
         $this->assertInstanceOf('Db\Entity\Artist', $found);
 
-        $this->resource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $this->resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
         $this->resource->setModuleName('DbApi');
 
         $entity = $this->resource->create($resourceDefinition);
-        $this->assertInstanceOf('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity', $entity);
+        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $entity);
         $controllerServiceName = $entity->controllerServiceName;
         $this->assertNotEmpty($controllerServiceName);
         $this->assertContains('DbApi\V1\Rest\Artist\Controller', $controllerServiceName);
@@ -123,7 +125,7 @@ class DoctrineRestServiceResourceTest extends TestCase
 
         $hal = $response->getBody();
 
-        $renderer = $this->getServiceLocator()->get('ZF\Hal\JsonRenderer');
+        $renderer = $this->getServiceLocator()->get('Laminas\ApiTools\Hal\JsonRenderer');
         $data = json_decode($renderer->render($hal), true);
 
         print_r($data);

@@ -1,15 +1,17 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Admin\Model;
+namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Filter\FilterChain;
-use Zend\Http\Request;
-use ZFTest\Apigility\Doctrine\TestCase;
+use Laminas\Filter\FilterChain;
+use Laminas\Http\Request;
+use LaminasTest\ApiTools\Doctrine\TestCase;
 
 class DoctrineMetadata1Test extends TestCase
 {
@@ -41,14 +43,14 @@ class DoctrineMetadata1Test extends TestCase
         ]);
 
         $this->dispatch(
-            '/apigility/api/doctrine/doctrine.entitymanager.orm_default/metadata/Db%5CEntity%5CArtist',
+            '/api-tools/api/doctrine/doctrine.entitymanager.orm_default/metadata/Db%5CEntity%5CArtist',
             Request::METHOD_GET
         );
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertArrayHasKey('name', $body);
         $this->assertEquals('Db\Entity\Artist', $body['name']);
 
-        $this->dispatch('/apigility/api/doctrine/doctrine.entitymanager.orm_default/metadata', Request::METHOD_GET);
+        $this->dispatch('/api-tools/api/doctrine/doctrine.entitymanager.orm_default/metadata', Request::METHOD_GET);
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertArrayHasKey('_embedded', $body);
     }
@@ -71,12 +73,12 @@ class DoctrineMetadata1Test extends TestCase
             "routeMatch" => "/db-test/artist",
         ];
 
-        $this->resource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $this->resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
         $this->resource->setModuleName('DbApi');
 
         $entity = $this->resource->create($resourceDefinition);
 
-        $this->assertInstanceOf('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity', $entity);
+        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $entity);
         $controllerServiceName = $entity->controllerServiceName;
         $this->assertNotEmpty($controllerServiceName);
         $this->assertContains('DbApi\V1\Rest\Artist\Controller', $controllerServiceName);
@@ -93,7 +95,7 @@ class DoctrineMetadata1Test extends TestCase
             switch ($mapping['type']) {
                 case 4:
                     $rpcServiceResource = $serviceManager->get(
-                        'ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource'
+                        'Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource'
                     );
                     $rpcServiceResource->setModuleName('DbApi');
                     $rpcServiceResource->create([

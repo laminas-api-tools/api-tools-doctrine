@@ -1,18 +1,20 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Server\Event\Listener;
+namespace LaminasTest\ApiTools\Doctrine\Server\Event\Listener;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Laminas\ApiTools\Doctrine\Server\Event\Listener\CollectionListener;
+use Laminas\Hydrator\HydratorInterface;
+use LaminasTestApiToolsDb\Entity\Artist;
 use PHPUnit\Framework\TestCase;
-use Zend\Hydrator\HydratorInterface;
-use ZF\Apigility\Doctrine\Server\Event\Listener\CollectionListener;
-use ZFTestApigilityDb\Entity\Artist;
 
 class CollectionListenerTest extends TestCase
 {
