@@ -1,43 +1,45 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
 return array(
     'service_manager' => array(
         'invokables' => array(
-            'ZF\\Apigility\\Doctrine\\Server\\Hydrator\\Strategy\\CollectionExtract' =>
-                'ZF\\Apigility\\Doctrine\\Server\\Hydrator\\Strategy\\CollectionExtract',
+            'Laminas\\ApiTools\\Doctrine\\Server\\Hydrator\\Strategy\\CollectionExtract' =>
+                'Laminas\\ApiTools\\Doctrine\\Server\\Hydrator\\Strategy\\CollectionExtract',
         ),
         'abstract_factories' => array(
-            'ZF\Apigility\Doctrine\Server\Resource\DoctrineResourceFactory',
+            'Laminas\ApiTools\Doctrine\Server\Resource\DoctrineResourceFactory',
         ),
         'factories' => array(
-            'ZfApigilityDoctrineQueryProviderManager' =>
-                'ZF\Apigility\Doctrine\Server\Query\Provider\Service\QueryProviderManagerFactory',
+            'LaminasApiToolsDoctrineQueryProviderManager' =>
+                'Laminas\ApiTools\Doctrine\Server\Query\Provider\Service\QueryProviderManagerFactory',
         ),
     ),
 
-    'zf-apigility-doctrine-query-provider' => array(
+    'api-tools-doctrine-query-provider' => array(
         'invokables' => array(
-            'default_orm' => 'ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOrm',
-            'default_odm' => 'ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOdm',
+            'default_orm' => 'Laminas\ApiTools\Doctrine\Server\Query\Provider\DefaultOrm',
+            'default_odm' => 'Laminas\ApiTools\Doctrine\Server\Query\Provider\DefaultOdm',
         )
     ),
 
     'view_manager' => array(
         'template_path_stack' => array(
-            'zf-apigility-doctrine' => __DIR__ . '/../view',
+            'api-tools-doctrine' => __DIR__ . '/../view',
         ),
     ),
 
     'validators' => array(
         'factories' => array(
-            'ZF\Apigility\Doctrine\Server\Validator\NoObjectExists' =>
-                'ZF\Apigility\Doctrine\Server\Validator\NoObjectExistsFactory',
-            'ZF\Apigility\Doctrine\Server\Validator\ObjectExists' =>
-                'ZF\Apigility\Doctrine\Server\Validator\ObjectExistsFactory',
+            'Laminas\ApiTools\Doctrine\Server\Validator\NoObjectExists' =>
+                'Laminas\ApiTools\Doctrine\Server\Validator\NoObjectExistsFactory',
+            'Laminas\ApiTools\Doctrine\Server\Validator\ObjectExists' =>
+                'Laminas\ApiTools\Doctrine\Server\Validator\ObjectExistsFactory',
         ),
     ),
 );
