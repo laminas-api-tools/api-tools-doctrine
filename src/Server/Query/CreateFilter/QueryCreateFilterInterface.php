@@ -1,9 +1,9 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Query\CreateFilter;
+namespace Laminas\ApiTools\Doctrine\Server\Query\CreateFilter;
 
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
-use ZF\Rest\ResourceEvent;
+use Laminas\ApiTools\Rest\ResourceEvent;
 
 interface QueryCreateFilterInterface extends ObjectManagerAwareInterface
 {

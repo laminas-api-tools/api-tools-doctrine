@@ -1,2 +1,2 @@
 <?php
-require __DIR__ . '/src/ZFTestApigilityGeneral/Module.php';
+require __DIR__ . '/src/LaminasTestApiToolsGeneral/Module.php';

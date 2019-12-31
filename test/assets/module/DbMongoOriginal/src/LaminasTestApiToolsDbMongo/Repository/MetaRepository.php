@@ -1,6 +1,6 @@
 <?php
 
-namespace ZFTestApigilityDbMongo\Repository;
+namespace LaminasTestApiToolsDbMongo\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
