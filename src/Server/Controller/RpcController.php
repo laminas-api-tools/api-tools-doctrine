@@ -1,10 +1,10 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Controller;
+namespace Laminas\ApiTools\Doctrine\Server\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 abstract class RpcController extends AbstractActionController
 {
@@ -22,17 +22,17 @@ abstract class RpcController extends AbstractActionController
         $childId = $this->params()->fromRoute('child_id');
 
         $config = $this->getServiceLocator()->get('Config');
-        $zfRpcDoctrineControllerArrayKey = array_search(get_class($this), $config['controllers']['invokables']);
+        $laminasRpcDoctrineControllerArrayKey = array_search(get_class($this), $config['controllers']['invokables']);
 
-        $associationConfig = $config['zf-rpc-doctrine-controller'][$zfRpcDoctrineControllerArrayKey];
-        $metadataConfig = $config['zf-hal']['metadata_map'][$associationConfig['source_entity']];
+        $associationConfig = $config['api-tools-rpc-doctrine-controller'][$laminasRpcDoctrineControllerArrayKey];
+        $metadataConfig = $config['api-tools-hal']['metadata_map'][$associationConfig['source_entity']];
         $hydratorConfig = $config['doctrine-hydrator'][$metadataConfig['hydrator']];
 
         $objectManager = $this->getServiceLocator()->get($hydratorConfig['object_manager']);
         $metadataFactory = $objectManager->getMetadataFactory();
 
         // Find target entity controller to dispatch
-        foreach ($config['zf-rest'] as $controllerName => $controllerConfig) {
+        foreach ($config['api-tools-rest'] as $controllerName => $controllerConfig) {
             if ($associationConfig['target_entity'] == $controllerConfig['entity_class']) {
                 $targetRouteParam = $controllerConfig['route_identifier_name'];
                 break;
@@ -65,7 +65,7 @@ abstract class RpcController extends AbstractActionController
                 $hal = $this->forward()->dispatch($controllerName, array(
                     $targetRouteParam => $childId,
                 ));
-                $renderer = $this->getServiceLocator()->get('ZF\Hal\JsonRenderer');
+                $renderer = $this->getServiceLocator()->get('Laminas\ApiTools\Hal\JsonRenderer');
                 $data = json_decode($renderer->render($hal), true);
 
                 return $data;
@@ -85,7 +85,7 @@ abstract class RpcController extends AbstractActionController
                 'query' => $query,
                 'orderBy' => $orderBy,
             ));
-            $renderer = $this->getServiceLocator()->get('ZF\Hal\JsonRenderer');
+            $renderer = $this->getServiceLocator()->get('Laminas\ApiTools\Hal\JsonRenderer');
             $data = json_decode($renderer->render($hal), true);
 
             return $data;
