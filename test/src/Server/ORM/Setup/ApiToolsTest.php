@@ -1,15 +1,15 @@
 <?php
-// Because of the code-generating of Apigility this script
+// Because of the code-generating of Laminas API Tools this script
 // is used to setup the tests.  Use ~/test/bin/reset-tests
 // to reset the output of this test if the unit tests
 // fail the application.
 
-namespace ZFTest\Apigility\Doctrine\Server\ORM\Setup;
+namespace LaminasTest\ApiTools\Doctrine\Server\ORM\Setup;
 
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Filter\FilterChain;
+use Laminas\Filter\FilterChain;
 
-class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class ApiToolsTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -28,12 +28,12 @@ class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpController
         $res = $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
         // Create DB
-        $resource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
 
         $artistResourceDefinition = array(
             "objectManager"=> "doctrine.entitymanager.orm_default",
             "serviceName" => "Artist",
-            "entityClass" => "ZFTestApigilityDb\\Entity\\Artist",
+            "entityClass" => "LaminasTestApiToolsDb\\Entity\\Artist",
             "routeIdentifierName" => "artist_id",
             "entityIdentifierName" => "id",
             "routeMatch" => "/test/artist",
@@ -48,7 +48,7 @@ class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpController
         $artistResourceDefinitionWithNonKeyIdentifer = array(
             "objectManager"=> "doctrine.entitymanager.orm_default",
             "serviceName" => "ArtistByName",
-            "entityClass" => "ZFTestApigilityDb\\Entity\\Artist",
+            "entityClass" => "LaminasTestApiToolsDb\\Entity\\Artist",
             "routeIdentifierName" => "artist_name",
             "entityIdentifierName" => "name",
             "routeMatch" => "/test/artist-by-name",
@@ -60,7 +60,7 @@ class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpController
         $albumResourceDefinition = array(
             "objectManager"=> "doctrine.entitymanager.orm_default",
             "serviceName" => "Album",
-            "entityClass" => "ZFTestApigilityDb\\Entity\\Album",
+            "entityClass" => "LaminasTestApiToolsDb\\Entity\\Album",
             "routeIdentifierName" => "album_id",
             "entityIdentifierName" => "id",
             "routeMatch" => "/test/album",
@@ -72,13 +72,13 @@ class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpController
             ),
         );
 
-        $resource->setModuleName('ZFTestApigilityDbApi');
+        $resource->setModuleName('LaminasTestApiToolsDbApi');
         $artistEntity = $resource->create($artistResourceDefinition);
         $artistEntity = $resource->create($artistResourceDefinitionWithNonKeyIdentifer);
         $albumEntity = $resource->create($albumResourceDefinition);
 
-        $this->assertInstanceOf('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity', $artistEntity);
-        $this->assertInstanceOf('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity', $albumEntity);
+        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $artistEntity);
+        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $albumEntity);
 
         // Build relation
         $filter = new FilterChain();
@@ -87,10 +87,10 @@ class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpController
 
         $em = $serviceManager->get('doctrine.entitymanager.orm_default');
         $metadataFactory = $em->getMetadataFactory();
-        $entityMetadata = $metadataFactory->getMetadataFor("ZFTestApigilityDb\\Entity\\Artist");
+        $entityMetadata = $metadataFactory->getMetadataFor("LaminasTestApiToolsDb\\Entity\\Artist");
 
-        $rpcServiceResource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource');
-        $rpcServiceResource->setModuleName('ZFTestApigilityDbApi');
+        $rpcServiceResource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource');
+        $rpcServiceResource->setModuleName('LaminasTestApiToolsDbApi');
 
         foreach ($entityMetadata->associationMappings as $mapping) {
             switch ($mapping['type']) {

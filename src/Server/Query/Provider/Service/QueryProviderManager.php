@@ -1,10 +1,10 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Query\Provider\Service;
+namespace Laminas\ApiTools\Doctrine\Server\Query\Provider\Service;
 
-use ZF\Apigility\Doctrine\Server\Query\Provider\QueryProviderInterface;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception;
+use Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception;
 
 class QueryProviderManager extends AbstractPluginManager
 {

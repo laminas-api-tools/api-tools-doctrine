@@ -1,16 +1,18 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
 use InvalidArgumentException;
+use Laminas\ApiTools\Admin\Model\RpcServiceEntity;
+use Laminas\ApiTools\Hal\Collection as HalCollection;
+use Laminas\Stdlib\ArraySerializableInterface;
 use RuntimeException;
-use ZF\Hal\Collection as HalCollection;
-use ZF\Apigility\Admin\Model\RpcServiceEntity;
-use Zend\Stdlib\ArraySerializableInterface;
 
 class DoctrineRpcServiceEntity extends RpcServiceEntity implements ArraySerializableInterface
 {
