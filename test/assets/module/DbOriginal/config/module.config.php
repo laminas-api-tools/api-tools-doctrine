@@ -1,28 +1,28 @@
 <?php
 
-namespace ZFTestApigilityDb;
+namespace LaminasTestApiToolsDb;
 
 return array(
     'service_manager' => array(
         'invokables' => array(
             'Artist_aggregate_listener' =>
-                'ZFTestApigilityDb\EventListener\ArtistAggregateListener',
+                'LaminasTestApiToolsDb\EventListener\ArtistAggregateListener',
         ),
     ),
-    'zf-apigility-doctrine-query-provider' => array(
+    'api-tools-doctrine-query-provider' => array(
         'invokables' => array(
-            'Artist_default' => 'ZFTestApigilityDb\Query\Provider\Artist\DefaultQueryProvider',
-            'Artist_update' => 'ZFTestApigilityDb\Query\Provider\Artist\UpdateQueryProvider',
+            'Artist_default' => 'LaminasTestApiToolsDb\Query\Provider\Artist\DefaultQueryProvider',
+            'Artist_update' => 'LaminasTestApiToolsDb\Query\Provider\Artist\UpdateQueryProvider',
         )
     ),
-    'zf-apigility-doctrine-query-create-filter' => array(
+    'api-tools-doctrine-query-create-filter' => array(
         'invokables' => array(
-            'Artist' => 'ZFTestApigilityDb\Query\CreateFilter\ArtistCreateFilter',
+            'Artist' => 'LaminasTestApiToolsDb\Query\CreateFilter\ArtistCreateFilter',
         )
     ),
-    'zf-apigility' => array(
+    'api-tools' => array(
         'doctrine-connected' => array(
-            'ZFTestApigilityDbApi\\V1\\Rest\\Artist\\ArtistResource' => array(
+            'LaminasTestApiToolsDbApi\\V1\\Rest\\Artist\\ArtistResource' => array(
                 'query_create_filter' => 'Artist',
                 'query_providers' => array(
                     'default' => 'Artist_default',

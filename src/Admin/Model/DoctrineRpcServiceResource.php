@@ -1,21 +1,23 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
+use Laminas\ApiTools\Admin\Model\InputFilterModel;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Hal\Collection as HalCollection;
+use Laminas\ApiTools\Hal\Link\Link;
+use Laminas\ApiTools\Hal\Resource as HalResource;
+use Laminas\ApiTools\Rest\AbstractResourceListener;
+use Laminas\ApiTools\Rest\Exception\CreationException;
+use Laminas\ApiTools\Rest\Exception\PatchException;
+use Laminas\Mvc\Controller\ControllerManager;
 use RuntimeException;
-use Zend\Mvc\Controller\ControllerManager;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Hal\Collection as HalCollection;
-use ZF\Hal\Link\Link;
-use ZF\Hal\Resource as HalResource;
-use ZF\Rest\AbstractResourceListener;
-use ZF\Rest\Exception\CreationException;
-use ZF\Rest\Exception\PatchException;
-use ZF\Apigility\Admin\Model\InputFilterModel;
 
 class DoctrineRpcServiceResource extends AbstractResourceListener
 {
@@ -331,7 +333,7 @@ class DoctrineRpcServiceResource extends AbstractResourceListener
                     array(
                         'rel' => 'self',
                         'route' => array(
-                            'name' => 'zf-apigility-admin/api/module/rpc-service/rpc_input_filter',
+                            'name' => 'api-tools-admin/api/module/rpc-service/rpc_input_filter',
                             'params' => array(
                                 'name' => $this->moduleName,
                                 'controller_service_name' => $service->controllerServiceName,
@@ -346,7 +348,7 @@ class DoctrineRpcServiceResource extends AbstractResourceListener
 
         $collection = new HalCollection($collection);
         $collection->setCollectionName('input_filter');
-        $collection->setCollectionRoute('zf-apigility-admin/module/rpc-service/inputfilter');
+        $collection->setCollectionRoute('api-tools-admin/module/rpc-service/inputfilter');
         $collection->setCollectionRouteParams(
             array(
             'name' => $this->moduleName,

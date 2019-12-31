@@ -1,14 +1,14 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Query\CreateFilter;
+namespace Laminas\ApiTools\Doctrine\Server\Query\CreateFilter;
 
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\ResourceEvent;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Rest\ResourceEvent;
 
 /**
  * Class DefaultCreateFilter
  *
- * @package ZF\Apigility\Doctrine\Server\Query\CreateFilter
+ * @package Laminas\ApiTools\Doctrine\Server\Query\CreateFilter
  */
 class DefaultCreateFilter extends AbstractCreateFilter
 {

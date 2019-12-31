@@ -3,10 +3,10 @@
 When finding the target entity the identifiers were limited to the entity metadata identifier fields.  This change makes the API much more flexible by allowing standard field(s) as the identifier.
 
 ```
-    'zf-rest' => array(
-        'ZFTestApigilityDbApi\\V1\\Rest\\ArtistByName\\Controller' => array(
-            'listener' => 'ZFTestApigilityDbApi\\V1\\Rest\\ArtistByName\\ArtistByNameResource',
-            'route_name' => 'zf-test-apigility-db-api.rest.doctrine.artist-by-name',
+    'api-tools-rest' => array(
+        'LaminasTestApiToolsDbApi\\V1\\Rest\\ArtistByName\\Controller' => array(
+            'listener' => 'LaminasTestApiToolsDbApi\\V1\\Rest\\ArtistByName\\ArtistByNameResource',
+            'route_name' => 'api-tools-test-api-tools-db-api.rest.doctrine.artist-by-name',
             'route_identifier_name' => 'artist_name',
             'entity_identifier_name' => 'name',
             'collection_name' => 'artist_by_name',
