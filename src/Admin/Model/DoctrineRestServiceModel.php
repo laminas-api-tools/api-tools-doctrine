@@ -1,26 +1,28 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use Zend\EventManager\EventManager;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Filter\FilterChain;
-use Zend\View\Model\ViewModel;
-use Zend\View\Renderer\PhpRenderer;
-use Zend\View\Resolver;
-use ZF\Apigility\Admin\Exception;
-use ZF\Configuration\ConfigResource;
-use ZF\Configuration\ModuleUtils;
-use ZF\Rest\Exception\CreationException;
-use Zf\Apigility\Admin\Model\ModuleEntity;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use ZF\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Admin\Exception;
+use Laminas\ApiTools\Admin\Model\ModuleEntity;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Configuration\ConfigResource;
+use Laminas\ApiTools\Configuration\ModuleUtils;
+use Laminas\ApiTools\Rest\Exception\CreationException;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Filter\FilterChain;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManagerAwareInterface;
+use Laminas\View\Model\ViewModel;
+use Laminas\View\Renderer\PhpRenderer;
+use Laminas\View\Resolver;
 
 class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceManagerAwareInterface
 {
@@ -112,7 +114,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
     /**
      * Determine if the given entity is doctrine-connected, and, if so, recast to a DoctrineRestServiceEntity
      *
-     * @param  \Zend\EventManager\Event       $e
+     * @param  \Laminas\EventManager\Event       $e
      * @return null|DoctrineRestServiceEntity
      */
     // @codeCoverageIgnoreStart
@@ -126,16 +128,16 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
         }
 
         $config = $e->getParam('config', array());
-        if (!isset($config['zf-apigility'])
-            || !isset($config['zf-apigility']['doctrine-connected'])
-            || !isset($config['zf-apigility']['doctrine-connected'][$entity->resourceClass])
+        if (!isset($config['api-tools'])
+            || !isset($config['api-tools']['doctrine-connected'])
+            || !isset($config['api-tools']['doctrine-connected'][$entity->resourceClass])
         ) {
             // No DB-connected configuration for this service; nothing to do
             return;
         }
 
         //TODO : Move hydrators handling into separate model ?
-        $configResource = $config['zf-apigility']['doctrine-connected'][$entity->resourceClass];
+        $configResource = $config['api-tools']['doctrine-connected'][$entity->resourceClass];
 
         if (isset($config['doctrine-hydrator']) && isset($config['doctrine-hydrator'][$configResource['hydrator']])) {
             $configHydrator = $config['doctrine-hydrator'][$configResource['hydrator']];
@@ -230,8 +232,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
     {
         $config = $this->configResource->fetch(true);
 
-        if (!isset($config['zf-rest'])
-            || !isset($config['zf-rest'][$controllerService])
+        if (!isset($config['api-tools-rest'])
+            || !isset($config['api-tools-rest'][$controllerService])
         ) {
             // @codeCoverageIgnoreStart
             throw new Exception\RuntimeException(
@@ -244,7 +246,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
             // @codeCoverageIgnoreEnd
         }
 
-        $restConfig = $config['zf-rest'][$controllerService];
+        $restConfig = $config['api-tools-rest'][$controllerService];
 
         $restConfig['controllerServiceName'] = $controllerService;
         $restConfig['module']                = $this->module;
@@ -309,7 +311,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
     public function fetchAll($version = null)
     {
         $config = $this->configResource->fetch(true);
-        if (!isset($config['zf-rest'])) {
+        if (!isset($config['api-tools-rest'])) {
             // @codeCoverageIgnoreStart
             return array();
             // @codeCoverageIgnoreEnd
@@ -341,7 +343,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
             );
         }
 
-        foreach (array_keys($config['zf-rest']) as $controllerService) {
+        foreach (array_keys($config['api-tools-rest']) as $controllerService) {
             // @codeCoverageIgnoreStart
             // Because a verion is always supplied this check may not be necessary
             if (!$pattern) {
@@ -705,7 +707,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
                     ),
                 )
             ),
-            'zf-versioning' => array(
+            'api-tools-versioning' => array(
                 'uri' => array(
                     $routeName
                 )
@@ -744,7 +746,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
      */
     public function createRestConfig(DoctrineRestServiceEntity $details, $controllerService, $resourceClass, $routeName)
     {
-        $config = array('zf-rest' => array(
+        $config = array('api-tools-rest' => array(
             $controllerService => array(
                 'listener'                   => $resourceClass,
                 'route_name'                 => $routeName,
@@ -787,7 +789,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
         if (!empty($whitelist)) {
             $config['content-type-whitelist'] = array($controllerService => $whitelist);
         }
-        $config = array('zf-content-negotiation' => $config);
+        $config = array('api-tools-content-negotiation' => $config);
         $this->configResource->patch($config, true);
     }
 
@@ -807,7 +809,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
 
         // Add all ORM collections to Hydrator Strategies
         if ($objectManager instanceof \Doctrine\ORM\EntityManager) {
-            $collectionStrategyName = 'ZF\Apigility\Doctrine\Server\Hydrator\Strategy\CollectionLink';
+            $collectionStrategyName = 'Laminas\ApiTools\Doctrine\Server\Hydrator\Strategy\CollectionLink';
             $metadataFactory = $objectManager->getMetadataFactory();
             $metadata = $metadataFactory->getMetadataFor($entityClass);
 
@@ -828,7 +830,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
 
         // The abstract_factories key is set to the value so these factories do not get duplicaed with each resource
         $config = array(
-            'zf-apigility' => array(
+            'api-tools' => array(
                 'doctrine-connected' => array(
                     $details->resourceClass => array(
                         'object_manager' => $details->objectManager,
@@ -887,7 +889,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
      */
     public function createHalConfig(DoctrineRestServiceEntity $details, $entityClass, $collectionClass, $routeName)
     {
-        $config = array('zf-hal' => array('metadata_map' => array(
+        $config = array('api-tools-hal' => array('metadata_map' => array(
             $entityClass => array(
                 'route_identifier_name' => $details->routeIdentifierName,
                 'entity_identifier_name' => $details->entityIdentifierName,
@@ -900,7 +902,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
             ),
         )));
         if (isset($details->hydratorName)) {
-            $config['zf-hal']['metadata_map'][$entityClass]['hydrator'] = $details->hydratorName;
+            $config['api-tools-hal']['metadata_map'][$entityClass]['hydrator'] = $details->hydratorName;
         }
         $this->configResource->patch($config, true);
     }
@@ -951,7 +953,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
         }
             // @codeCoverageIgnoreEnd
 
-        $config = array('zf-rest' => array(
+        $config = array('api-tools-rest' => array(
             $original->controllerServiceName => $patch,
         ));
         $this->configResource->patch($config, true);
@@ -962,7 +964,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
             if ($update->$property === null) {
                 continue;
             }
-            $key = sprintf('zf-rest.%s.%s', $original->controllerServiceName, $configKey);
+            $key = sprintf('api-tools-rest.%s.%s', $original->controllerServiceName, $configKey);
             $this->configResource->patchKey($key, $update->$property);
         }
     }
@@ -989,7 +991,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
         DoctrineRestServiceEntity $original,
         DoctrineRestServiceEntity $update
     ) {
-        $baseKey = 'zf-content-negotiation.';
+        $baseKey = 'api-tools-content-negotiation.';
         $service = $original->controllerServiceName;
 
         if ($update->selector) {
@@ -1020,7 +1022,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
         $patch = array();
         $patch['object_manager'] = $update->objectManager;
         $patch['hydrator'] = $update->hydratorName;
-        $basekey = 'zf-apigility.doctrine-connected.';
+        $basekey = 'api-tools.doctrine-connected.';
         $resource = $update->resourceClass;
 
         $this->configResource->patchKey($basekey . $resource, $patch);
@@ -1035,8 +1037,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
     {
         $config = $this->configResource->fetch(true);
 
-        $restResourceClass = $config['zf-rest'][$entity->controllerServiceName]['listener'];
-        $restCollectionClass = $config['zf-rest'][$entity->controllerServiceName]['collection_class'];
+        $restResourceClass = $config['api-tools-rest'][$entity->controllerServiceName]['listener'];
+        $restCollectionClass = $config['api-tools-rest'][$entity->controllerServiceName]['collection_class'];
 
         $reflector = new \ReflectionClass($restResourceClass);
         unlink($reflector->getFileName());
@@ -1058,9 +1060,9 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
         $key   = array('router', 'routes', $route);
         $this->configResource->deleteKey($key);
 
-        $uriKey = array_search($route, $config['zf-versioning']['uri']);
+        $uriKey = array_search($route, $config['api-tools-versioning']['uri']);
         if ($uriKey !== false) {
-            $key = array('zf-versioning', 'uri', $uriKey);
+            $key = array('api-tools-versioning', 'uri', $uriKey);
             $this->configResource->deleteKey($key);
         }
     }
@@ -1075,31 +1077,31 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
     {
          // Get hydrator name
          $config = $this->configResource->fetch(true);
-         $hydratorName = $config['zf-hal']['metadata_map'][$entity->entityClass]['hydrator'];
+         $hydratorName = $config['api-tools-hal']['metadata_map'][$entity->entityClass]['hydrator'];
          $objectManagerClass = $config['doctrine-hydrator'][$hydratorName]['object_manager'];
 
          $key = array('doctrine-hydrator', $hydratorName);
          $this->configResource->deleteKey($key);
 
-         $key = array('zf-apigility', 'doctrine-connected', $entity->resourceClass);
+         $key = array('api-tools', 'doctrine-connected', $entity->resourceClass);
          $this->configResource->deleteKey($key);
 
-        $key = array('zf-rest', $entity->controllerServiceName);
+        $key = array('api-tools-rest', $entity->controllerServiceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-content-negotiation', 'controllers', $entity->controllerServiceName);
+        $key = array('api-tools-content-negotiation', 'controllers', $entity->controllerServiceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-content-negotiation', 'accept-whitelist', $entity->controllerServiceName);
+        $key = array('api-tools-content-negotiation', 'accept-whitelist', $entity->controllerServiceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-content-negotiation', 'content-type-whitelist', $entity->controllerServiceName);
+        $key = array('api-tools-content-negotiation', 'content-type-whitelist', $entity->controllerServiceName);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-hal', 'metadata_map', $entity->collectionClass);
+        $key = array('api-tools-hal', 'metadata_map', $entity->collectionClass);
         $this->configResource->deleteKey($key);
 
-        $key = array('zf-hal', 'metadata_map', $entity->entityClass);
+        $key = array('api-tools-hal', 'metadata_map', $entity->entityClass);
         $this->configResource->deleteKey($key);
     }
 
@@ -1255,12 +1257,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
         array $config
     ) {
         // @codeCoverageIgnoreStart
-        if (!isset($config['zf-content-negotiation'])) {
+        if (!isset($config['api-tools-content-negotiation'])) {
             return;
         }
         // @codeCoverageIgnoreEnd
 
-        $config = $config['zf-content-negotiation'];
+        $config = $config['api-tools-content-negotiation'];
 
         if (isset($config['controllers'])
             && isset($config['controllers'][$controllerServiceName])
@@ -1302,15 +1304,15 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
      */
     protected function mergeHalConfig($controllerServiceName, DoctrineRestServiceEntity $metadata, array $config)
     {
-        if (!isset($config['zf-hal'])
-            || !isset($config['zf-hal']['metadata_map'])
+        if (!isset($config['api-tools-hal'])
+            || !isset($config['api-tools-hal']['metadata_map'])
         ) {
             // @codeCoverageIgnoreStart
             return;
             // @codeCoverageIgnoreEnd
         }
 
-        $config = $config['zf-hal']['metadata_map'];
+        $config = $config['api-tools-hal']['metadata_map'];
 
         $entityClass     = $this->deriveEntityClass($controllerServiceName, $metadata, $config);
         $collectionClass = $this->deriveCollectionClass($controllerServiceName, $metadata, $config);
@@ -1339,12 +1341,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
      */
     protected function deriveEntityClass($controllerServiceName, DoctrineRestServiceEntity $metadata, array $config)
     {
-        if (isset($config['zf-rest'])
-            && isset($config['zf-rest'][$controllerServiceName])
-            && isset($config['zf-rest'][$controllerServiceName]['entity_class'])
+        if (isset($config['api-tools-rest'])
+            && isset($config['api-tools-rest'][$controllerServiceName])
+            && isset($config['api-tools-rest'][$controllerServiceName]['entity_class'])
         ) {
             // @codeCoverageIgnoreStart
-            return $config['zf-rest'][$controllerServiceName]['entity_class'];
+            return $config['api-tools-rest'][$controllerServiceName]['entity_class'];
             // @codeCoverageIgnoreEnd
         }
 
@@ -1380,12 +1382,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface, ServiceMan
      */
     protected function deriveCollectionClass($controllerServiceName, DoctrineRestServiceEntity $metadata, array $config)
     {
-        if (isset($config['zf-rest'])
-            && isset($config['zf-rest'][$controllerServiceName])
-            && isset($config['zf-rest'][$controllerServiceName]['collection_class'])
+        if (isset($config['api-tools-rest'])
+            && isset($config['api-tools-rest'][$controllerServiceName])
+            && isset($config['api-tools-rest'][$controllerServiceName]['collection_class'])
         ) {
             // @codeCoverageIgnoreStart
-            return $config['zf-rest'][$controllerServiceName]['collection_class'];
+            return $config['api-tools-rest'][$controllerServiceName]['collection_class'];
             // @codeCoverageIgnoreEnd
         }
 
