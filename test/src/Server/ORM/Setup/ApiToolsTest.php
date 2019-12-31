@@ -1,15 +1,15 @@
 <?php
-// Because of the code-generating of Apigility this script
+// Because of the code-generating of Laminas API Tools this script
 // is used to setup the tests.  Use ~/test/bin/reset-tests
 // to reset the output of this test if the unit tests
 // fail the application.
 
-namespace ZFTest\Apigility\Doctrine\Server\ORM\Setup;
+namespace LaminasTest\ApiTools\Doctrine\Server\ORM\Setup;
 
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Filter\FilterChain;
+use Laminas\Filter\FilterChain;
 
-class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class ApiToolsTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -28,7 +28,7 @@ class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpController
         $res = $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
         // Create DB
-        $resource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
 
         $artistResourceDefinition = [
             "objectManager"=> "doctrine.entitymanager.orm_default",
@@ -52,8 +52,8 @@ class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpController
         $artistEntity = $resource->create($artistResourceDefinition);
         $albumEntity = $resource->create($albumResourceDefinition);
 
-        $this->assertInstanceOf('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity', $artistEntity);
-        $this->assertInstanceOf('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity', $albumEntity);
+        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $artistEntity);
+        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $albumEntity);
 
         // Build relation
         $filter = new FilterChain();
@@ -64,7 +64,7 @@ class ApigilityTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpController
         $metadataFactory = $em->getMetadataFactory();
         $entityMetadata = $metadataFactory->getMetadataFor("Db\\Entity\\Artist");
 
-        $rpcServiceResource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource');
+        $rpcServiceResource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource');
         $rpcServiceResource->setModuleName('DbApi');
 
         foreach ($entityMetadata->associationMappings as $mapping) {

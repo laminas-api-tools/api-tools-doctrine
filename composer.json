@@ -1,43 +1,21 @@
 {
-    "name": "zfcampus/zf-apigility-doctrine",
-    "type": "library",
-    "description": "Doctrine for Apigility",
-    "keywords": [
-        "apigility",
-        "doctrine",
-        "api"
-    ],
-    "homepage": "http://www.apigility.com/",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "Tom Anderson",
-            "email": "tanderson@soliantconsulting.com"
-        }
-    ],
-    "require-dev": {
-        "zfcampus/zf-apigility-admin": "~1.0",
-        "zendframework/zend-test": ">=2.3",
-        "zendframework/zend-form": ">=2.3",
-        "zendframework/zend-serializer": ">=2.3",
-        "zendframework/zend-log": ">=2.3",
-        "phpunit/phpunit": "3.7.*",
-        "fabpot/php-cs-fixer": "0.4.*@dev",
-        "satooshi/php-coveralls": "dev-master",
-        "doctrine/doctrine-orm-module": "*",
-        "doctrine/doctrine-mongo-odm-module": "*",
-        "doctrine/mongodb-odm": "~1.0.0"
+    "license": "BSD-3-Clause",
+    "homepage": "https://api-tools.getlaminas.org",
+    "support": {
+        "docs": "https://api-tools.getlaminas.org/documentation",
+        "issues": "https://github.com/laminas-api-tools/api-tools-doctrine/issues",
+        "source": "https://github.com/laminas-api-tools/api-tools-doctrine",
+        "rss": "https://github.com/laminas-api-tools/api-tools-doctrine/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
+    },
+    "config": {
+        "sort-packages": true
     },
     "require": {
-        "php": ">=5.4",
-        "phpro/zf-doctrine-hydration-module": "~0.1.0",
-        "zfcampus/zf-apigility": "~1.0"
+        "laminas/laminas-zendframework-bridge": "^1.0"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "autoload": {
-        "psr-4": {
-            "ZF\\Apigility\\Doctrine\\": "src/",
-        }
+    "replace": {
+        "zfcampus/zf-apigility-doctrine": "self.version"
     }
 }
