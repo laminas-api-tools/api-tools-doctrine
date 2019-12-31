@@ -1,20 +1,20 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Query\Provider;
+namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
-use ZF\Apigility\Doctrine\Server\Paginator\Adapter\DoctrineOrmAdapter;
-use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Zend\Paginator\Adapter\AdapterInterface;
+use DoctrineModule\Persistence\ObjectManagerAwareInterface;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Paginator\Adapter\DoctrineOrmAdapter;
+use Laminas\ApiTools\Rest\ResourceEvent;
+use Laminas\Paginator\Adapter\AdapterInterface;
 use OAuth2\Request as OAuth2Request;
 use OAuth2\Server as OAuth2Server;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\ResourceEvent;
 
 /**
  * Class FetchAllOrm
  *
- * @package ZF\Apigility\Doctrine\Server\Query\Provider
+ * @package Laminas\ApiTools\Doctrine\Server\Query\Provider
  */
 abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, QueryProviderInterface
 {

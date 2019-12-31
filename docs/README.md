@@ -1,4 +1,4 @@
-# zf-apigility-doctrine 
+# api-tools-doctrine 
 
 This folder contains upgrade and changelogs for each version.
 

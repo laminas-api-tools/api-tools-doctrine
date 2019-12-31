@@ -1,10 +1,10 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Query\Provider;
+namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
-use ZF\Apigility\Doctrine\Server\Paginator\Adapter\DoctrineOdmAdapter;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\ResourceEvent;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Paginator\Adapter\DoctrineOdmAdapter;
+use Laminas\ApiTools\Rest\ResourceEvent;
 use OAuth2\Request as OAuth2Request;
 use OAuth2\Server as OAuth2Server;
 
