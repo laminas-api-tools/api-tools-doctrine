@@ -1,21 +1,21 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Query;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Query;
 
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Persistence\ProvidesObjectManager;
-use ZF\Apigility\Doctrine\Server\Paginator\Adapter\DoctrineOrmAdapter;
-use Zend\Paginator\Adapter\AdapterInterface;
-use Zend\ServiceManager\AbstractPluginManager;
-use ZF\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Paginator\Adapter\DoctrineOrmAdapter;
+use Laminas\Paginator\Adapter\AdapterInterface;
+use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
  * Class FetchAllOrmQuery
  *
- * @package ZF\Apigility\Doctrine\Server\Resource\Query
+ * @package Laminas\ApiTools\Doctrine\Server\Resource\Query
  */
 class FetchAllOrmQuery
-    implements ObjectManagerAwareInterface, ApigilityFetchAllQuery
+    implements ObjectManagerAwareInterface, ApiToolsFetchAllQuery
 {
 
     use ProvidesObjectManager;
