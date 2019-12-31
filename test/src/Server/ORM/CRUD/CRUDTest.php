@@ -1,19 +1,19 @@
 <?php
-// Because of the code-generating of Apigility this script
+// Because of the code-generating of Laminas API Tools this script
 // is used to setup the tests.  Use ~/test/bin/reset-tests
 // to reset the output of this test if the unit tests
 // fail the application.
 
-namespace ZFTest\Apigility\Doctrine\Server\ORM\CRUD;
+namespace LaminasTest\ApiTools\Doctrine\Server\ORM\CRUD;
 
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Http\Request;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
-use ZFTestApigilityDb\Entity\Artist as ArtistEntity;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\Http\Request;
+use LaminasTestApiToolsDb\Entity\Artist as ArtistEntity;
 
-class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class CRUDTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -35,7 +35,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
     protected function validateTriggeredEvents($expectedEvents)
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $eventCatcher = $serviceManager->get('ZFTestApigilityGeneral\Listener\EventCatcher');
+        $eventCatcher = $serviceManager->get('LaminasTestApiToolsGeneral\Listener\EventCatcher');
 
         $this->assertEquals($expectedEvents, $eventCatcher->getCaughtEvents());
     }
@@ -46,7 +46,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
     protected function validateTriggeredEventsContains($expectedEvents)
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $eventCatcher = $serviceManager->get('ZFTestApigilityGeneral\Listener\EventCatcher');
+        $eventCatcher = $serviceManager->get('LaminasTestApiToolsGeneral\Listener\EventCatcher');
 
         foreach ($expectedEvents as $event) {
             $this->assertTrue(in_array($event, $eventCatcher->getCaughtEvents()));
@@ -78,11 +78,11 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_CREATE_PRE,
             function(DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestCreateFailure');
+                return new ApiProblem(400, 'LaminasTestCreateFailure');
             }
         );
 
@@ -94,8 +94,8 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->getRequest()->setContent('{"name": "ArtistEleven","createdAt": "2011-12-18 13:17:17"}');
         $this->dispatch('/test/artist');
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
-        $this->assertEquals('ZFTestCreateFailure', $body['detail']);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertEquals('LaminasTestCreateFailure', $body['detail']);
         $this->assertEquals(400, $this->getResponseStatusCode());
     }
 
@@ -143,17 +143,17 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_FETCH_POST,
             function(DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestFetchFailure');
+                return new ApiProblem(400, 'LaminasTestFetchFailure');
             }
         );
 
         $this->dispatch('/test/artist/' . $artist->getId());
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
         $this->assertEquals(404, $this->getResponseStatusCode());
     }
 
@@ -194,19 +194,19 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_FETCH_ALL_PRE,
             function(DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestFetchAllFailure');
+                return new ApiProblem(400, 'LaminasTestFetchAllFailure');
             }
         );
 
         $this->getRequest()->setContent(null);
         $this->dispatch('/test/artist?orderBy%5Bname%5D=ASC');
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
-        $this->assertEquals('ZFTestFetchAllFailure', $body['detail']);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertEquals('LaminasTestFetchAllFailure', $body['detail']);
         $this->assertEquals(400, $this->getResponseStatusCode());
     }
 
@@ -233,7 +233,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertEquals('ArtistOnePatchEdit', $body['name']);
 
-        $foundEntity = $em->getRepository('ZFTestApigilityDb\Entity\Artist')->find($artist->getId());
+        $foundEntity = $em->getRepository('LaminasTestApiToolsDb\Entity\Artist')->find($artist->getId());
         $this->assertEquals('ArtistOnePatchEdit', $foundEntity->getName());
         $this->validateTriggeredEvents(array(
             DoctrineResourceEvent::EVENT_PATCH_PRE,
@@ -255,11 +255,11 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_PATCH_PRE,
             function(DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestPatchFailure');
+                return new ApiProblem(400, 'LaminasTestPatchFailure');
             }
         );
 
@@ -271,8 +271,8 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->getRequest()->setContent('{"name":"ArtistTenPatchEdit"}');
         $this->dispatch('/test/artist/' . $artist->getId());
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
-        $this->assertEquals('ZFTestPatchFailure', $body['detail']);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertEquals('LaminasTestPatchFailure', $body['detail']);
         $this->assertEquals(400, $this->getResponseStatusCode());
     }
 
@@ -356,11 +356,11 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_PATCH_LIST_POST,
             function(DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestPatchFailure');
+                return new ApiProblem(400, 'LaminasTestPatchFailure');
             }
         );
 
@@ -372,8 +372,8 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->getRequest()->setContent('[{"id": "' . $artist->getId() . '", "name":"ArtistTenPatchEdit"}]');
         $this->dispatch('/test/artist');
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
-        $this->assertEquals('ZFTestPatchFailure', $body['detail']);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertEquals('LaminasTestPatchFailure', $body['detail']);
         $this->assertEquals(400, $this->getResponseStatusCode());
     }
 
@@ -400,7 +400,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertEquals('ArtistSevenPutEdit', $body['name']);
 
-        $foundEntity = $em->getRepository('ZFTestApigilityDb\Entity\Artist')->find($artist->getId());
+        $foundEntity = $em->getRepository('LaminasTestApiToolsDb\Entity\Artist')->find($artist->getId());
         $this->assertEquals('ArtistSevenPutEdit', $foundEntity->getName());
         $this->validateTriggeredEvents(array(
             DoctrineResourceEvent::EVENT_UPDATE_PRE,
@@ -422,11 +422,11 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_UPDATE_PRE,
             function(DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestPutFailure');
+                return new ApiProblem(400, 'LaminasTestPutFailure');
             }
         );
 
@@ -438,8 +438,8 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->getRequest()->setContent('{"name": "ArtistNinePutEdit","createdAt": "2012-12-18 13:17:17"}');
         $this->dispatch('/test/artist/' . $artist->getId());
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
-        $this->assertEquals('ZFTestPutFailure', $body['detail']);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertEquals('LaminasTestPutFailure', $body['detail']);
         $this->assertEquals(400, $this->getResponseStatusCode());
     }
 
@@ -465,7 +465,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->dispatch('/test/artist/' . $artist->getId());
         $this->assertEquals(204, $this->getResponseStatusCode());
 
-        $this->assertEmpty($em->getRepository('ZFTestApigilityDb\Entity\Artist')->find($id));
+        $this->assertEmpty($em->getRepository('LaminasTestApiToolsDb\Entity\Artist')->find($id));
         $this->validateTriggeredEvents(
             array(
             DoctrineResourceEvent::EVENT_DELETE_PRE,
@@ -488,11 +488,11 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_DELETE_PRE,
             function(DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestDeleteFailure');
+                return new ApiProblem(400, 'LaminasTestDeleteFailure');
             }
         );
 
@@ -502,8 +502,8 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->getRequest()->setMethod(Request::METHOD_DELETE);
         $this->dispatch('/test/artist/' . $artist->getId());
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
-        $this->assertEquals('ZFTestDeleteFailure', $body['detail']);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertEquals('LaminasTestDeleteFailure', $body['detail']);
         $this->assertEquals(400, $this->getResponseStatusCode());
 
         // Test DELETE: entity not found

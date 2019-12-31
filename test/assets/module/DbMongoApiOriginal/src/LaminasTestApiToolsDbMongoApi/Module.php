@@ -1,10 +1,9 @@
 <?php
+namespace LaminasTestApiToolsDbMongoApi;
 
-namespace ZFTestApigilityDb;
+use Laminas\ApiTools\Provider\ApiToolsProviderInterface;
 
-use ZF\Apigility\Provider\ApigilityProviderInterface;
-
-class Module implements ApigilityProviderInterface
+class Module implements ApiToolsProviderInterface
 {
     public function getConfig()
     {
@@ -14,7 +13,7 @@ class Module implements ApigilityProviderInterface
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
+            'Laminas\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__,
                 ),

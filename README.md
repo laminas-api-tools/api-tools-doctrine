@@ -1,9 +1,9 @@
-Apigility for Doctrine
+Laminas API Tools for Doctrine
 ==============================
 
-[![Build status](https://api.travis-ci.org/zfcampus/zf-apigility-doctrine.svg)](http://travis-ci.org/zfcampus/zf-apigility-doctrine)
+[![Build status](https://api.travis-ci.org/laminas-api-tools/api-tools-doctrine.svg)](https://travis-ci.org/laminas-api-tools/api-tools-doctrine)
 
-This module provides the classes for integrating Doctrine with Apigility.
+This module provides the classes for integrating Doctrine with Laminas API Tools.
 
 Installation
 ------------
@@ -12,12 +12,12 @@ Installation of this module uses composer. For composer documentation, please re
 [getcomposer.org](http://getcomposer.org/).
 
 ```sh
-$ php composer.phar require zfcampus/zf-apigility-doctrine "~0.3"
+$ php composer.phar require laminas-api-tools/api-tools-doctrine "~0.3"
 ```
 
-This library provides two modules.  The first, ZF\Apigility\Doctrine\Server provides
-the classes to serve data created by the second, ZF\Apigility\Doctrine\Admin.  The
-Admin module is used to create apigility resources and the Server serves those
+This library provides two modules.  The first, Laminas\ApiTools\Doctrine\Server provides
+the classes to serve data created by the second, Laminas\ApiTools\Doctrine\Admin.  The
+Admin module is used to create api-tools resources and the Server serves those
 created resoruces.  Generally you would include Admin in your development.config.php
 and Server in your application.config.php
 
@@ -26,16 +26,16 @@ API Resources
 -------------
 
 
-***/apigility/api/doctrine[/:object_manager_alias]/metadata[/:name]***
+***/api-tools/api/doctrine[/:object_manager_alias]/metadata[/:name]***
 
 This will return metadata for the named entity which is a member of the
 named object manager.  Querying without a name will return all metadata
 for the object manager.
 
 
-***/apigility/api/module[/:name]/doctrine[/:controller_service_name]***
+***/api-tools/api/module[/:name]/doctrine[/:controller_service_name]***
 
-This is a Doctrine resource creation route _like_ Apigility Rest `/apigility/api/module[/:name]/rest[/:controller_service_name]`
+This is a Doctrine resource creation route _like_ Laminas API Tools Rest `/api-tools/api/module[/:name]/rest[/:controller_service_name]`
 POST Parameters:
 
 ```json
@@ -86,12 +86,12 @@ EVENT_DELETE_POST = 'delete.post';
 Attach to events through the Shared Event Manager:
 
 ```php
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 
 $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
 
 $sharedEvents->attach(
-    'ZF\Apigility\Doctrine\DoctrineResource',
+    'Laminas\ApiTools\Doctrine\DoctrineResource',
     DoctrineResourceEvent::EVENT_CREATE_PRE,
     function(DoctrineResourceEvent $e) {
         $e->stopPropagation();
@@ -102,7 +102,7 @@ $sharedEvents->attach(
 
 It is also possible to add custom event listeners to the configuration of a single doctrine-connected resource:
 ```php
-'zf-apigility' => array(
+'api-tools' => array(
     'doctrine-connected' => array(
         'Api\\V1\\Rest\\User\\UserResource' => array(
             // ...
@@ -157,7 +157,7 @@ A query provider returns a QueryBuilder object.  By using a custom query provide
 A custom plugin manager is available to register your own query providers.  This can be done through this configuration:
 
 ```php
-'zf-apigility-doctrine-query-provider' => array(
+'api-tools-doctrine-query-provider' => array(
     'invokables' => array(
         'entity_name_fetch_all' => 'Application\Query\Provider\EntityName\FetchAll',
     )
@@ -176,7 +176,7 @@ When the query provider is registered attach it to the doctrine-connected resour
 * patch_all delegates to patch
 
 ```php
-'zf-apigility' => array(
+'api-tools' => array(
     'doctrine-connected' => array(
         'Api\\V1\\Rest\\....' => array(
             'query_providers' => array(
@@ -199,7 +199,7 @@ Create filters take the data as a parameter and return the data, modified or fil
 A custom plugin manager is available to register your own create filters.  This can be done through following configuration:
 
 ```php
-'zf-apigility-doctrine-query-create-filter' => array(
+'api-tools-doctrine-query-create-filter' => array(
     'invokables' => array(
         'entity_name' => 'Application\Query\CreateFilter\EntityName',
     )
@@ -208,7 +208,7 @@ A custom plugin manager is available to register your own create filters.  This 
 
 Register your Query Create Filter as:
 ```php
-'zf-apigility' => array(
+'api-tools' => array(
     'doctrine-connected' => array(
         'Api\\V1\\Rest\\....' => array(
             'query_create_filter' => 'entity_name',
