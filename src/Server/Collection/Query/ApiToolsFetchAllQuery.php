@@ -1,12 +1,12 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Query;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Query;
 
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
-use Zend\Paginator\Adapter\AdapterInterface;
-use Zend\ServiceManager\AbstractPluginManager;
+use Laminas\Paginator\Adapter\AdapterInterface;
+use Laminas\ServiceManager\AbstractPluginManager;
 
-interface ApigilityFetchAllQuery extends ObjectManagerAwareInterface
+interface ApiToolsFetchAllQuery extends ObjectManagerAwareInterface
 {
     /**
      * @param string $entityClass

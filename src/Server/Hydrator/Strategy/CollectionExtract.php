@@ -1,10 +1,10 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Hydrator\Strategy;
+namespace Laminas\ApiTools\Doctrine\Server\Hydrator\Strategy;
 
-use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 use DoctrineModule\Stdlib\Hydrator\Strategy\AbstractCollectionStrategy;
-use ZF\Hal\Collection;
+use Laminas\ApiTools\Hal\Collection;
+use Laminas\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * A field-specific hydrator for collections.
