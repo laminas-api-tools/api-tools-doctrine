@@ -1,11 +1,11 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Query\Provider;
+namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
-use Zend\Paginator\Adapter\AdapterInterface;
-use Zend\ServiceManager\AbstractPluginManager;
-use ZF\Rest\ResourceEvent;
+use Laminas\ApiTools\Rest\ResourceEvent;
+use Laminas\Paginator\Adapter\AdapterInterface;
+use Laminas\ServiceManager\AbstractPluginManager;
 
 interface QueryProviderInterface extends ObjectManagerAwareInterface
 {

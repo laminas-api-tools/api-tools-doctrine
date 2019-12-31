@@ -1,18 +1,18 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Query\CreateFilter;
+namespace Laminas\ApiTools\Doctrine\Server\Query\CreateFilter;
 
-use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OAuth2\Server as OAuth2Server;
+use DoctrineModule\Persistence\ObjectManagerAwareInterface;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Rest\ResourceEvent;
 use OAuth2\Request as OAuth2Request;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\ResourceEvent;
+use OAuth2\Server as OAuth2Server;
 
 /**
  * Class DefaultCreateFilter
  *
- * @package ZF\Apigility\Doctrine\Server\Query\CreateFilter
+ * @package Laminas\ApiTools\Doctrine\Server\Query\CreateFilter
  */
 abstract class AbstractCreateFilter implements ObjectManagerAwareInterface, QueryCreateFilterInterface
 {

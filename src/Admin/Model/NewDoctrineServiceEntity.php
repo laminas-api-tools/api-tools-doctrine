@@ -1,15 +1,17 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use ZF\Apigility\Admin\Model\NewRestServiceEntity as ZFNewRestServiceEntity;
-use Zend\Stdlib\ArraySerializableInterface;
+use Laminas\ApiTools\Admin\Model\NewRestServiceEntity as LaminasNewRestServiceEntity;
+use Laminas\Stdlib\ArraySerializableInterface;
 
-class NewDoctrineServiceEntity extends ZFNewRestServiceEntity implements ArraySerializableInterface
+class NewDoctrineServiceEntity extends LaminasNewRestServiceEntity implements ArraySerializableInterface
 {
     /**
      * @var ObjectManager
