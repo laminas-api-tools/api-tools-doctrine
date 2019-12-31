@@ -1,19 +1,21 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Server\Validator;
+namespace LaminasTest\ApiTools\Doctrine\Server\Validator;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Validator\ObjectExists as ObjectExistsOrigin;
+use Laminas\ApiTools\Doctrine\Server\Validator\ObjectExists;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Validator\ValidatorPluginManager;
-use ZF\Apigility\Doctrine\Server\Validator\ObjectExists;
 
 class ObjectExistsFactoryTest extends TestCase
 {

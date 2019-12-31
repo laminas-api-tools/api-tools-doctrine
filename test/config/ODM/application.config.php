@@ -1,7 +1,9 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
 return [
@@ -9,29 +11,29 @@ return [
         'DoctrineModule',
         'DoctrineMongoODMModule',
         'Phpro\DoctrineHydrationModule',
-        'ZF\Apigility',
-        'ZF\Apigility\Admin',
-        'ZF\Hal',
-        'ZF\ContentNegotiation',
-        'ZF\Rest',
-        'ZF\Rpc',
-        'ZF\Configuration',
-        'ZF\Versioning',
-        'ZF\ApiProblem',
-        'ZF\Apigility\Doctrine\Admin',
-        'ZF\Apigility\Doctrine\Server',
-        'ZFTestApigilityGeneral',
-        'ZFTestApigilityDbMongo',
-        'ZFTestApigilityDbMongoApi',
+        'Laminas\ApiTools',
+        'Laminas\ApiTools\Admin',
+        'Laminas\ApiTools\Hal',
+        'Laminas\ApiTools\ContentNegotiation',
+        'Laminas\ApiTools\Rest',
+        'Laminas\ApiTools\Rpc',
+        'Laminas\ApiTools\Configuration',
+        'Laminas\ApiTools\Versioning',
+        'Laminas\ApiTools\ApiProblem',
+        'Laminas\ApiTools\Doctrine\Admin',
+        'Laminas\ApiTools\Doctrine\Server',
+        'LaminasTestApiToolsGeneral',
+        'LaminasTestApiToolsDbMongo',
+        'LaminasTestApiToolsDbMongoApi',
     ],
     'module_listener_options' => [
         'config_glob_paths' => [
             __DIR__ . '/local.php',
         ],
         'module_paths' => [
-            'ZFTestApigilityGeneral' => __DIR__ . '/../../assets/module/ZFTestApigilityGeneral',
-            'ZFTestApigilityDbMongo' => __DIR__ . '/../../assets/module/ZFTestApigilityDbMongo',
-            'ZFTestApigilityDbMongoApi' => __DIR__ . '/../../assets/module/ZFTestApigilityDbMongoApi',
+            'LaminasTestApiToolsGeneral' => __DIR__ . '/../../assets/module/LaminasTestApiToolsGeneral',
+            'LaminasTestApiToolsDbMongo' => __DIR__ . '/../../assets/module/LaminasTestApiToolsDbMongo',
+            'LaminasTestApiToolsDbMongoApi' => __DIR__ . '/../../assets/module/LaminasTestApiToolsDbMongoApi',
         ],
     ],
 ];

@@ -1,17 +1,19 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
 use Interop\Container\ContainerInterface;
-use Zend\EventManager\SharedEventManagerInterface;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use ZF\Apigility\Admin\Model\ModuleModel;
-use ZF\Apigility\Admin\Model\ModulePathSpec;
-use ZF\Configuration\ConfigResourceFactory;
+use Laminas\ApiTools\Admin\Model\ModuleModel;
+use Laminas\ApiTools\Admin\Model\ModulePathSpec;
+use Laminas\ApiTools\Configuration\ConfigResourceFactory;
+use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 
 class DoctrineRestServiceModelFactoryFactory
 {
@@ -27,7 +29,7 @@ class DoctrineRestServiceModelFactoryFactory
             || ! $container->has('SharedEventManager')
         ) {
             throw new ServiceNotCreatedException(sprintf(
-                '%s is missing one or more dependencies from ZF\Configuration',
+                '%s is missing one or more dependencies from Laminas\ApiTools\Configuration',
                 DoctrineRestServiceModelFactory::class
             ));
         }
