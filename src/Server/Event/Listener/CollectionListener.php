@@ -1,22 +1,22 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Event\Listener;
+namespace Laminas\ApiTools\Doctrine\Server\Event\Listener;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\Hydrator\HydratorAwareInterface;
+use Laminas\Hydrator\HydratorInterface;
+use Laminas\InputFilter\CollectionInputFilter;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Stdlib\ArrayObject;
 use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\InputFilter\CollectionInputFilter;
-use Zend\InputFilter\InputFilterInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayObject;
-use Zend\Hydrator\HydratorAwareInterface;
-use Zend\Hydrator\HydratorInterface;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
-use ZF\Apigility\Doctrine\Server\Exception\InvalidArgumentException;
 
 /**
  * Class CollectionListener
@@ -27,7 +27,7 @@ use ZF\Apigility\Doctrine\Server\Exception\InvalidArgumentException;
  * also be created or updated with the parent, preventing multiple calls. Downstream, the relationships will continue to
  * be managed by the hydrator and whatever strategies are defined on it
  *
- * @package ZF\Apigility\Doctrine\Server\Event\Listener
+ * @package Laminas\ApiTools\Doctrine\Server\Event\Listener
  */
 class CollectionListener implements ListenerAggregateInterface
 {

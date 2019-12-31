@@ -1,19 +1,19 @@
 <?php
-// Because of the code-generating of Apigility this script
+// Because of the code-generating of Laminas API Tools this script
 // is used to setup the tests.  Use ~/test/bin/reset-tests
 // to reset the output of this test if the unit tests
 // fail the application.
 
-namespace ZFTest\Apigility\Doctrine\Server\ODM\CRUD;
+namespace LaminasTest\ApiTools\Doctrine\Server\ODM\CRUD;
 
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\Http\Request;
+use LaminasTestApiToolsDbMongo\Document\Meta as MetaEntity;
+use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 use MongoClient;
-use ZF\ApiProblem\ApiProblem;
-use ZFTestApigilityGeneral\Listener\EventCatcher;
-use Zend\Http\Request;
-use ZFTestApigilityDbMongo\Document\Meta as MetaEntity;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
 
-class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class CRUDTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -44,7 +44,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
     protected function validateTriggeredEvents($expectedEvents)
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $eventCatcher = $serviceManager->get('ZFTestApigilityGeneral\Listener\EventCatcher');
+        $eventCatcher = $serviceManager->get('LaminasTestApiToolsGeneral\Listener\EventCatcher');
 
         $this->assertEquals($expectedEvents, $eventCatcher->getCaughtEvents());
     }
@@ -74,11 +74,11 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_CREATE_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestCreateFailure');
+                return new ApiProblem(400, 'LaminasTestCreateFailure');
             }
         );
 
@@ -90,8 +90,8 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->getRequest()->setContent('{"name": "ArtistEleven","createdAt": "2011-12-18 13:17:17"}');
         $this->dispatch('/test/meta');
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
-        $this->assertEquals('ZFTestCreateFailure', $body['detail']);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertEquals('LaminasTestCreateFailure', $body['detail']);
         $this->assertEquals(400, $this->getResponseStatusCode());
     }
 
@@ -130,18 +130,18 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_FETCH_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestFetchFailure');
+                return new ApiProblem(400, 'LaminasTestFetchFailure');
             }
         );
 
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->dispatch('/test/meta/' . 111);
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
         $this->assertEquals(400, $this->getResponseStatusCode());
     }
 
@@ -183,11 +183,11 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
 
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
-            'ZF\Apigility\Doctrine\DoctrineResource',
+            'Laminas\ApiTools\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_FETCH_ALL_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestFetchAllFailure');
+                return new ApiProblem(400, 'LaminasTestFetchAllFailure');
             }
         );
 
@@ -195,8 +195,8 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->dispatch('/test/meta?orderBy%5Bname%5D=ASC');
         $body = json_decode($this->getResponse()->getBody(), true);
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $this->getResponse());
-        $this->assertEquals('ZFTestFetchAllFailure', $body['detail']);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $this->getResponse());
+        $this->assertEquals('LaminasTestFetchAllFailure', $body['detail']);
         $this->assertEquals(400, $this->getResponseStatusCode());
     }
     /*
