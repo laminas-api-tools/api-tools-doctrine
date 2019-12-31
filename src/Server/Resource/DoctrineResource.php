@@ -1,10 +1,12 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016-2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Server\Resource;
+namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,23 +16,23 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Stdlib\Hydrator;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
+use Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
+use Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface;
+use Laminas\ApiTools\Rest\AbstractResourceListener;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\EventInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\SharedEventManager;
+use Laminas\Hydrator\HydratorAwareInterface;
+use Laminas\Hydrator\HydratorInterface;
+use Laminas\Mvc\ModuleRouteListener;
 use ReflectionClass;
 use Traversable;
-use Zend\EventManager\EventInterface;
-use Zend\EventManager\EventManager;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\SharedEventManager;
-use Zend\Hydrator\HydratorAwareInterface;
-use Zend\Hydrator\HydratorInterface;
-use Zend\Mvc\ModuleRouteListener;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
-use ZF\Apigility\Doctrine\Server\Exception\InvalidArgumentException;
-use ZF\Apigility\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
-use ZF\Apigility\Doctrine\Server\Query\Provider\QueryProviderInterface;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\AbstractResourceListener;
-use ZF\Rest\RestController;
 
 class DoctrineResource extends AbstractResourceListener implements
     ObjectManagerAwareInterface,
@@ -55,7 +57,7 @@ class DoctrineResource extends AbstractResourceListener implements
     /**
      * @var array
      */
-    protected $eventIdentifier = ['ZF\Apigility\Doctrine\DoctrineResource'];
+    protected $eventIdentifier = ['Laminas\ApiTools\Doctrine\DoctrineResource'];
 
     /**
      * @var array|QueryProviderInterface
@@ -189,7 +191,7 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @param array|\ZF\Apigility\Doctrine\Server\Query\Provider\QueryProviderInterface[]
+     * @param array|\Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface[]
      * @throws InvalidArgumentException if parameter is not an array or \Traversable object
      */
     public function setQueryProviders($queryProviders)
@@ -557,7 +559,7 @@ class DoctrineResource extends AbstractResourceListener implements
             RestController::class,
             'getList.post',
             function (EventInterface $e) use ($queryProvider, $entityClass, $data) {
-                /** @var \ZF\Hal\Collection $halCollection */
+                /** @var \Laminas\ApiTools\Hal\Collection $halCollection */
                 $halCollection = $e->getParam('collection');
                 $collection = $halCollection->getCollection();
 
@@ -667,7 +669,7 @@ class DoctrineResource extends AbstractResourceListener implements
      * @param $name
      * @param $entity
      * @param $data mixed The original data supplied to the resource method, if any
-     * @return \Zend\EventManager\ResponseCollection
+     * @return \Laminas\EventManager\ResponseCollection
      */
     protected function triggerDoctrineEvent($name, $entity, $data = null)
     {

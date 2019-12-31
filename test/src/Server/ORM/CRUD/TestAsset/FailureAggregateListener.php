@@ -1,16 +1,18 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Server\ORM\CRUD\TestAsset;
+namespace LaminasTest\ApiTools\Doctrine\Server\ORM\CRUD\TestAsset;
 
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\ListenerAggregateTrait;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
-use ZF\ApiProblem\ApiProblem;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\EventManager\ListenerAggregateTrait;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
 
 class FailureAggregateListener implements ListenerAggregateInterface
 {
@@ -42,6 +44,6 @@ class FailureAggregateListener implements ListenerAggregateInterface
     public function failure(DoctrineResourceEvent $event)
     {
         $event->stopPropagation();
-        return new ApiProblem(400, sprintf('ZFTestFailureAggregateListener: %s', $event->getName()));
+        return new ApiProblem(400, sprintf('LaminasTestFailureAggregateListener: %s', $event->getName()));
     }
 }

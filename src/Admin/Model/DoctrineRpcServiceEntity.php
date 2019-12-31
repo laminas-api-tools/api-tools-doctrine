@@ -1,13 +1,15 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use Zend\Stdlib\ArraySerializableInterface;
-use ZF\Apigility\Admin\Model\RpcServiceEntity;
+use Laminas\ApiTools\Admin\Model\RpcServiceEntity;
+use Laminas\Stdlib\ArraySerializableInterface;
 
 class DoctrineRpcServiceEntity extends RpcServiceEntity implements ArraySerializableInterface
 {

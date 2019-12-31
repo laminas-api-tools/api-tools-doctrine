@@ -1,14 +1,16 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Server;
+namespace Laminas\ApiTools\Doctrine\Server;
 
-use Zend\ModuleManager\ModuleManager;
-use ZF\Apigility\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
-use ZF\Apigility\Doctrine\Server\Query\Provider\QueryProviderInterface;
+use Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
+use Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface;
+use Laminas\ModuleManager\ModuleManager;
 
 class Module
 {
@@ -33,17 +35,17 @@ class Module
         $serviceListener = $sm->get('ServiceListener');
 
         $serviceListener->addServiceManager(
-            'ZfApigilityDoctrineQueryProviderManager',
-            'zf-apigility-doctrine-query-provider',
+            'LaminasApiToolsDoctrineQueryProviderManager',
+            'api-tools-doctrine-query-provider',
             QueryProviderInterface::class,
-            'getZfApigilityDoctrineQueryProviderConfig'
+            'getLaminasApiToolsDoctrineQueryProviderConfig'
         );
 
         $serviceListener->addServiceManager(
-            'ZfApigilityDoctrineQueryCreateFilterManager',
-            'zf-apigility-doctrine-query-create-filter',
+            'LaminasApiToolsDoctrineQueryCreateFilterManager',
+            'api-tools-doctrine-query-create-filter',
             QueryCreateFilterInterface::class,
-            'getZfApigilityDoctrineQueryCreateFilterConfig'
+            'getLaminasApiToolsDoctrineQueryCreateFilterConfig'
         );
     }
 

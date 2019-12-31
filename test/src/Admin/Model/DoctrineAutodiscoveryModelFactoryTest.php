@@ -1,17 +1,19 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Admin\Model;
+namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
 use Interop\Container\ContainerInterface;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineAutodiscoveryModelFactory;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Prophecy\Prophecy\ProphecyInterface;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModelFactory;
 
 class DoctrineAutodiscoveryModelFactoryTest extends \PHPUnit_Framework_TestCase
 {

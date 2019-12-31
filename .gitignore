@@ -1,6 +1,7 @@
-vendor/
-phpunit.xml
-test/data/
+/clover.xml
+/composer.lock
+/coveralls-upload.json
+/phpunit.xml
+/vendor/
 test/assets/module/*/config/module.config.php
-clover.xml
-coveralls-upload.json
+test/data/
