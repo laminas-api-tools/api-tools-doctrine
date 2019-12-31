@@ -1,17 +1,17 @@
 <?php
-// Because of the code-generating of Apigility this script
+// Because of the code-generating of Laminas API Tools this script
 // is used to setup the tests.  Use ~/test/bin/reset-tests
 // to reset the output of this test if the unit tests
 // fail the application.
 
-namespace ZFTest\Apigility\Doctrine\Server\ORM\CRUD;
+namespace LaminasTest\ApiTools\Doctrine\Server\ORM\CRUD;
 
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Http\Request;
-use ZFTestApigilityDb\Entity\Artist as ArtistEntity;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\Http\Request;
+use LaminasTestApiToolsDb\Entity\Artist as ArtistEntity;
 
-class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class CRUDTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -33,7 +33,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
     protected function validateTriggeredEvents($expectedEvents)
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $eventCatcher = $serviceManager->get('ZFTestApigilityGeneral\Listener\EventCatcher');
+        $eventCatcher = $serviceManager->get('LaminasTestApiToolsGeneral\Listener\EventCatcher');
 
         $this->assertEquals($expectedEvents, $eventCatcher->getCaughtEvents());
     }
@@ -130,7 +130,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertEquals('ArtistOnePatchEdit', $body['name']);
 
-        $foundEntity = $em->getRepository('ZFTestApigilityDb\Entity\Artist')->find($artist->getId());
+        $foundEntity = $em->getRepository('LaminasTestApiToolsDb\Entity\Artist')->find($artist->getId());
         $this->assertEquals('ArtistOnePatchEdit', $foundEntity->getName());
         $this->validateTriggeredEvents(array(
             DoctrineResourceEvent::EVENT_PATCH_PRE,
@@ -159,7 +159,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertEquals('ArtistSevenPutEdit', $body['name']);
 
-        $foundEntity = $em->getRepository('ZFTestApigilityDb\Entity\Artist')->find($artist->getId());
+        $foundEntity = $em->getRepository('LaminasTestApiToolsDb\Entity\Artist')->find($artist->getId());
         $this->assertEquals('ArtistSevenPutEdit', $foundEntity->getName());
         $this->validateTriggeredEvents(array(
             DoctrineResourceEvent::EVENT_UPDATE_PRE,
@@ -187,7 +187,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
         $this->dispatch('/test/artist/' . $artist->getId());
         $this->assertEquals(204, $this->getResponseStatusCode());
 
-        $this->assertEmpty($em->getRepository('ZFTestApigilityDb\Entity\Artist')->find($id));
+        $this->assertEmpty($em->getRepository('LaminasTestApiToolsDb\Entity\Artist')->find($id));
         $this->validateTriggeredEvents(array(
             DoctrineResourceEvent::EVENT_DELETE_PRE,
             DoctrineResourceEvent::EVENT_DELETE_POST,

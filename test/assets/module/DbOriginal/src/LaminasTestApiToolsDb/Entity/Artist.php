@@ -1,6 +1,6 @@
 <?php
 
-namespace ZFTestApigilityDb\Entity;
+namespace LaminasTestApiToolsDb\Entity;
 
 use \Doctrine\Common\Collections\ArrayCollection;
 
@@ -64,11 +64,11 @@ class Artist
      */
     public function addAlbum($album)
     {
-        if ($album instanceof \ZFTestApigilityDb\Entity\Album) {
+        if ($album instanceof \LaminasTestApiToolsDb\Entity\Album) {
             $this->album[] = $album;
         } elseif ($album instanceof ArrayCollection) {
             foreach ($album as $a) {
-                if (! $a instanceof \ZFTestApigilityDb\Entity\Album) {
+                if (! $a instanceof \LaminasTestApiToolsDb\Entity\Album) {
                     throw new \Exception('Invalid type in addAlbum');
                 }
                 $this->album->add($a);
@@ -85,11 +85,11 @@ class Artist
      */
     public function removeAlbum($album)
     {
-        if ($album instanceof \ZFTestApigilityDb\Entity\Album) {
+        if ($album instanceof \LaminasTestApiToolsDb\Entity\Album) {
             $this->album[] = $album;
         } elseif ($album instanceof ArrayCollection) {
             foreach ($album as $a) {
-                if (! $a instanceof \ZFTestApigilityDb\Entity\Album) {
+                if (! $a instanceof \LaminasTestApiToolsDb\Entity\Album) {
                     throw new \Exception('Invalid type remove addAlbum');
                 }
                 $this->album->removeElement($a);

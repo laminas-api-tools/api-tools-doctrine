@@ -1,26 +1,26 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Resource;
+namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManagerAwareTrait;
-use ZF\Apigility\Doctrine\Server\Collection\Query;
-use Zend\Stdlib\Hydrator\HydratorInterface;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\AbstractResourceListener;
-use Zend\EventManager\StaticEventManager;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Collection\Query;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Rest\AbstractResourceListener;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManagerAwareTrait;
+use Laminas\EventManager\StaticEventManager;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManagerAwareInterface;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
 
 /**
  * Class DoctrineResource
  *
- * @package ZF\Apigility\Doctrine\Server\Resource
+ * @package Laminas\ApiTools\Doctrine\Server\Resource
  */
 class DoctrineResource extends AbstractResourceListener implements
     ObjectManagerAwareInterface,
@@ -33,7 +33,7 @@ class DoctrineResource extends AbstractResourceListener implements
     /**
      * @var array
      */
-    protected $eventIdentifier = array('ZF\Apigility\Doctrine\DoctrineResource');
+    protected $eventIdentifier = array('Laminas\ApiTools\Doctrine\DoctrineResource');
 
     /**
      * @var ServiceManager
@@ -41,7 +41,7 @@ class DoctrineResource extends AbstractResourceListener implements
     protected $serviceManager;
 
     /**
-     * @var Query\ApigilityFetchAllQuery
+     * @var Query\ApiToolsFetchAllQuery
      */
     protected $fetchAllQuery;
 
@@ -66,7 +66,7 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @param \ZF\Apigility\Doctrine\Server\Collection\Query\ApigilityFetchAllQuery $fetchAllQuery
+     * @param \Laminas\ApiTools\Doctrine\Server\Collection\Query\ApiToolsFetchAllQuery $fetchAllQuery
      */
     public function setFetchAllQuery($fetchAllQuery)
     {
@@ -74,7 +74,7 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @return \ZF\Apigility\Doctrine\Server\Collection\Query\ApigilityFetchAllQuery
+     * @return \Laminas\ApiTools\Doctrine\Server\Collection\Query\ApiToolsFetchAllQuery
      */
     public function getFetchAllQuery()
     {
@@ -132,7 +132,7 @@ class DoctrineResource extends AbstractResourceListener implements
     protected $hydrator;
 
     /**
-     * @param \Zend\Stdlib\Hydrator\HydratorInterface $hydrator
+     * @param \Laminas\Stdlib\Hydrator\HydratorInterface $hydrator
      */
     public function setHydrator($hydrator)
     {
@@ -140,7 +140,7 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @return \Zend\Stdlib\Hydrator\HydratorInterface
+     * @return \Laminas\Stdlib\Hydrator\HydratorInterface
      */
     public function getHydrator()
     {
@@ -248,7 +248,7 @@ class DoctrineResource extends AbstractResourceListener implements
      * Fetch all or a subset of resources
      *
      *
-     * @see Apigility/Doctrine/Server/Resource/AbstractResource.php
+     * @see ApiTools/Doctrine/Server/Resource/AbstractResource.php
      * @param  array            $data
      * @return ApiProblem|mixed
      */
@@ -281,7 +281,7 @@ class DoctrineResource extends AbstractResourceListener implements
         // Add event to set extra HAL data
         $entityClass = $this->getEntityClass();
         StaticEventManager::getInstance()->attach(
-            'ZF\Rest\RestController',
+            'Laminas\ApiTools\Rest\RestController',
             'getList.post',
             function ($e) use ($fetchAllQuery, $entityClass, $data) {
                 $halCollection = $e->getParam('collection');
@@ -377,7 +377,7 @@ class DoctrineResource extends AbstractResourceListener implements
      * @param      $entity
      * @param null $collection
      *
-     * @return \Zend\EventManager\ResponseCollection
+     * @return \Laminas\EventManager\ResponseCollection
      */
     protected function triggerDoctrineEvent($name, $entity, $collection = null)
     {

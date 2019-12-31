@@ -1,17 +1,18 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Admin\Model;
+namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\RouteMatch;
 
-use Zend\Http\Request;
-use Zend\Mvc\Router\RouteMatch;
-
-class DoctrineMetadata2Test extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class DoctrineMetadata2Test extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -40,28 +41,28 @@ class DoctrineMetadata2Test extends \Zend\Test\PHPUnit\Controller\AbstractHttpCo
         ));
 
         $this->dispatch(
-            '/apigility/api/module/DbApi/doctrine/DbApi%5CV1%5CRest%5CArtist%5CController',
+            '/api-tools/api/module/DbApi/doctrine/DbApi%5CV1%5CRest%5CArtist%5CController',
             Request::METHOD_GET
         );
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertArrayHasKey('controller_service_name', $body);
         $this->assertEquals('DbApi\V1\Rest\Artist\Controller', $body['controller_service_name']);
 
-        $this->dispatch('/apigility/api/module/DbApi/doctrine?version=1', Request::METHOD_GET);
+        $this->dispatch('/api-tools/api/module/DbApi/doctrine?version=1', Request::METHOD_GET);
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertEquals(
             'DbApi\V1\Rest\Artist\Controller',
             $body['_embedded']['doctrine'][0]['controller_service_name']
         );
 
-        $this->dispatch('/apigility/api/module/DbApi/doctrine', Request::METHOD_GET);
+        $this->dispatch('/api-tools/api/module/DbApi/doctrine', Request::METHOD_GET);
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertEquals(
             'DbApi\V1\Rest\Artist\Controller',
             $body['_embedded']['doctrine'][0]['controller_service_name']
         );
 
-        $this->resource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $this->resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
         $this->resource->setModuleName('DbApi');
         $this->assertEquals($this->resource->getModuleName(), 'DbApi');
 
@@ -73,7 +74,7 @@ class DoctrineMetadata2Test extends \Zend\Test\PHPUnit\Controller\AbstractHttpCo
             'content_type_whitelist' => array('new content whitelist'),
         ));
 
-        $this->rpcResource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource');
+        $this->rpcResource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource');
         $this->rpcResource->setModuleName('DbApi');
         $this->rpcResource->patch('DbApi\\V1\\Rpc\\Artistalbum\\Controller', array(
             'routematch' => '/doctrine-rpc-changed/test',
@@ -90,8 +91,8 @@ class DoctrineMetadata2Test extends \Zend\Test\PHPUnit\Controller\AbstractHttpCo
         foreach ($body['_embedded']['doctrine'] as $service) {
             $this->resource->delete($service['controller_service_name']);
         }
-        $this->dispatch('/apigility/api/module/DbApi/doctrine-rpc?version=1', Request::METHOD_GET);
-        $this->dispatch('/apigility/api/module/DbApi/doctrine-rpc', Request::METHOD_GET);
+        $this->dispatch('/api-tools/api/module/DbApi/doctrine-rpc?version=1', Request::METHOD_GET);
+        $this->dispatch('/api-tools/api/module/DbApi/doctrine-rpc', Request::METHOD_GET);
         $body = json_decode($this->getResponse()->getBody(), true);
         $this->assertEquals(
             'DbApi\V1\Rpc\Artistalbum\Controller',

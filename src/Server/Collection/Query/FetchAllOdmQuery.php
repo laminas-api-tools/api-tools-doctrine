@@ -1,13 +1,13 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Query;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Query;
 
 use DoctrineModule\Persistence\ProvidesObjectManager;
-use ZF\Apigility\Doctrine\Server\Paginator\Adapter\DoctrineOdmAdapter;
-use Zend\ServiceManager\AbstractPluginManager;
-use ZF\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Paginator\Adapter\DoctrineOdmAdapter;
+use Laminas\ServiceManager\AbstractPluginManager;
 
-class FetchAllOdmQuery implements ApigilityFetchAllQuery
+class FetchAllOdmQuery implements ApiToolsFetchAllQuery
 {
     use ProvidesObjectManager;
 

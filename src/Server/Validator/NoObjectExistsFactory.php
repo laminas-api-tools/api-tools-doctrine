@@ -1,12 +1,12 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Validator;
+namespace Laminas\ApiTools\Doctrine\Server\Validator;
 
 use DoctrineModule\Validator\NoObjectExists;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\MutableCreationOptionsInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\MutableCreationOptionsInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Stdlib\ArrayUtils;
 
 class NoObjectExistsFactory implements FactoryInterface, MutableCreationOptionsInterface
 {
