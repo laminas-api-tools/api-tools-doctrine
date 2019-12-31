@@ -1,21 +1,23 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Admin\Model;
+namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
 use Interop\Container\ContainerInterface;
+use Laminas\ApiTools\Admin\Model\ModuleModel;
+use Laminas\ApiTools\Admin\Model\ModulePathSpec;
+use Laminas\ApiTools\Configuration\ConfigResourceFactory;
+use Laminas\ApiTools\Configuration\ResourceFactory;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceModelFactoryFactory;
+use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Prophecy\Prophecy\ProphecyInterface;
-use Zend\EventManager\SharedEventManagerInterface;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use ZF\Apigility\Admin\Model\ModuleModel;
-use ZF\Apigility\Admin\Model\ModulePathSpec;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceModelFactoryFactory;
-use ZF\Configuration\ConfigResourceFactory;
-use ZF\Configuration\ResourceFactory;
 
 class DoctrineRpcServiceModelFactoryFactoryTest extends \PHPUnit_Framework_TestCase
 {

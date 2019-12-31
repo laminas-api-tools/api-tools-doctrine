@@ -1,22 +1,24 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Server\Resource;
+namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
+use Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
+use Laminas\ApiTools\Hal\Plugin\Hal;
+use Laminas\Hydrator\HydratorInterface;
+use Laminas\ServiceManager\AbstractFactoryInterface;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
-use Zend\Hydrator\HydratorInterface;
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use ZF\Apigility\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
-use ZF\Hal\Plugin\Hal;
 
 class DoctrineResourceFactory implements AbstractFactoryInterface
 {
@@ -26,7 +28,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param ContainerInterface $container
      * @param string $requestedName
      * @return bool
-     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
+     * @throws \Laminas\ServiceManager\Exception\ServiceNotFoundException
      */
     public function canCreate(ContainerInterface $container, $requestedName)
     {
@@ -36,13 +38,13 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
 
         $config = $container->get('config');
 
-        if (! isset($config['zf-apigility']['doctrine-connected'])
-            || ! is_array($config['zf-apigility']['doctrine-connected'])
+        if (! isset($config['api-tools']['doctrine-connected'])
+            || ! is_array($config['api-tools']['doctrine-connected'])
         ) {
             return false;
         }
 
-        $config = $config['zf-apigility']['doctrine-connected'];//[$requestedName];
+        $config = $config['api-tools']['doctrine-connected'];//[$requestedName];
 
         if (! isset($config[$requestedName])
             || ! is_array($config[$requestedName])
@@ -80,11 +82,11 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
-        $doctrineConnectedConfig = $config['zf-apigility']['doctrine-connected'][$requestedName];
+        $doctrineConnectedConfig = $config['api-tools']['doctrine-connected'][$requestedName];
         $doctrineHydratorConfig = $config['doctrine-hydrator'];
 
         $restConfig = null;
-        foreach ($config['zf-rest'] as $restControllerConfig) {
+        foreach ($config['api-tools-rest'] as $restControllerConfig) {
             if ($restControllerConfig['listener'] == $requestedName) {
                 $restConfig = $restControllerConfig;
                 break;
@@ -93,7 +95,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
 
         if (is_null($restConfig)) {
             throw new RuntimeException(
-                sprintf('No zf-rest configuration found for resource %s', $requestedName)
+                sprintf('No api-tools-rest configuration found for resource %s', $requestedName)
             );
         }
 
@@ -128,7 +130,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     /**
      * Retrieve the resource class based on the provided configuration.
      *
-     * Defaults to ZF\Apigility\Doctrine\Server\Resource\DoctrineResource.
+     * Defaults to Laminas\ApiTools\Doctrine\Server\Resource\DoctrineResource.
      *
      * @param array $config
      * @param string $requestedName
@@ -248,7 +250,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      */
     protected function loadQueryCreateFilter(ContainerInterface $container, array $config, $objectManager)
     {
-        $createFilterManager = $container->get('ZfApigilityDoctrineQueryCreateFilterManager');
+        $createFilterManager = $container->get('LaminasApiToolsDoctrineQueryCreateFilterManager');
         $filterManagerAlias = isset($config['query_create_filter']) ? $config['query_create_filter'] : 'default';
 
         /** @var QueryCreateFilterInterface $queryCreateFilter */
@@ -270,7 +272,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     protected function loadQueryProviders(ContainerInterface $serviceLocator, array $config, $objectManager)
     {
         $queryProviders = [];
-        $queryManager = $serviceLocator->get('ZfApigilityDoctrineQueryProviderManager');
+        $queryManager = $serviceLocator->get('LaminasApiToolsDoctrineQueryProviderManager');
 
         // Load default query provider
         if (class_exists(EntityManager::class)

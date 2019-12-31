@@ -1,6 +1,6 @@
-.idea/
-vendor/
-test/data/
+/clover.xml
+/composer.lock
+/coveralls-upload.json
+/vendor/
 test/assets/module/*/config/module.config.php
-clover.xml
-coveralls-upload.json
+test/data/

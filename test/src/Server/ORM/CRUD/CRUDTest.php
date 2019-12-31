@@ -1,28 +1,30 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Server\ORM\CRUD;
+namespace LaminasTest\ApiTools\Doctrine\Server\ORM\CRUD;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Filter\FilterChain;
-use Zend\Http\Request;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceEntity;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource;
-use ZF\Apigility\Doctrine\DoctrineResource;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
-use ZFTest\Apigility\Doctrine\TestCase;
-use ZFTestApigilityDb\Entity\Album;
-use ZFTestApigilityDb\Entity\Artist;
-use ZFTestApigilityGeneral\Listener\EventCatcher;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceEntity;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource;
+use Laminas\ApiTools\Doctrine\DoctrineResource;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\Filter\FilterChain;
+use Laminas\Http\Request;
+use LaminasTest\ApiTools\Doctrine\TestCase;
+use LaminasTestApiToolsDb\Entity\Album;
+use LaminasTestApiToolsDb\Entity\Artist;
+use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 
 class CRUDTest extends TestCase
 {
@@ -94,7 +96,7 @@ class CRUDTest extends TestCase
             ],
         ];
 
-        $this->setModuleName($restServiceResource, 'ZFTestApigilityDbApi');
+        $this->setModuleName($restServiceResource, 'LaminasTestApiToolsDbApi');
         $artistEntity       = $restServiceResource->create($artistResourceDefinition);
         $artistByNameEntity = $restServiceResource->create($artistResourceDefinitionWithNonKeyIdentifier);
         $albumEntity        = $restServiceResource->create($albumResourceDefinition);
@@ -113,7 +115,7 @@ class CRUDTest extends TestCase
 
         /** @var DoctrineRpcServiceResource $rpcServiceResource */
         $rpcServiceResource = $serviceManager->get(DoctrineRpcServiceResource::class);
-        $this->setModuleName($rpcServiceResource, 'ZFTestApigilityDbApi');
+        $this->setModuleName($rpcServiceResource, 'LaminasTestApiToolsDbApi');
 
         foreach ($entityMetadata->associationMappings as $mapping) {
             switch ($mapping['type']) {
@@ -201,7 +203,7 @@ class CRUDTest extends TestCase
             DoctrineResourceEvent::EVENT_CREATE_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestCreateFailure');
+                return new ApiProblem(400, 'LaminasTestCreateFailure');
             }
         );
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -218,7 +220,7 @@ class CRUDTest extends TestCase
 
         $this->assertResponseStatusCode(400);
         $this->assertInstanceOf(ApiProblemResponse::class, $this->getResponse());
-        $this->assertEquals('ZFTestCreateFailure', $body['detail']);
+        $this->assertEquals('LaminasTestCreateFailure', $body['detail']);
     }
 
     public function testFetch()
@@ -274,7 +276,7 @@ class CRUDTest extends TestCase
             DoctrineResourceEvent::EVENT_FETCH_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestFetchFailure');
+                return new ApiProblem(400, 'LaminasTestFetchFailure');
             }
         );
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -284,7 +286,7 @@ class CRUDTest extends TestCase
 
         $this->assertResponseStatusCode(400);
         $this->assertInstanceOf(ApiProblemResponse::class, $this->getResponse());
-        $this->assertEquals('ZFTestFetchFailure', $body['detail']);
+        $this->assertEquals('LaminasTestFetchFailure', $body['detail']);
     }
 
     public function testFetchAll()
@@ -334,7 +336,7 @@ class CRUDTest extends TestCase
             DoctrineResourceEvent::EVENT_FETCH_ALL_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestFetchAllFailure');
+                return new ApiProblem(400, 'LaminasTestFetchAllFailure');
             }
         );
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -344,7 +346,7 @@ class CRUDTest extends TestCase
 
         $this->assertResponseStatusCode(400);
         $this->assertInstanceOf(ApiProblemResponse::class, $this->getResponse());
-        $this->assertEquals('ZFTestFetchAllFailure', $body['detail']);
+        $this->assertEquals('LaminasTestFetchAllFailure', $body['detail']);
     }
 
     public function testPatch()
@@ -380,7 +382,7 @@ class CRUDTest extends TestCase
             DoctrineResourceEvent::EVENT_PATCH_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestPatchFailure');
+                return new ApiProblem(400, 'LaminasTestPatchFailure');
             }
         );
         $this->getRequest()->getHeaders()->addHeaders([
@@ -395,7 +397,7 @@ class CRUDTest extends TestCase
 
         $this->assertResponseStatusCode(400);
         $this->assertInstanceOf(ApiProblemResponse::class, $this->getResponse());
-        $this->assertEquals('ZFTestPatchFailure', $body['detail']);
+        $this->assertEquals('LaminasTestPatchFailure', $body['detail']);
     }
 
     public function testPatchList()
@@ -450,7 +452,7 @@ class CRUDTest extends TestCase
             DoctrineResourceEvent::EVENT_PATCH_LIST_POST,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestPatchFailure');
+                return new ApiProblem(400, 'LaminasTestPatchFailure');
             }
         );
         $this->getRequest()->getHeaders()->addHeaders([
@@ -470,7 +472,7 @@ class CRUDTest extends TestCase
 
         $this->assertResponseStatusCode(400);
         $this->assertInstanceOf(ApiProblemResponse::class, $this->getResponse());
-        $this->assertEquals('ZFTestPatchFailure', $body['detail']);
+        $this->assertEquals('LaminasTestPatchFailure', $body['detail']);
     }
 
     public function testPut()
@@ -509,7 +511,7 @@ class CRUDTest extends TestCase
             DoctrineResourceEvent::EVENT_UPDATE_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestPutFailure');
+                return new ApiProblem(400, 'LaminasTestPutFailure');
             }
         );
         $this->getRequest()->getHeaders()->addHeaders([
@@ -527,7 +529,7 @@ class CRUDTest extends TestCase
 
         $this->assertResponseStatusCode(400);
         $this->assertInstanceOf(ApiProblemResponse::class, $this->getResponse());
-        $this->assertEquals('ZFTestPutFailure', $body['detail']);
+        $this->assertEquals('LaminasTestPutFailure', $body['detail']);
     }
 
     public function testDelete()
@@ -556,7 +558,7 @@ class CRUDTest extends TestCase
             DoctrineResourceEvent::EVENT_DELETE_PRE,
             function (DoctrineResourceEvent $e) {
                 $e->stopPropagation();
-                return new ApiProblem(400, 'ZFTestDeleteFailure');
+                return new ApiProblem(400, 'LaminasTestDeleteFailure');
             }
         );
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -567,7 +569,7 @@ class CRUDTest extends TestCase
 
         $this->assertResponseStatusCode(400);
         $this->assertInstanceOf(ApiProblemResponse::class, $this->getResponse());
-        $this->assertEquals('ZFTestDeleteFailure', $body['detail']);
+        $this->assertEquals('LaminasTestDeleteFailure', $body['detail']);
         $foundEntity = $this->em->getRepository(Artist::class)->find($artist->getId());
         $this->assertEquals($artist->getId(), $foundEntity->getId());
     }
