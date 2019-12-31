@@ -1,14 +1,14 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Paginator\Adapter;
+namespace Laminas\ApiTools\Doctrine\Server\Paginator\Adapter;
 
 use Doctrine\Odm\MongoDB\Query\Builder;
-use Zend\Paginator\Adapter\AdapterInterface;
+use Laminas\Paginator\Adapter\AdapterInterface;
 
 /**
  * Class DoctrineOdmAdapter
  *
- * @package ZF\Apigility\Doctrine\Server\Paginator\Adapter
+ * @package Laminas\ApiTools\Doctrine\Server\Paginator\Adapter
  */
 class DoctrineOdmAdapter implements AdapterInterface
 {
