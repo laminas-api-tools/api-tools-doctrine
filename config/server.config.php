@@ -1,30 +1,41 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Server;
+namespace Laminas\ApiTools\Doctrine\Server;
 
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
     'service_manager' => [
+        // Legacy Zend Framework aliases
+        'aliases' => [
+            'ZfApigilityDoctrineQueryProviderManager' => 'LaminasApiToolsDoctrineQueryProviderManager',
+            'ZfApigilityDoctrineQueryCreateFilterManager' => 'LaminasApiToolsDoctrineQueryCreateFilterManager',
+        ],
         'abstract_factories' => [
             Resource\DoctrineResourceFactory::class,
         ],
         'factories' => [
-            'ZfApigilityDoctrineQueryProviderManager'
+            'LaminasApiToolsDoctrineQueryProviderManager'
                 => Query\Provider\Service\QueryProviderManagerFactory::class,
-            'ZfApigilityDoctrineQueryCreateFilterManager'
+            'LaminasApiToolsDoctrineQueryCreateFilterManager'
                 => Query\CreateFilter\Service\QueryCreateFilterManagerFactory::class,
         ],
     ],
 
-    'zf-apigility-doctrine-query-provider' => [
+    'api-tools-doctrine-query-provider' => [
         'aliases' => [
             'default_odm' => Query\Provider\DefaultOdm::class,
             'default_orm' => Query\Provider\DefaultOrm::class,
+
+            // Legacy Zend Framework aliases
+            \ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOdm::class => Query\Provider\DefaultOdm::class,
+            \ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOrm::class => Query\Provider\DefaultOrm::class,
         ],
         'factories' => [
             Query\Provider\DefaultOdm::class => InvokableFactory::class,
@@ -32,9 +43,12 @@ return [
         ],
     ],
 
-    'zf-apigility-doctrine-query-create-filter' => [
+    'api-tools-doctrine-query-create-filter' => [
         'aliases' => [
             'default' => Query\CreateFilter\DefaultCreateFilter::class,
+
+            // Legacy Zend Framework aliases
+            \ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter::class => Query\CreateFilter\DefaultCreateFilter::class,
         ],
         'factories' => [
             Query\CreateFilter\DefaultCreateFilter::class => InvokableFactory::class,
@@ -43,11 +57,16 @@ return [
 
     'view_manager' => [
         'template_path_stack' => [
-            'zf-apigility-doctrine' => __DIR__ . '/../view',
+            'api-tools-doctrine' => __DIR__ . '/../view',
         ],
     ],
 
     'validators' => [
+        // Legacy Zend Framework aliases
+        'aliases' => [
+            \ZF\Apigility\Doctrine\Server\Validator\NoObjectExists::class => Validator\NoObjectExists::class,
+            \ZF\Apigility\Doctrine\Server\Validator\ObjectExists::class => Validator\ObjectExists::class,
+        ],
         'factories' => [
             Validator\NoObjectExists::class => Validator\NoObjectExistsFactory::class,
             Validator\ObjectExists::class   => Validator\ObjectExistsFactory::class,

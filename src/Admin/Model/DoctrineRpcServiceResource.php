@@ -1,17 +1,19 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Admin\Model;
+namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use Zend\Mvc\Controller\ControllerManager;
-use ZF\Apigility\Admin\Model\DocumentationModel;
-use ZF\Apigility\Admin\Model\InputFilterModel;
-use ZF\Apigility\Admin\Model\RpcServiceResource;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\Exception\CreationException;
+use Laminas\ApiTools\Admin\Model\DocumentationModel;
+use Laminas\ApiTools\Admin\Model\InputFilterModel;
+use Laminas\ApiTools\Admin\Model\RpcServiceResource;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Rest\Exception\CreationException;
+use Laminas\Mvc\Controller\ControllerManager;
 
 class DoctrineRpcServiceResource extends RpcServiceResource
 {

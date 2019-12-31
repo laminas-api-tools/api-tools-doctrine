@@ -1,14 +1,16 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Server\Event;
+namespace Laminas\ApiTools\Doctrine\Server\Event;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Zend\EventManager\Event;
-use ZF\Rest\ResourceEvent;
+use Laminas\ApiTools\Rest\ResourceEvent;
+use Laminas\EventManager\Event;
 
 class DoctrineResourceEvent extends Event
 {
@@ -145,7 +147,7 @@ class DoctrineResourceEvent extends Event
     }
 
     /**
-     * @return \ZF\Rest\ResourceEvent
+     * @return \Laminas\ApiTools\Rest\ResourceEvent
      */
     public function getResourceEvent()
     {
@@ -153,7 +155,7 @@ class DoctrineResourceEvent extends Event
     }
 
     /**
-     * @param \ZF\Rest\ResourceEvent $resourceEvent
+     * @param \Laminas\ApiTools\Rest\ResourceEvent $resourceEvent
      * @return $this
      */
     public function setResourceEvent($resourceEvent)

@@ -1,13 +1,15 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine;
+namespace LaminasTest\ApiTools\Doctrine;
 
-use Zend\Mvc\Application;
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Laminas\Mvc\Application;
+use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
 class TestCase extends AbstractHttpControllerTestCase
 {
@@ -19,7 +21,7 @@ class TestCase extends AbstractHttpControllerTestCase
         $appVersion = $r->getNumberOfRequiredParameters() === 2 ? 2 : 3;
 
         if ($appVersion === 3) {
-            array_unshift($config['modules'], 'Zend\Router', 'Zend\Hydrator');
+            array_unshift($config['modules'], 'Laminas\Router', 'Laminas\Hydrator');
         }
 
         $this->enabledModules = $config['module_listener_options']['module_paths'];

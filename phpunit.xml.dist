@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuites>
-        <testsuite name="ZFApigility\Doctrine Module Tests">
+        <testsuite name="LaminasApiTools\Doctrine Module Tests">
             <directory>./test/src/</directory>
         </testsuite>
     </testsuites>

@@ -1,34 +1,36 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2016-2018 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Server\ORM\CRUD;
+namespace LaminasTest\ApiTools\Doctrine\Server\ORM\CRUD;
 
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Tools\SchemaTool;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceEntity;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource;
+use Laminas\ApiTools\Doctrine\DoctrineResource;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Rest\ResourceEvent;
+use Laminas\Filter\FilterChain;
+use Laminas\Http\Request;
+use Laminas\ServiceManager\ServiceManager;
+use LaminasTest\ApiTools\Doctrine\TestCase;
+use LaminasTestApiToolsDb\Entity\Album;
+use LaminasTestApiToolsDb\Entity\Artist;
+use LaminasTestApiToolsDb\Entity\Product;
+use LaminasTestApiToolsDbApi\V1\Rest\Artist\ArtistResource;
+use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 use PHPUnit\Framework\Assert;
-use Zend\Filter\FilterChain;
-use Zend\Http\Request;
-use Zend\ServiceManager\ServiceManager;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceEntity;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource;
-use ZF\Apigility\Doctrine\DoctrineResource;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
-use ZF\Rest\ResourceEvent;
-use ZFTest\Apigility\Doctrine\TestCase;
-use ZFTestApigilityDb\Entity\Album;
-use ZFTestApigilityDb\Entity\Artist;
-use ZFTestApigilityDb\Entity\Product;
-use ZFTestApigilityDbApi\V1\Rest\Artist\ArtistResource;
-use ZFTestApigilityGeneral\Listener\EventCatcher;
 
 class CRUDTest extends TestCase
 {
@@ -115,7 +117,7 @@ class CRUDTest extends TestCase
             ],
         ];
 
-        $this->setModuleName($restServiceResource, 'ZFTestApigilityDbApi');
+        $this->setModuleName($restServiceResource, 'LaminasTestApiToolsDbApi');
         $artistEntity       = $restServiceResource->create($artistResourceDefinition);
         $artistByNameEntity = $restServiceResource->create($artistResourceDefinitionWithNonKeyIdentifier);
         $albumEntity        = $restServiceResource->create($albumResourceDefinition);
@@ -136,7 +138,7 @@ class CRUDTest extends TestCase
 
         /** @var DoctrineRpcServiceResource $rpcServiceResource */
         $rpcServiceResource = $serviceManager->get(DoctrineRpcServiceResource::class);
-        $this->setModuleName($rpcServiceResource, 'ZFTestApigilityDbApi');
+        $this->setModuleName($rpcServiceResource, 'LaminasTestApiToolsDbApi');
 
         foreach ($entityMetadata->associationMappings as $mapping) {
             switch ($mapping['type']) {
@@ -266,7 +268,7 @@ class CRUDTest extends TestCase
     /**
      * @see https://github.com/zfcampus/zf-apigility-doctrine/pull/316
      */
-    public function testFetchByCustomIdFieldIncludesApigilityResourceEventInDoctrineResourceEvent()
+    public function testFetchByCustomIdFieldIncludesApiToolsResourceEventInDoctrineResourceEvent()
     {
         $product = $this->createProduct();
 
@@ -337,10 +339,10 @@ class CRUDTest extends TestCase
         $sm = $this->getApplication()->getServiceManager();
 
         $config = $sm->get('config');
-        $resourceName = 'ZFTestApigilityDbApi\V1\Rest\Artist\ArtistResource';
-        $resourceConfig = $config['zf-apigility']['doctrine-connected'][$resourceName];
+        $resourceName = 'LaminasTestApiToolsDbApi\V1\Rest\Artist\ArtistResource';
+        $resourceConfig = $config['api-tools']['doctrine-connected'][$resourceName];
         $resourceConfig['entity_factory'] = 'ResourceInstantiator';
-        $config['zf-apigility']['doctrine-connected'][$resourceName] = $resourceConfig;
+        $config['api-tools']['doctrine-connected'][$resourceName] = $resourceConfig;
 
         $sm->setAllowOverride(true);
         $sm->setService('config', $config);
@@ -937,8 +939,8 @@ class CRUDTest extends TestCase
     {
         return [
             //          $methodToAttachListener,     $detailMessage
-            'shared' => ['attachSharedListener',     'ZFTestSharedListenerFailure'],
-            'config' => ['attachAggregatedListener', 'ZFTestFailureAggregateListener'],
+            'shared' => ['attachSharedListener',     'LaminasTestSharedListenerFailure'],
+            'config' => ['attachAggregatedListener', 'LaminasTestFailureAggregateListener'],
         ];
     }
 
@@ -954,7 +956,7 @@ class CRUDTest extends TestCase
             $eventName,
             function (DoctrineResourceEvent $e) use ($eventName) {
                 $e->stopPropagation();
-                return new ApiProblem(400, sprintf('ZFTestSharedListenerFailure: %s', $eventName));
+                return new ApiProblem(400, sprintf('LaminasTestSharedListenerFailure: %s', $eventName));
             }
         );
     }
@@ -968,12 +970,12 @@ class CRUDTest extends TestCase
         $sm = $this->getApplication()->getServiceManager();
         $sm->setAllowOverride(true);
         $config = $sm->get('config');
-        $config['zf-apigility']['doctrine-connected'][ArtistResource::class]['listeners'][]
-            = 'ZFTestFailureAggregateListener';
+        $config['api-tools']['doctrine-connected'][ArtistResource::class]['listeners'][]
+            = 'LaminasTestFailureAggregateListener';
         $sm->setService('config', $config);
         $sm->setAllowOverride(false);
 
         $listener = new TestAsset\FailureAggregateListener($eventName);
-        $sm->setService('ZFTestFailureAggregateListener', $listener);
+        $sm->setService('LaminasTestFailureAggregateListener', $listener);
     }
 }
