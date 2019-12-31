@@ -1,21 +1,21 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Resource;
+namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\Hydrator\HydratorInterface;
-use ZF\Apigility\Doctrine\Server\Collection\Query;
 use Exception;
+use Laminas\ApiTools\Doctrine\Server\Collection\Query;
+use Laminas\ServiceManager\AbstractFactoryInterface;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
 
 /**
  * Class AbstractDoctrineResourceFactory
  *
- * @package ZF\Apigility\Doctrine\Server\Resource
+ * @package Laminas\ApiTools\Doctrine\Server\Resource
  */
 class DoctrineResourceFactory implements AbstractFactoryInterface
 {
@@ -34,7 +34,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param $requestedName
      *
      * @return bool
-     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
+     * @throws \Laminas\ServiceManager\Exception\ServiceNotFoundException
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
@@ -51,9 +51,9 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
         // Validate object is set
         $config = $serviceLocator->get('Config');
 
-        if (!isset($config['zf-apigility']['doctrine-connected'])
-            || !is_array($config['zf-apigility']['doctrine-connected'])
-            || !isset($config['zf-apigility']['doctrine-connected'][$requestedName])
+        if (!isset($config['api-tools']['doctrine-connected'])
+            || !is_array($config['api-tools']['doctrine-connected'])
+            || !isset($config['api-tools']['doctrine-connected'][$requestedName])
         ) {
             $this->lookupCache[$requestedName] = false;
 
@@ -64,7 +64,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
         $className = isset($config['class']) ? $config['class'] : $requestedName;
         $className = $this->normalizeClassname($className);
         $reflection = new \ReflectionClass($className);
-        if (!$reflection->isSubclassOf('\ZF\Apigility\Doctrine\Server\Resource\DoctrineResource')) {
+        if (!$reflection->isSubclassOf('\Laminas\ApiTools\Doctrine\Server\Resource\DoctrineResource')) {
             // @codeCoverageIgnoreStart
             throw new ServiceNotFoundException(
                 sprintf(
@@ -77,7 +77,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
         // @codeCoverageIgnoreEnd
 
         // Validate object manager
-        $config = $config['zf-apigility']['doctrine-connected'];
+        $config = $config['api-tools']['doctrine-connected'];
         if (!isset($config[$requestedName]) || !isset($config[$requestedName]['object_manager'])) {
             // @codeCoverageIgnoreStart
             throw new ServiceNotFoundException(
@@ -107,9 +107,9 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         $config = $serviceLocator->get('Config');
-        $doctrineConnectedConfig = $config['zf-apigility']['doctrine-connected'][$requestedName];
+        $doctrineConnectedConfig = $config['api-tools']['doctrine-connected'][$requestedName];
 
-        foreach ($config['zf-rest'] as $restControllerConfig) {
+        foreach ($config['api-tools-rest'] as $restControllerConfig) {
             if ($restControllerConfig['listener'] == $requestedName) {
                 $restConfig = $restControllerConfig;
                 break;
@@ -156,7 +156,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param                         $config
      *
      * @return ObjectManager
-     * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
+     * @throws \Laminas\ServiceManager\Exception\ServiceNotCreatedException
      */
     protected function loadObjectManager(ServiceLocatorInterface $serviceLocator, $config)
     {
@@ -200,12 +200,12 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param                         $config
      * @param                         $objectManager
      *
-     * @return ZF\Apigility\Doctrine\Query\Provider\FetchAll\FetchAllQueryProviderInterface
-     * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
+     * @return Laminas\ApiTools\Doctrine\Query\Provider\FetchAll\FetchAllQueryProviderInterface
+     * @throws \Laminas\ServiceManager\Exception\ServiceNotCreatedException
      */
     protected function loadQueryCreateFilter(ServiceLocatorInterface $serviceLocator, $config, $objectManager)
     {
-        $createFilterManager = $serviceLocator->get('ZfApigilityDoctrineQueryCreateFilterManager');
+        $createFilterManager = $serviceLocator->get('LaminasApiToolsDoctrineQueryCreateFilterManager');
         $filterManagerAlias = (isset($config['query_create_filter'])) ? $config['query_create_filter']: 'default';
 
         $queryCreateFilter = $createFilterManager->get($filterManagerAlias);
@@ -213,7 +213,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
         // Load the oAuth2 server
         $oAuth2Server = false;
         try {
-            $oAuth2ServerFactory = $serviceLocator->get('ZF\OAuth2\Service\OAuth2Server');
+            $oAuth2ServerFactory = $serviceLocator->get('Laminas\ApiTools\OAuth2\Service\OAuth2Server');
             $oAuth2Server = $oAuth2ServerFactory();
             $queryCreateFilter->setOAuth2Server($oAuth2Server);
         } catch (Exception $e) {
@@ -232,13 +232,13 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param                         $config
      * @param                         $objectManager
      *
-     * @return ZF\Apigility\Doctrine\Query\Provider\FetchAll\FetchAllQueryProviderInterface
-     * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
+     * @return Laminas\ApiTools\Doctrine\Query\Provider\FetchAll\FetchAllQueryProviderInterface
+     * @throws \Laminas\ServiceManager\Exception\ServiceNotCreatedException
      */
     protected function loadQueryProviders(ServiceLocatorInterface $serviceLocator, $config, $objectManager)
     {
         $queryProviders = array();
-        $queryManager = $serviceLocator->get('ZfApigilityDoctrineQueryProviderManager');
+        $queryManager = $serviceLocator->get('LaminasApiToolsDoctrineQueryProviderManager');
 
         // Load default query provider
         if (class_exists('\\Doctrine\\ORM\\EntityManager')
@@ -265,7 +265,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
         // Load the oAuth2 server
         $oAuth2Server = false;
         try {
-            $oAuth2ServerFactory = $serviceLocator->get('ZF\OAuth2\Service\OAuth2Server');
+            $oAuth2ServerFactory = $serviceLocator->get('Laminas\ApiTools\OAuth2\Service\OAuth2Server');
             $oAuth2Server = $oAuth2ServerFactory();
         } catch (Exception $e) {
             // If no oAuth2 server that's just fine.
