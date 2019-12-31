@@ -1,22 +1,24 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Apigility\Doctrine\Admin\Model;
+namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
 use Doctrine\ORM\Tools\SchemaTool;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\Http\TreeRouteStack as HttpRouter;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use LaminasTest\ApiTools\Util\ServiceManagerFactory;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource;
-use ZFTest\Util\ServiceManagerFactory;
 
 class DoctrineRestServiceResourceTest extends AbstractHttpControllerTestCase //TestCase
 {
@@ -63,11 +65,11 @@ class DoctrineRestServiceResourceTest extends AbstractHttpControllerTestCase //T
         $found = $em->getRepository('Db\Entity\Artist')->find($artist->getId());
         $this->assertInstanceOf('Db\Entity\Artist', $found);
 
-        $this->resource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $this->resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
         $this->resource->setModuleName('DbApi');
 
         $entity = $this->resource->create($resourceDefinition);
-        $this->assertInstanceOf('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity', $entity);
+        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $entity);
         $controllerServiceName = $entity->controllerServiceName;
         $this->assertNotEmpty($controllerServiceName);
         $this->assertContains('DbApi\V1\Rest\Artist\Controller', $controllerServiceName);
@@ -129,7 +131,7 @@ class DoctrineRestServiceResourceTest extends AbstractHttpControllerTestCase //T
 
         $hal = $response->getBody();
 
-        $renderer = $this->getServiceLocator()->get('ZF\Hal\JsonRenderer');
+        $renderer = $this->getServiceLocator()->get('Laminas\ApiTools\Hal\JsonRenderer');
         $data = json_decode($renderer->render($hal), true);
 
         print_r($data);
