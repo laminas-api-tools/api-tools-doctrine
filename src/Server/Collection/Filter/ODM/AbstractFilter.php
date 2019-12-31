@@ -1,8 +1,8 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Filter\ODM;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Filter\ODM;
 
-use ZF\Apigility\Doctrine\Server\Collection\Filter\FilterInterface;
+use Laminas\ApiTools\Doctrine\Server\Collection\Filter\FilterInterface;
 
 abstract class AbstractFilter implements FilterInterface
 {

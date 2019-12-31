@@ -13,9 +13,9 @@ return array(
             ),
         ),
     ),
-    'zf-orm-collection-filter' => array(
+    'api-tools-orm-collection-filter' => array(
         'invokables' => array(
-            'innerjoin' => 'ZF\Apigility\Doctrine\Server\Collection\Filter\ORM\InnerJoin',
+            'innerjoin' => 'Laminas\ApiTools\Doctrine\Server\Collection\Filter\ORM\InnerJoin',
         ),
     ),
 );

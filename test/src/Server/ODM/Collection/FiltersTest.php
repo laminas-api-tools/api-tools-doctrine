@@ -1,10 +1,10 @@
 <?php
 
-namespace ZFTest\Apigility\Doctrine\Server\ODM\Collection;
+namespace LaminasTest\ApiTools\Doctrine\Server\ODM\Collection;
 
-use Zend\Http\Request;
+use Laminas\Http\Request;
 
-class FiltersTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class FiltersTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {

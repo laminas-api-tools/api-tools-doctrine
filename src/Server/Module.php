@@ -1,13 +1,15 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Apigility\Doctrine\Server;
+namespace Laminas\ApiTools\Doctrine\Server;
 
-use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
-use Zend\ModuleManager\ModuleManager;
+use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
+use Laminas\ModuleManager\ModuleManager;
 
 class Module
     implements DependencyIndicatorInterface
@@ -15,7 +17,7 @@ class Module
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
+            'Laminas\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__,
                 ),
@@ -34,24 +36,24 @@ class Module
         $serviceListener = $sm->get('ServiceListener');
 
         $serviceListener->addServiceManager(
-            'ZfOrmCollectionFilterManager',
-            'zf-orm-collection-filter',
-            'ZF\Apigility\Doctrine\Server\Collection\Filter\FilterInterface',
-            'getZfOrmFilterConfig'
+            'LaminasOrmCollectionFilterManager',
+            'api-tools-orm-collection-filter',
+            'Laminas\ApiTools\Doctrine\Server\Collection\Filter\FilterInterface',
+            'getLaminasOrmFilterConfig'
         );
 
         $serviceListener->addServiceManager(
-            'ZfOdmCollectionFilterManager',
-            'zf-odm-collection-filter',
-            'ZF\Apigility\Doctrine\Server\Collection\Filter\FilterInterface',
-            'getZfOdmFilterConfig'
+            'LaminasOdmCollectionFilterManager',
+            'api-tools-odm-collection-filter',
+            'Laminas\ApiTools\Doctrine\Server\Collection\Filter\FilterInterface',
+            'getLaminasOdmFilterConfig'
         );
 
         $serviceListener->addServiceManager(
-            'ZfCollectionQueryManager',
-            'zf-collection-query',
-            'ZF\Apigility\Doctrine\Server\Collection\Query\ApigilityFetchAllQuery',
-            'getZfCollectionQueryConfig'
+            'LaminasCollectionQueryManager',
+            'api-tools-collection-query',
+            'Laminas\ApiTools\Doctrine\Server\Collection\Query\ApiToolsFetchAllQuery',
+            'getLaminasCollectionQueryConfig'
         );
     }
 

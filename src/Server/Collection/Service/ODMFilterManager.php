@@ -1,10 +1,10 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Service;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Service;
 
-use ZF\Apigility\Doctrine\Server\Collection\Filter\FilterInterface;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception;
+use Laminas\ApiTools\Doctrine\Server\Collection\Filter\FilterInterface;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception;
 
 class ODMFilterManager extends AbstractPluginManager
 {

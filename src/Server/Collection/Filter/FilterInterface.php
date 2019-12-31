@@ -1,6 +1,6 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Filter;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Filter;
 
 interface FilterInterface
 {

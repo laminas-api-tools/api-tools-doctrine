@@ -1,6 +1,6 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Filter\ODM;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Filter\ODM;
 
 class LessThan extends AbstractFilter
 {

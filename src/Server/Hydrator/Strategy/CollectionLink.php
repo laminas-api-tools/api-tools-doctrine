@@ -1,13 +1,13 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Hydrator\Strategy;
+namespace Laminas\ApiTools\Doctrine\Server\Hydrator\Strategy;
 
-use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 use DoctrineModule\Stdlib\Hydrator\Strategy\AbstractCollectionStrategy;
-use ZF\Hal\Link\Link;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Zend\Filter\FilterChain;
+use Laminas\ApiTools\Hal\Link\Link;
+use Laminas\Filter\FilterChain;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManagerAwareInterface;
+use Laminas\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * A field-specific hydrator for collections.
@@ -34,11 +34,11 @@ class CollectionLink extends AbstractCollectionStrategy
     public function extract($value)
     {
         $config = $this->getServiceManager()->get('Config');
-        if (!method_exists($value, 'getTypeClass') or !isset($config['zf-hal']['metadata_map'][$value->getTypeClass()->name])) {
+        if (!method_exists($value, 'getTypeClass') or !isset($config['api-tools-hal']['metadata_map'][$value->getTypeClass()->name])) {
             return;
         }
 
-        $config = $config['zf-hal']['metadata_map'][$value->getTypeClass()->name];
+        $config = $config['api-tools-hal']['metadata_map'][$value->getTypeClass()->name];
         $mapping = $value->getMapping();
 
         $filter = new FilterChain();

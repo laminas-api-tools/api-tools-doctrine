@@ -1,6 +1,6 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Filter\ORM;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Filter\ORM;
 
 class Equals extends AbstractFilter
 {

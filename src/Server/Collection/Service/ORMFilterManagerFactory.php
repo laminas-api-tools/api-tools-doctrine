@@ -1,10 +1,10 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Service;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Service;
 
-use Zend\Mvc\Service\AbstractPluginManagerFactory;
+use Laminas\Mvc\Service\AbstractPluginManagerFactory;
 
 class ORMFilterManagerFactory extends AbstractPluginManagerFactory
 {
-    const PLUGIN_MANAGER_CLASS = 'ZF\Apigility\Doctrine\Server\Collection\Service\ORMFilterManager';
+    const PLUGIN_MANAGER_CLASS = 'Laminas\ApiTools\Doctrine\Server\Collection\Service\ORMFilterManager';
 }

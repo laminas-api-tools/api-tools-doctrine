@@ -1,9 +1,9 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Filter\ORM;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Filter\ORM;
 
-use ZF\Apigility\Doctrine\Server\Collection\Filter\FilterInterface;
-use ZF\Apigility\Doctrine\Server\Collection\Service\ORMFilterManager;
+use Laminas\ApiTools\Doctrine\Server\Collection\Filter\FilterInterface;
+use Laminas\ApiTools\Doctrine\Server\Collection\Service\ORMFilterManager;
 
 abstract class AbstractFilter implements FilterInterface
 {

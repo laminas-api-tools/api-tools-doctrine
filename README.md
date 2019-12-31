@@ -1,9 +1,9 @@
-Apigility for Doctrine
+Laminas API Tools for Doctrine
 ==============================
 
-[![Build status](https://api.travis-ci.org/zfcampus/zf-apigility-doctrine.svg)](http://travis-ci.org/zfcampus/zf-apigility-doctrine) 
+[![Build status](https://api.travis-ci.org/laminas-api-tools/api-tools-doctrine.svg)](https://travis-ci.org/laminas-api-tools/api-tools-doctrine) 
 
-This module provides the classes for integrating Doctrine with Apigility.
+This module provides the classes for integrating Doctrine with Laminas API Tools.
 
 Installation
 ------------
@@ -12,12 +12,12 @@ Installation of this module uses composer. For composer documentation, please re
 [getcomposer.org](http://getcomposer.org/).
 
 ```sh
-$ php composer.phar require zfcampus/zf-apigility-doctrine:dev-master
+$ php composer.phar require laminas-api-tools/api-tools-doctrine:dev-master
 ```
 
-This library provides two modules.  The first, ZF\Apigility\Doctrine\Server provides
-the classes to serve data created by the second, ZF\Apigility\Doctrine\Admin.  The
-Admin module is used to create apigility resources and the Server serves those
+This library provides two modules.  The first, Laminas\ApiTools\Doctrine\Server provides
+the classes to serve data created by the second, Laminas\ApiTools\Doctrine\Admin.  The
+Admin module is used to create api-tools resources and the Server serves those
 created resoruces.  Generally you would include Admin in your development.config.php
 and Server in your application.config.php
 
@@ -26,16 +26,16 @@ API Resources
 -------------
 
 
-***/apigility/api/doctrine[/:object_manager_alias]/metadata[/:name]***
+***/api-tools/api/doctrine[/:object_manager_alias]/metadata[/:name]***
 
 This will return metadata for the named entity which is a member of the
 named object manager.  Querying without a name will return all metadata
 for the object manager.
 
 
-***/apigility/api/module[/:name]/doctrine[/:controller_service_name]***
+***/api-tools/api/module[/:name]/doctrine[/:controller_service_name]***
 
-This is a Doctrine resource creation route like Apigility Rest `/apigility/api/module[/:name]/rest[/:controller_service_name]`
+This is a Doctrine resource creation route like Laminas API Tools Rest `/api-tools/api/module[/:name]/rest[/:controller_service_name]`
 POST Parameters:
 
 ```json
@@ -81,12 +81,12 @@ EVENT_DELETE_POST = 'delete.post';
 The EventManager is available through the StaticEventManager:
 
 ```php
-StaticEventManager::getInstance()->attach('ZF\Apigility\Doctrine\DoctrineResource', 'create.post', $callable);
+StaticEventManager::getInstance()->attach('Laminas\ApiTools\Doctrine\DoctrineResource', 'create.post', $callable);
 ```
 
 It is also possible to add custom event listeners to the configuration of a single doctrine-connected resource:
 ```php
-'zf-apigility' => array(
+'api-tools' => array(
     'doctrine-connected' => array(
         'Api\\V1\\Rest\\User\\UserResource' => array(
             // ...
@@ -157,17 +157,17 @@ A custom plugin manager is available to register your own query providers.
 This can be done through following configuration:
 
 ```php
-'zf-collection-query' => array(
+'api-tools-collection-query' => array(
     'invokables' => array(
         'custom-query-provider' => 'Application\My\Custom\QueryProvider',
     )
 ),
 ```
 
-You have to make sure that this registered class implements the `ApigilityFetchAllQuery` interface.
+You have to make sure that this registered class implements the `ApiToolsFetchAllQuery` interface.
 When the query provider is registered, you have to attach it to the doctrine-connected resource configuration:
 ```php
-'zf-apigility' => array(
+'api-tools' => array(
     'doctrine-connected' => array(
         'Api\\V1\\Rest\\....' => array(
             'query_provider' => 'custom-query-provider',
@@ -321,10 +321,10 @@ The Inner Join and On Query Type is not enabled by default.
 To enable it add this to your configuration (e.g. ```config/autoload/global.php```).  There is also an optional On filter used to join two columns (e.g. row.id = other.id)
 
 ```php
-    'zf-orm-collection-filter' => array(
+    'api-tools-orm-collection-filter' => array(
         'invokables' => array(
-            'innerjoin' => 'ZF\Apigility\Doctrine\Server\Collection\Filter\ORM\InnerJoin',
-            'on' => 'ZF\Apigility\Doctrine\Server\Collection\Filter\ORM\On',
+            'innerjoin' => 'Laminas\ApiTools\Doctrine\Server\Collection\Filter\ORM\InnerJoin',
+            'on' => 'Laminas\ApiTools\Doctrine\Server\Collection\Filter\ORM\On',
         ),
     ),
 ```
@@ -332,7 +332,7 @@ To enable it add this to your configuration (e.g. ```config/autoload/global.php`
 To disable any filters do the same but set the value to null
 
 ```php
-    'zf-orm-collection-filter' => array(
+    'api-tools-orm-collection-filter' => array(
         'invokables' => array(
             'notlike' => null,
         ),
