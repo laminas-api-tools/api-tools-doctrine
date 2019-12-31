@@ -1,6 +1,6 @@
 <?php
 
-namespace ZFTestApigilityDbMongo;
+namespace LaminasTestApiToolsDbMongo;
 
 return [
     'doctrine' => [

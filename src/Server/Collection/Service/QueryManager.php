@@ -1,10 +1,10 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Collection\Service;
+namespace Laminas\ApiTools\Doctrine\Server\Collection\Service;
 
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception;
-use ZF\Apigility\Doctrine\Server\Collection\Query\ApigilityFetchAllQuery;
+use Laminas\ApiTools\Doctrine\Server\Collection\Query\ApiToolsFetchAllQuery;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception;
 
 class QueryManager extends AbstractPluginManager
 {
@@ -18,14 +18,14 @@ class QueryManager extends AbstractPluginManager
      */
     public function validatePlugin($filter)
     {
-        if ($filter instanceof ApigilityFetchAllQuery) {
+        if ($filter instanceof ApiToolsFetchAllQuery) {
             // we're okay
             return;
         }
 
         // @codeCoverageIgnoreStart
         throw new Exception\RuntimeException(sprintf(
-            'Plugin of type %s is invalid; must implement ApigilityFetchAllQuery',
+            'Plugin of type %s is invalid; must implement ApiToolsFetchAllQuery',
             (is_object($filter) ? get_class($filter) : gettype($filter))
         ));
         // @codeCoverageIgnoreEnd

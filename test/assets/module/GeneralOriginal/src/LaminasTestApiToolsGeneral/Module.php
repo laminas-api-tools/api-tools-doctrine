@@ -1,11 +1,11 @@
 <?php
-namespace ZFTestApigilityGeneral;
+namespace LaminasTestApiToolsGeneral;
 
-use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\BootstrapListenerInterface;
-use ZF\Apigility\Provider\ApigilityProviderInterface;
+use Laminas\ApiTools\Provider\ApiToolsProviderInterface;
+use Laminas\EventManager\EventInterface;
+use Laminas\ModuleManager\Feature\BootstrapListenerInterface;
 
-class Module implements ApigilityProviderInterface, BootstrapListenerInterface
+class Module implements ApiToolsProviderInterface, BootstrapListenerInterface
 {
     public function getConfig()
     {
@@ -15,7 +15,7 @@ class Module implements ApigilityProviderInterface, BootstrapListenerInterface
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
+            'Laminas\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__,
                 ),
@@ -37,7 +37,7 @@ class Module implements ApigilityProviderInterface, BootstrapListenerInterface
         $eventManager = $application->getEventManager();
         $sharedEventManager = $eventManager->getSharedManager();
 
-        $eventCatcher = $serviceManager->get('ZFTestApigilityGeneral\Listener\EventCatcher');
+        $eventCatcher = $serviceManager->get('LaminasTestApiToolsGeneral\Listener\EventCatcher');
         $sharedEventManager->attachAggregate($eventCatcher);
     }
 

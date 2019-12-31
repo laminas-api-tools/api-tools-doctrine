@@ -1,10 +1,10 @@
 <?php
 
-namespace ZFTestApigilityGeneral\Listener;
+namespace LaminasTestApiToolsGeneral\Listener;
 
-use Zend\EventManager\Event;
-use Zend\EventManager\SharedEventManagerInterface;
-use Zend\EventManager\SharedListenerAggregateInterface;
+use Laminas\EventManager\Event;
+use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\EventManager\SharedListenerAggregateInterface;
 
 /**
  * Class EventCatcher
@@ -15,7 +15,7 @@ class EventCatcher
     implements  SharedListenerAggregateInterface
 {
 
-    const EVENT_IDENTIFIER = 'ZF\Apigility\Doctrine\DoctrineResource';
+    const EVENT_IDENTIFIER = 'Laminas\ApiTools\Doctrine\DoctrineResource';
 
     /**
      * @var array

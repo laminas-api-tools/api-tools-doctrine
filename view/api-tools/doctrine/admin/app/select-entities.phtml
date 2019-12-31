@@ -5,7 +5,7 @@ $(function() {
     });
 
     $('#loadObjectManager').on('click', function(event) {
-        window.location = '<?= $this->url('apigility-doctrine-admin-select-entities', array('moduleName' => $this->moduleName)); ?>'
+        window.location = '<?= $this->url('api-tools-doctrine-admin-select-entities', array('moduleName' => $this->moduleName)); ?>'
             + '/' + $('#objectManagerAlias').first().val();
         return false;
     });
@@ -20,12 +20,12 @@ $(function() {
 
 <?php
 
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
 
 $form = new Form('select-entities');
 $form->setAttributes(array(
-    'action' => $this->url('apigility-doctrine-admin-create-resources', array('moduleName' => $this->moduleName)),
+    'action' => $this->url('api-tools-doctrine-admin-create-resources', array('moduleName' => $this->moduleName)),
     'method' => 'post',
     'class' => 'form-horizontal'
 ));
@@ -73,7 +73,7 @@ $form->add($hydrateByValue);
 
 <?= $this->form()->openTag($form); ?>
 <fieldset>
-<legend>Apigility for Doctrine</legend>
+<legend>Laminas API Tools for Doctrine</legend>
 
 <?= $this->formRow($form->get('objectManagerAlias')); ?>
 

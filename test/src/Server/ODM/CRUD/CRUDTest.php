@@ -1,17 +1,17 @@
 <?php
-// Because of the code-generating of Apigility this script
+// Because of the code-generating of Laminas API Tools this script
 // is used to setup the tests.  Use ~/test/bin/reset-tests
 // to reset the output of this test if the unit tests
 // fail the application.
 
-namespace ZFTest\Apigility\Doctrine\Server\ODM\CRUD;
+namespace LaminasTest\ApiTools\Doctrine\Server\ODM\CRUD;
 
-use ZFTestApigilityGeneral\Listener\EventCatcher;
-use Zend\Http\Request;
-use ZFTestApigilityDbMongo\Document\Meta as MetaEntity;
-use ZF\Apigility\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\Http\Request;
+use LaminasTestApiToolsDbMongo\Document\Meta as MetaEntity;
+use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 
-class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class CRUDTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -37,7 +37,7 @@ class CRUDTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestC
     protected function validateTriggeredEvents($expectedEvents)
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $eventCatcher = $serviceManager->get('ZFTestApigilityGeneral\Listener\EventCatcher');
+        $eventCatcher = $serviceManager->get('LaminasTestApiToolsGeneral\Listener\EventCatcher');
 
         $this->assertEquals($expectedEvents, $eventCatcher->getCaughtEvents());
     }

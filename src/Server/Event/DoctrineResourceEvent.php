@@ -1,14 +1,14 @@
 <?php
 
-namespace ZF\Apigility\Doctrine\Server\Event;
+namespace Laminas\ApiTools\Doctrine\Server\Event;
 
-use Zend\EventManager\Event;
-use ZF\Rest\ResourceEvent;
+use Laminas\ApiTools\Rest\ResourceEvent;
+use Laminas\EventManager\Event;
 
 /**
  * Class DoctrineResourceEvent
  *
- * @package ZF\Apigility\Doctrine\Server\Event
+ * @package Laminas\ApiTools\Doctrine\Server\Event
  */
 class DoctrineResourceEvent extends Event
 {
@@ -99,7 +99,7 @@ class DoctrineResourceEvent extends Event
     }
 
     /**
-     * @param \ZF\Rest\ResourceEvent $resourceEvent
+     * @param \Laminas\ApiTools\Rest\ResourceEvent $resourceEvent
      */
     public function setResourceEvent($resourceEvent)
     {
@@ -109,7 +109,7 @@ class DoctrineResourceEvent extends Event
     }
 
     /**
-     * @return \ZF\Rest\ResourceEvent
+     * @return \Laminas\ApiTools\Rest\ResourceEvent
      */
     public function getResourceEvent()
     {

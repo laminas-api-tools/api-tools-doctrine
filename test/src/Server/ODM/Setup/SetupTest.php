@@ -1,12 +1,12 @@
 <?php
-// Because of the code-generating of Apigility this script
+// Because of the code-generating of Laminas API Tools this script
 // is used to setup the tests.  Use ~/test/bin/reset-tests
 // to reset the output of this test if the unit tests
 // fail the application.
 
-namespace ZFTest\Apigility\Doctrine\Server\Model\Server\ODM\Setup;
+namespace LaminasTest\ApiTools\Doctrine\Server\Model\Server\ODM\Setup;
 
-class SetupTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+class SetupTest extends \Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -22,20 +22,20 @@ class SetupTest extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTest
         $serviceManager = $this->getApplication()->getServiceManager();
 
         // Create DB
-        $resource = $serviceManager->get('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
 
         $metaResourceDefinition = [
             "objectManager"=> "doctrine.documentmanager.odm_default",
             "serviceName" => "Meta",
-            "entityClass" => "ZFTestApigilityDbMongo\\Document\\Meta",
+            "entityClass" => "LaminasTestApiToolsDbMongo\\Document\\Meta",
             "routeIdentifierName" => "meta_id",
             "entityIdentifierName" => "id",
             "routeMatch" => "/test/meta",
         ];
 
-        $resource->setModuleName('ZFTestApigilityDbMongoApi');
+        $resource->setModuleName('LaminasTestApiToolsDbMongoApi');
         $metaEntity = $resource->create($metaResourceDefinition);
 
-        $this->assertInstanceOf('ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceEntity', $metaEntity);
+        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $metaEntity);
    }
 }
