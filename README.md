@@ -1,7 +1,7 @@
 Doctrine in Laminas API Tools
 ==============================
 
-[![Build Status](https://travis-ci.org/laminas-api-tools/api-tools-doctrine.svg?branch=master)](https://travis-ci.org/laminas-api-tools/api-tools-doctrine)
+[![Build Status](https://travis-ci.com/laminas-api-tools/api-tools-doctrine.svg?branch=master)](https://travis-ci.com/laminas-api-tools/api-tools-doctrine)
 [![Coverage Status](https://coveralls.io/repos/github/laminas-api-tools/api-tools-doctrine/badge.svg?branch=master)](https://coveralls.io/github/laminas-api-tools/api-tools-doctrine?branch=master)
 [![Total Downloads](https://poser.pugx.org/laminas-api-tools/api-tools-doctrine/downloads)](https://packagist.org/packages/laminas-api-tools/api-tools-doctrine)
 
