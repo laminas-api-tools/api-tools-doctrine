@@ -10,7 +10,7 @@ return [
     'doctrine' => [
         'connection' => [
             'odm_default' => [
-                'server' => 'localhost',
+                'server' => 'mongo',
                 'port' => '27017',
                 'user' => '',
                 'password' => '',
