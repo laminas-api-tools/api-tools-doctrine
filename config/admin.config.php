@@ -59,12 +59,18 @@ return [
     'service_manager' => [
         // Legacy Zend Framework aliases
         'aliases' => [
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModel::class => Model\DoctrineAutodiscoveryModel::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineMetadataServiceResource::class => Model\DoctrineMetadataServiceResource::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceModelFactory::class => Model\DoctrineRestServiceModelFactory::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource::class => Model\DoctrineRestServiceResource::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory::class => Model\DoctrineRpcServiceModelFactory::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource::class => Model\DoctrineRpcServiceResource::class,
+            \ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModel::class
+                => Model\DoctrineAutodiscoveryModel::class,
+            \ZF\Apigility\Doctrine\Admin\Model\DoctrineMetadataServiceResource::class
+                => Model\DoctrineMetadataServiceResource::class,
+            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceModelFactory::class
+                => Model\DoctrineRestServiceModelFactory::class,
+            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource::class
+                => Model\DoctrineRestServiceResource::class,
+            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory::class
+                => Model\DoctrineRpcServiceModelFactory::class,
+            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource::class
+                => Model\DoctrineRpcServiceResource::class,
         ],
         'factories' => [
             Model\DoctrineAutodiscoveryModel::class      => Model\DoctrineAutodiscoveryModelFactory::class,
@@ -79,7 +85,8 @@ return [
     'controllers' => [
         // Legacy Zend Framework aliases
         'aliases' => [
-            \ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery::class => Controller\DoctrineAutodiscovery::class,
+            \ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery::class
+                => Controller\DoctrineAutodiscovery::class,
         ],
         'factories' => [
             Controller\DoctrineAutodiscovery::class => Controller\DoctrineAutodiscoveryControllerFactory::class,

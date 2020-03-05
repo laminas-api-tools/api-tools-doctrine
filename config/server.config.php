@@ -48,7 +48,8 @@ return [
             'default' => Query\CreateFilter\DefaultCreateFilter::class,
 
             // Legacy Zend Framework aliases
-            \ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter::class => Query\CreateFilter\DefaultCreateFilter::class,
+            \ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter::class
+                => Query\CreateFilter\DefaultCreateFilter::class,
         ],
         'factories' => [
             Query\CreateFilter\DefaultCreateFilter::class => InvokableFactory::class,
