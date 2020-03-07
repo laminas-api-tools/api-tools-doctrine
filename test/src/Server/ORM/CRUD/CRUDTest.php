@@ -21,6 +21,8 @@ use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource;
 use Laminas\ApiTools\Doctrine\DoctrineResource;
 use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\ApiTools\Rest\ResourceEvent;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\EventInterface;
 use Laminas\Filter\FilterChain;
 use Laminas\Http\Request;
 use Laminas\ServiceManager\ServiceManager;
@@ -245,6 +247,40 @@ class CRUDTest extends TestCase
             sprintf('%s: %s', $message, DoctrineResourceEvent::EVENT_CREATE_PRE),
             $body['detail']
         );
+    }
+
+    public function testFetchAllInvalidQueryThrows500ViaDomainException()
+    {
+        $product = $this->createProduct();
+        $product = $this->createProduct();
+        $product = $this->createProduct();
+
+        $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
+        $this->getRequest()->setMethod(Request::METHOD_GET);
+
+        $sharedEventManager = ($this->getApplication()->getEventManager()->getSharedManager())
+            ->attach(
+                RestController::class,
+                'getList.post',
+                function (EventInterface $e) {
+                    /** @var \Laminas\ApiTools\Hal\Collection $halCollection */
+                    $halCollection = $e->getParam('collection');
+                    $collection = $halCollection->getCollection();
+
+                    // Set an invalid query to trigger API Problem Exception
+                    $query = $collection->getAdapter()->getQuery()
+                        ->setDql('SELECT test.invalid FROM test');
+                    ;
+                }, 100000
+            );
+
+
+        $this->dispatch('/test/rest/product');
+        $body = json_decode($this->getResponse()->getBody(), true);
+
+        $this->assertEquals(500, $this->getResponse()->getStatusCode());
+        $this->assertEquals('Invalid query.', $body['detail']);
+        $this->assertEquals('Internal Server Error', $body['title']);
     }
 
     public function testFetchByCustomIdField()

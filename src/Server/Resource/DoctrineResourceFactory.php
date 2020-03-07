@@ -105,13 +105,17 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
             ? $container->get($doctrineConnectedConfig['entity_factory'])
             : null;
 
+        $displayExceptions = $config['view_manager']['display_exceptions'] ?? false;
         $hydrator = $this->loadHydrator($container, $doctrineConnectedConfig, $doctrineHydratorConfig);
         $queryProviders = $this->loadQueryProviders($container, $doctrineConnectedConfig, $objectManager);
         $queryCreateFilter = $this->loadQueryCreateFilter($container, $doctrineConnectedConfig, $objectManager);
         $configuredListeners = $this->loadConfiguredListeners($container, $doctrineConnectedConfig);
 
-        /** @var DoctrineResource $listener */
-        $listener = new $resourceClass($entityFactory);
+        /**
+         * @var DoctrineResource $listener
+         * @var bool $displayExceptions
+        */
+        $listener = new $resourceClass($entityFactory, $displayExceptions);
         $listener->setSharedEventManager($container->get('Application')->getEventManager()->getSharedManager());
         $listener->setObjectManager($objectManager);
         $listener->setHydrator($hydrator);
