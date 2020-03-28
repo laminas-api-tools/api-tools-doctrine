@@ -83,6 +83,6 @@
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
     "replace": {
-        "zfcampus/zf-apigility-doctrine": "self.version"
+        "zfcampus/zf-apigility-doctrine": "^2.3.0"
     }
 }
