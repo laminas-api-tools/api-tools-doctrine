@@ -13,8 +13,15 @@ use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
 class TestCase extends AbstractHttpControllerTestCase
 {
+    /**
+     * @var array{string, string}
+     */
     private $enabledModules = [];
 
+    /**
+     * @param array $config
+     * @return TestCase|void
+     */
     public function setApplicationConfig($config)
     {
         $r = (new \ReflectionClass(Application::class))->getConstructor();
@@ -37,6 +44,10 @@ class TestCase extends AbstractHttpControllerTestCase
         return parent::tearDown();
     }
 
+    /**
+     * @param string $dir
+     * @return bool
+     */
     private function removeDir($dir)
     {
         $files = array_diff(scandir($dir), ['.', '..']);
@@ -48,6 +59,9 @@ class TestCase extends AbstractHttpControllerTestCase
         return rmdir($dir);
     }
 
+    /**
+     * @return void
+     */
     private function clearAssets()
     {
         foreach ($this->enabledModules as $module => $path) {
@@ -59,6 +73,12 @@ class TestCase extends AbstractHttpControllerTestCase
         }
     }
 
+    /**
+     * @param object $resource
+     * @param string $moduleName
+     * @return void
+     * @throws \ReflectionException
+     */
     protected function setModuleName($resource, $moduleName)
     {
         $r = new \ReflectionObject($resource);

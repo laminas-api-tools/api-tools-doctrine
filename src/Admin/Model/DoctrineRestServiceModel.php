@@ -136,13 +136,13 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
         $entity = $event->getParam('entity', false);
         if (! $entity) {
             // No entity; nothing to do
-            return;
+            return null;
         }
 
         $config = $event->getParam('config', []);
         if (! isset($config['api-tools']['doctrine-connected'][$entity->resourceClass])) {
             // No DB-connected configuration for this service; nothing to do
-            return;
+            return null;
         }
 
         // TODO : Move hydrators handling into separate model ?

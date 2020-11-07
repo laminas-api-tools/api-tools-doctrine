@@ -29,10 +29,13 @@ class DoctrineAutodiscoveryController extends AbstractActionController
         $this->model = $model;
     }
 
+    /**
+     * @return ViewModel
+     */
     public function discoverAction()
     {
         $module = $this->params()->fromRoute('name');
-        $version = $this->params()->fromRoute('version');
+        $version = (int) $this->params()->fromRoute('version');
         $adapter = $this->params()->fromRoute('object_manager_alias');
         $data = $this->model->fetchFields($module, $version, $adapter);
 
