@@ -22,7 +22,6 @@ use Laminas\InputFilter\CollectionInputFilter;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\ArrayObject;
-use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
 
 /**
  * The purpose of this listener is to handle toMany relationships that were supplied in the request method. Historically
@@ -367,7 +366,7 @@ class CollectionListener implements ListenerAggregateInterface
     {
         if ($this->entityHydratorMap === null) {
             $config = $this->getServiceManager()->get('config');
-            $config = $config[DoctrineHydratorFactory::FACTORY_NAMESPACE];
+            $config = $config['doctrine-hydrator'];
 
             if (! empty($config)) {
                 $this->entityHydratorMap = [];

@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [laminas-api-tools/api-tools-doctrine#15](https://github.com/laminas-api-tools/api-tools-doctrine/issues/15) remove dependency to phpro/zf-doctrine-hydration-module 
 
 ### Deprecated
 
