@@ -48,6 +48,7 @@ return [
             'default' => Query\CreateFilter\DefaultCreateFilter::class,
 
             // Legacy Zend Framework aliases
+            // @codingStandardsIgnoreLine Generic.Files.LineLength
             \ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter::class => Query\CreateFilter\DefaultCreateFilter::class,
         ],
         'factories' => [

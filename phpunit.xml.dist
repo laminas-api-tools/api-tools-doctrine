@@ -10,4 +10,8 @@
             <directory>./src</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="TESTS_LAMINAS_API_TOOLS_DOCTRINE_EXTMONGODB_CONNECTSTRING" value="mongodb://localhost/"/>
+        <env name="TESTS_LAMINAS_API_TOOLS_DOCTRINE_EXTMONGODB_DATABASE" value="laminas_api-tools_doctrine_server_test"/>
+    </php>
 </phpunit>

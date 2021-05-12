@@ -1,8 +1,7 @@
 Doctrine in Laminas API Tools
 ==============================
 
-[![Build Status](https://travis-ci.com/laminas-api-tools/api-tools-doctrine.svg)](https://travis-ci.com/laminas-api-tools/api-tools-doctrine)
-[![Coverage Status](https://coveralls.io/repos/github/laminas-api-tools/api-tools-doctrine/badge.svg)](https://coveralls.io/github/laminas-api-tools/api-tools-doctrine)
+[![Build Status](https://github.com/laminas-api-tools/api-tools-doctrine/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas-api-tools/api-tools-doctrine/actions/workflows/continuous-integration.yml)
 [![Total Downloads](https://poser.pugx.org/laminas-api-tools/api-tools-doctrine/downloads)](https://packagist.org/packages/laminas-api-tools/api-tools-doctrine)
 
 This module provides the classes for integrating Doctrine with Laminas API Tools.

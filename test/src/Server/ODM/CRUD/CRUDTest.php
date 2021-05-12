@@ -80,7 +80,7 @@ class CRUDTest extends TestCase
         $config = $this->getApplication()->getConfig();
         $config = $config['doctrine']['connection']['odm_default'];
 
-        $connection = new MongoClient('mongodb://' . $config['server'] . ':' . $config['port']);
+        $connection = new MongoClient($config['connectionString']);
         $db = $connection->{$config['dbname']};
         $collection = $db->meta;
         $collection->remove();
