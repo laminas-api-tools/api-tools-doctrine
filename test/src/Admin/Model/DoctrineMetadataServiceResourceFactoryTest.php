@@ -8,14 +8,17 @@ use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineMetadataServiceResource;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineMetadataServiceResourceFactory;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ProphecyInterface;
 
 class DoctrineMetadataServiceResourceFactoryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var ProphecyInterface|ServiceManager */
     private $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

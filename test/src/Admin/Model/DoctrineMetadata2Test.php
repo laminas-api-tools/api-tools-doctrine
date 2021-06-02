@@ -13,7 +13,7 @@ use function json_decode;
 
 class DoctrineMetadata2Test extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markTestIncomplete();
 
@@ -23,7 +23,7 @@ class DoctrineMetadata2Test extends TestCase
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // FIXME: Drop database from in-memory
     }

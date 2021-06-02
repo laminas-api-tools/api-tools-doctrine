@@ -157,8 +157,8 @@ class CollectionListener implements ListenerAggregateInterface
     }
 
     /**
-     * @param string $targetEntityClassName
-     * @param array $data
+     * @param class-string $targetEntityClassName
+     * @param array|null $data
      * @return object|null
      */
     protected function processEntity($targetEntityClassName, $data)
@@ -269,7 +269,7 @@ class CollectionListener implements ListenerAggregateInterface
 
     /**
      * @param string $association
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return bool
      */
     protected function validateAssociationData($association, $data)
@@ -303,7 +303,7 @@ class CollectionListener implements ListenerAggregateInterface
     }
 
     /**
-     * @param string $entityClass
+     * @param class-string $entityClass
      * @param ObjectManager $objectManager
      * @return AbstractHydrator|DoctrineObject
      */

@@ -32,7 +32,7 @@ class DefaultOdm extends AbstractQueryProvider
     }
 
     /**
-     * @param string $entityClass
+     * @param class-string $entityClass
      * @return int
      */
     public function getCollectionTotal($entityClass)

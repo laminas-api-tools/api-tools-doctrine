@@ -27,7 +27,7 @@ class DoctrineAutodiscoveryModelTest extends TestCase
 
         $result = $model->fetchFields(null, null, 'doctrine.entitymanager.orm_default');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(3, $result);
 
         usort($result, function (array $a, array $b) {
@@ -58,7 +58,7 @@ class DoctrineAutodiscoveryModelTest extends TestCase
 
         $result = $model->fetchFields(null, null, 'doctrine.documentmanager.odm_default');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(1, $result);
 
         $this->assertEquals(Meta::class, $result[0]['entity_class']);

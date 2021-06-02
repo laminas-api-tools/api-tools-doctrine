@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./vendor/autoload.php" colors="true">
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    bootstrap="./vendor/autoload.php"
+    colors="true"
+    xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd">
+    <coverage includeUncoveredFiles="true">
+        <include>
+            <directory>./src</directory>
+        </include>
+    </coverage>
+
     <testsuites>
         <testsuite name="LaminasApiTools\Doctrine Module Tests">
             <directory>./test/src/</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory>./src</directory>
-        </whitelist>
-    </filter>
+
     <php>
         <env name="TESTS_LAMINAS_API_TOOLS_DOCTRINE_EXTMONGODB_CONNECTSTRING" value="mongodb://localhost/"/>
         <env name="TESTS_LAMINAS_API_TOOLS_DOCTRINE_EXTMONGODB_DATABASE" value="laminas_api-tools_doctrine_server_test"/>

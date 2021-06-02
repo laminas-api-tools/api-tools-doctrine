@@ -95,7 +95,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
             }
         }
 
-        if (null === $restConfig) {
+        if ($restConfig === null) {
             throw new RuntimeException(
                 sprintf('No api-tools-rest configuration found for resource %s', $requestedName)
             );
