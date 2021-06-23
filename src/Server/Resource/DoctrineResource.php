@@ -672,7 +672,7 @@ class DoctrineResource extends AbstractResourceListener implements
     /**
      * Gets an entity by route params and/or the specified id
      *
-     * @param strign|int $id
+     * @param string|int $id
      * @param string $method
      * @param null|array $data parameters
      * @return object
@@ -680,7 +680,7 @@ class DoctrineResource extends AbstractResourceListener implements
     protected function findEntity($id, $method, $data = null)
     {
         // Match identity identifier name(s) with id(s)
-        $ids      = explode($this->getMultiKeyDelimiter(), $id);
+        $ids      = explode($this->getMultiKeyDelimiter(), (string) $id);
         $keys     = explode($this->getMultiKeyDelimiter(), $this->getEntityIdentifierName());
         $criteria = [];
 
@@ -739,7 +739,7 @@ class DoctrineResource extends AbstractResourceListener implements
             if ($queryBuilder instanceof MongoDBQueryBuilder) {
                 $queryBuilder->field($key)->equals($value);
             } else {
-                $parameterName = 'a' . md5(rand());
+                $parameterName = 'a' . md5((string) rand());
                 $queryBuilder->andwhere($queryBuilder->expr()->eq('row.' . $key, ":$parameterName"));
                 $queryBuilder->setParameter($parameterName, $value, $classMetaData->getTypeOfField($key));
             }
