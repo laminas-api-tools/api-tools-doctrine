@@ -42,7 +42,7 @@ class CRUDTest extends TestCase
     /** @var EntityManager */
     protected $em;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -149,7 +149,10 @@ class CRUDTest extends TestCase
                 case ClassMetadataInfo::ONE_TO_MANY:
                     $entity = $rpcServiceResource->create([
                         'service_name' => 'Artist' . $mapping['fieldName'],
-                        'route_match'  => '/test/artist[/:parent_id]/' . $filter($mapping['fieldName']) . '[/:child_id]',
+                        'route_match'  => sprintf(
+                            '/test/artist[/:parent_id]/%s[/:child_id]',
+                            $filter($mapping['fieldName'])
+                        ),
                         'http_methods' => [
                             'GET',
                             'PUT',

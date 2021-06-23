@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\ApiTools\Doctrine\Server;
 
 use Laminas\ServiceManager\Factory\InvokableFactory;
+use ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter;
 use ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOdm;
 use ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOrm;
 use ZF\Apigility\Doctrine\Server\Validator\NoObjectExists;
@@ -46,8 +47,7 @@ return [
             'default' => Query\CreateFilter\DefaultCreateFilter::class,
 
             // Legacy Zend Framework aliases
-            // @codingStandardsIgnoreLine Generic.Files.LineLength
-            \ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter::class => Query\CreateFilter\DefaultCreateFilter::class,
+            DefaultCreateFilter::class => Query\CreateFilter\DefaultCreateFilter::class,
         ],
         'factories' => [
             Query\CreateFilter\DefaultCreateFilter::class => InvokableFactory::class,

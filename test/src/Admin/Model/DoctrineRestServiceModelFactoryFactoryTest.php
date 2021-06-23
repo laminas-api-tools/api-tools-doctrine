@@ -14,15 +14,20 @@ use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceModelFactoryFactory
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\ServiceManager;
+use LaminasTest\ApiTools\Doctrine\DeprecatedAssertionsTrait;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ProphecyInterface;
 
 class DoctrineRestServiceModelFactoryFactoryTest extends TestCase
 {
+    use DeprecatedAssertionsTrait;
+    use ProphecyTrait;
+
     /** @var ProphecyInterface|ServiceManager */
     private $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

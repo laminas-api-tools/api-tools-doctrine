@@ -15,7 +15,7 @@ use function print_r;
 
 class DoctrineRestServiceResourceTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markTestIncomplete();
 
@@ -25,7 +25,7 @@ class DoctrineRestServiceResourceTest extends TestCase
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // FIXME: Drop database from in-memory
     }
@@ -39,7 +39,6 @@ class DoctrineRestServiceResourceTest extends TestCase
         $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
 
         $tool = new SchemaTool($em);
-        $res  = $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
         // Create DB
         $resourceDefinition = [
@@ -69,19 +68,6 @@ class DoctrineRestServiceResourceTest extends TestCase
         $this->assertNotEmpty($controllerServiceName);
         $this->assertContains('DbApi\V1\Rest\Artist\Controller', $controllerServiceName);
 
-        //        $serviceManager = ServiceManagerFactory::getServiceManager();
-        //        $config = $serviceManager->get('config');
-
-        //        $routerConfig = isset($config['router']) ? $config['router'] : [];
-        //        $router = HttpRouter::factory($routerConfig);
-
-        //        $routeMatch = new RouteMatch(['controller' => $controllerServiceName]);
-        //        $event = new MvcEvent();
-        //        $event->setRouter($router);
-        //        $event->setRouteMatch($routeMatch);
-
-        //        $this->getRequest()->setMethod('GET');
-
         $request = $this->getRequest();
         $request->setMethod('GET');
         $request->getHeaders()->addHeaders(
@@ -95,42 +81,5 @@ class DoctrineRestServiceResourceTest extends TestCase
         $this->resource->delete('DbApi\\V1\\Rest\\Artist\\Controller');
 
         print_r($x);
-
-        return;
-        /*
-
-        //        $controller->setEvent($event);
-        //        $controller->setServiceLocator($serviceManager);
-
-        //        $routeMatch = new RouteMatch(['controller' => $controllerServiceName]);
-
-        //        print_r($config);
-        //        print_r(get_class_methods($router));
-
-        $this->resource->delete('DbApi\\V1\\Rest\\Artist\\Controller');
-
-        return;
-
-        //        $controller = new $controllerServiceName;
-        //        $request    = new Request();
-
-        $query   = [];
-        $query[] = ['type' => 'eq', 'field' => 'id', 'value' => $found->getId()];
-
-        // Fetch test runs
-        $routeMatch->setParam('action', 'index');
-
-        $result   = $controller->dispatch($this->request);
-        $response = $controller->getResponse();
-
-        //        $this->assertEquals(200, $response->getStatusCode());
-
-        $hal = $response->getBody();
-
-        $renderer = $this->getServiceLocator()->get('Laminas\ApiTools\Hal\JsonRenderer');
-        $data     = json_decode($renderer->render($hal), true);
-
-        print_r($data);
-         */
     }
 }

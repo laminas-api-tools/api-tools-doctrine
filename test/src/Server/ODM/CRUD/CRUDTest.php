@@ -29,7 +29,7 @@ class CRUDTest extends TestCase
     /** @var DocumentManager */
     protected $dm;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class CRUDTest extends TestCase
         $this->buildODMApi();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->clearData();
 

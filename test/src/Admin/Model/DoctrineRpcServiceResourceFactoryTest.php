@@ -12,15 +12,20 @@ use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResourceFactory;
 use Laminas\Mvc\Controller\ControllerManager;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use LaminasTest\ApiTools\Doctrine\DeprecatedAssertionsTrait;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ProphecyInterface;
 
 class DoctrineRpcServiceResourceFactoryTest extends TestCase
 {
+    use DeprecatedAssertionsTrait;
+    use ProphecyTrait;
+
     /** @var ProphecyInterface|ContainerInterface */
     private $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

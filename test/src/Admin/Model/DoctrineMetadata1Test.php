@@ -13,10 +13,11 @@ use Laminas\Http\Request;
 use LaminasTest\ApiTools\Doctrine\TestCase;
 
 use function json_decode;
+use function sprintf;
 
 class DoctrineMetadata1Test extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markTestIncomplete();
 
@@ -26,7 +27,7 @@ class DoctrineMetadata1Test extends TestCase
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // FIXME: Drop database from in-memory
     }
@@ -92,7 +93,6 @@ class DoctrineMetadata1Test extends TestCase
         $metadataFactory = $em->getMetadataFactory();
         $entityMetadata  = $metadataFactory->getMetadataFor("Db\\Entity\\Artist");
 
-        // phpcs:disable Generic.Files.LineLength.TooLong
         foreach ($entityMetadata->associationMappings as $mapping) {
             switch ($mapping['type']) {
                 case 4:
@@ -102,7 +102,10 @@ class DoctrineMetadata1Test extends TestCase
                     $rpcServiceResource->setModuleName('DbApi');
                     $rpcServiceResource->create([
                         'service_name' => 'Artist' . $mapping['fieldName'],
-                        'route'        => '/db-test/artist[/:parent_id]/' . $filter($mapping['fieldName']) . '[/:child_id]',
+                        'route'        => sprintf(
+                            '/db-test/artist[/:parent_id]/%s[/:child_id]',
+                            $filter($mapping['fieldName'])
+                        ),
                         'http_methods' => [
                             'GET',
                             'PUT',
@@ -120,6 +123,5 @@ class DoctrineMetadata1Test extends TestCase
                     break;
             }
         }
-        // phpcs:enable
     }
 }

@@ -9,18 +9,23 @@ use Laminas\ApiTools\Doctrine\Admin\Controller\DoctrineAutodiscoveryController;
 use Laminas\ApiTools\Doctrine\Admin\Controller\DoctrineAutodiscoveryControllerFactory;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
 use Laminas\ServiceManager\AbstractPluginManager;
+use LaminasTest\ApiTools\Doctrine\DeprecatedAssertionsTrait;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ProphecyInterface;
 
 class DoctrineAutodiscoveryControllerFactoryTest extends TestCase
 {
+    use DeprecatedAssertionsTrait;
+    use ProphecyTrait;
+
     /** @var ProphecyInterface|ContainerInterface */
     private $container;
 
     /** @var DoctrineAutodiscoveryModel */
     private $model;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

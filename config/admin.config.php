@@ -5,6 +5,13 @@ declare(strict_types=1);
 namespace Laminas\ApiTools\Doctrine\Admin;
 
 use Laminas\ApiTools\Doctrine\Server;
+use ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery;
+use ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
+use ZF\Apigility\Doctrine\Admin\Model\DoctrineMetadataServiceResource;
+use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceModelFactory;
+use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory;
+use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource;
 
 return [
     'router'                        => [
@@ -54,14 +61,12 @@ return [
     'service_manager'               => [
         // Legacy Zend Framework aliases
         'aliases'   => [
-            // @codingStandardsIgnoreStart Generic.Files.LineLength
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModel::class => Model\DoctrineAutodiscoveryModel::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineMetadataServiceResource::class => Model\DoctrineMetadataServiceResource::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceModelFactory::class => Model\DoctrineRestServiceModelFactory::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource::class => Model\DoctrineRestServiceResource::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory::class => Model\DoctrineRpcServiceModelFactory::class,
-            \ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource::class => Model\DoctrineRpcServiceResource::class,
-            // @codingStandardsIgnoreEnd Generic.Files.LineLength
+            DoctrineAutodiscoveryModel::class      => Model\DoctrineAutodiscoveryModel::class,
+            DoctrineMetadataServiceResource::class => Model\DoctrineMetadataServiceResource::class,
+            DoctrineRestServiceModelFactory::class => Model\DoctrineRestServiceModelFactory::class,
+            DoctrineRestServiceResource::class     => Model\DoctrineRestServiceResource::class,
+            DoctrineRpcServiceModelFactory::class  => Model\DoctrineRpcServiceModelFactory::class,
+            DoctrineRpcServiceResource::class      => Model\DoctrineRpcServiceResource::class,
         ],
         'factories' => [
             Model\DoctrineAutodiscoveryModel::class      => Model\DoctrineAutodiscoveryModelFactory::class,
@@ -75,8 +80,7 @@ return [
     'controllers'                   => [
         // Legacy Zend Framework aliases
         'aliases'   => [
-            // @codingStandardsIgnoreLine Generic.Files.LineLength
-            \ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery::class => Controller\DoctrineAutodiscovery::class,
+            DoctrineAutodiscovery::class => Controller\DoctrineAutodiscovery::class,
         ],
         'factories' => [
             Controller\DoctrineAutodiscovery::class => Controller\DoctrineAutodiscoveryControllerFactory::class,

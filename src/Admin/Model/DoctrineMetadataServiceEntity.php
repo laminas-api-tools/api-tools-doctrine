@@ -8,45 +8,116 @@ use Laminas\Stdlib\ArraySerializableInterface;
 
 class DoctrineMetadataServiceEntity implements ArraySerializableInterface
 {
-    // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint,WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCapsProperty
+    /** @var string */
     protected $name;
+
+    /** @var string */
     protected $namespace;
+
+    /** @var class-string */
     protected $rootEntityName;
+
+    /** @var array */
     protected $customGeneratorDefinition;
+
+    /** @var class-string */
     protected $customRepositoryClassName;
+
+    /** @var bool */
     protected $isMappedSuperclass;
+
+    /** @var string[] */
     protected $parentClasses;
+
+    /** @var string[] */
     protected $subClasses;
+
+    /** @var array */
     protected $namedQueries;
+
+    /** @var array */
     protected $namedNativeQueries;
+
+    /** @var array */
     protected $sqlResultSetMappings;
+
+    /** @var string */
     protected $identifier;
+
+    /** @var string */
     protected $inheritanceType;
+
+    /** @var string */
     protected $generatorType;
+
+    /** @var array */
     protected $fieldMappings;
+
+    /** @var string[] */
     protected $fieldNames;
+
+    /** @var string[] */
     protected $columnNames;
+
+    /** @var string */
     protected $discriminatorValue;
+
+    /** @var array */
     protected $discriminatorMap;
+
+    /** @var string */
     protected $discriminatorColumn;
+
+    /** @var string */
     protected $table;
+
+    /** @var array */
     protected $lifecycleCallbacks;
+
+    /** @var array */
     protected $entityListeners;
+
+    /** @var array */
     protected $associationMappings;
+
+    /** @var bool */
     protected $isIdentifierComposite;
+
+    /** @var bool */
     protected $containsForeignIdentifier;
+
+    /** @var string */
     protected $idGenerator;
+
+    /** @var array */
     protected $sequenceGeneratorDefinition;
+
+    /** @var array */
     protected $tableGeneratorDefinition;
+
+    /** @var string */
     protected $changeTrackingPolicy;
+
+    /** @var bool */
     protected $isVersioned;
+
+    /** @var string */
     protected $versionField;
+
+    /** @var class-string */
     protected $reflClass;
+
+    /** @var bool */
     protected $isReadOnly;
+
+    /** @var string */
     protected $namingStrategy;
+
+    /** @var array */
     protected $reflFields;
-    protected $ClassMetadataInfo_prototype;
-    // phpcs:enable
+
+    /** @var mixed */
+    protected $classMetadataInfoPrototype;
 
     /** @return $this */
     public function exchangeArray(array $data)
@@ -162,7 +233,7 @@ class DoctrineMetadataServiceEntity implements ArraySerializableInterface
                     $this->reflFields = $value;
                     break;
                 case 'Doctrine\ORM\Mapping\ClassMetadataInfo_prototype':
-                    $this->ClassMetadataInfo_prototype = $value;
+                    $this->classMetadataInfoPrototype = $value;
                     break;
                 default:
                     break;
@@ -212,7 +283,7 @@ class DoctrineMetadataServiceEntity implements ArraySerializableInterface
             'isReadOnly'                                       => $this->isReadOnly,
             '*namingStrategy'                                  => $this->namingStrategy,
             'reflFields'                                       => $this->reflFields,
-            'Doctrine\ORM\Mapping\ClassMetadataInfo_prototype' => $this->ClassMetadataInfo_prototype,
+            'Doctrine\ORM\Mapping\ClassMetadataInfo_prototype' => $this->classMetadataInfoPrototype,
         ];
     }
 }

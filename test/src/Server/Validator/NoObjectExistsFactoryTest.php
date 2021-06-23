@@ -11,10 +11,13 @@ use Laminas\ApiTools\Doctrine\Server\Validator\NoObjectExists;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class NoObjectExistsFactoryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var ObjectProphecy|ServiceManager */
     private $serviceManager;
 
@@ -24,7 +27,7 @@ class NoObjectExistsFactoryTest extends TestCase
     /** @var ObjectProphecy|ObjectRepository */
     private $objectRepository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

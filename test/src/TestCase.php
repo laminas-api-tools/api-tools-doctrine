@@ -7,6 +7,7 @@ namespace LaminasTest\ApiTools\Doctrine;
 use Laminas\Mvc\Application;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionObject;
 
 use function array_diff;
@@ -23,11 +24,11 @@ use const DIRECTORY_SEPARATOR;
 
 class TestCase extends AbstractHttpControllerTestCase
 {
-    /** @var array */
+    /** @var string[] */
     private $enabledModules = [];
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      * @return $this
      */
     public function setApplicationConfig($config)
@@ -45,7 +46,7 @@ class TestCase extends AbstractHttpControllerTestCase
         return parent::setApplicationConfig($config);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->clearAssets();
 
@@ -74,6 +75,7 @@ class TestCase extends AbstractHttpControllerTestCase
         }
     }
 
+    /** @throws ReflectionException */
     protected function setModuleName(object $resource, string $moduleName): void
     {
         $r    = new ReflectionObject($resource);
