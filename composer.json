@@ -43,7 +43,7 @@
         "doctrine/mongodb-odm": "^1.0",
         "doctrine/orm": "^2.6.3",
         "laminas-api-tools/api-tools-admin": "^1.5.7",
-        "laminas-api-tools/api-tools-hal": "^1.4.2",
+        "laminas-api-tools/api-tools-hal": "^1.6.1",
         "laminas/laminas-coding-standard": "~2.3.0",
         "laminas/laminas-form": "^2.9.2",
         "laminas/laminas-i18n": "^2.7.3",
