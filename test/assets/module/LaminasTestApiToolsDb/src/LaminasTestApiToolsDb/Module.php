@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTestApiToolsDb;
 
 use Laminas\ApiTools\Provider\ApiToolsProviderInterface;
+use Laminas\Loader\StandardAutoloader;
 
 class Module implements ApiToolsProviderInterface
 {
@@ -14,7 +17,7 @@ class Module implements ApiToolsProviderInterface
     public function getAutoloaderConfig()
     {
         return [
-            'Laminas\Loader\StandardAutoloader' => [
+            StandardAutoloader::class => [
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__,
                 ],

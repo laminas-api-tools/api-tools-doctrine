@@ -1,16 +1,17 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
+use DateTime;
+use Db\Entity\Artist;
 use Doctrine\ORM\Tools\SchemaTool;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
 use LaminasTest\ApiTools\Doctrine\TestCase;
-use LaminasTest\ApiTools\Util\ServiceManagerFactory;
+
+use function print_r;
 
 class DoctrineRestServiceResourceTest extends TestCase
 {
@@ -26,7 +27,7 @@ class DoctrineRestServiceResourceTest extends TestCase
 
     protected function tearDown()
     {
-        # FIXME: Drop database from in-memory
+        // FIXME: Drop database from in-memory
     }
 
     /**
@@ -35,35 +36,35 @@ class DoctrineRestServiceResourceTest extends TestCase
     public function testCreateReturnsRestServiceEntityWithControllerServiceNamePopulated()
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $em = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
 
         $tool = new SchemaTool($em);
-        $res = $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
+        $res  = $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
         // Create DB
         $resourceDefinition = [
-            "objectManager" => "doctrine.entitymanager.orm_default",
-            "serviceName" => "Artist",
-            "entityClass" => "Db\\Entity\\Artist",
-            "routeIdentifierName" => "artist_id",
+            "objectManager"        => "doctrine.entitymanager.orm_default",
+            "serviceName"          => "Artist",
+            "entityClass"          => "Db\\Entity\\Artist",
+            "routeIdentifierName"  => "artist_id",
             "entityIdentifierName" => "id",
-            "routeMatch" => "/db-test/artist",
+            "routeMatch"           => "/db-test/artist",
         ];
 
         // Verify ORM is working
-        $artist = new \Db\Entity\Artist;
+        $artist = new Artist();
         $artist->setName('TestInsert');
-        $artist->setCreatedAt(new \Datetime());
+        $artist->setCreatedAt(new DateTime());
         $em->persist($artist);
         $em->flush();
         $found = $em->getRepository('Db\Entity\Artist')->find($artist->getId());
         $this->assertInstanceOf('Db\Entity\Artist', $found);
 
-        $this->resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $this->resource = $serviceManager->get(DoctrineRestServiceResource::class);
         $this->resource->setModuleName('DbApi');
 
         $entity = $this->resource->create($resourceDefinition);
-        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $entity);
+        $this->assertInstanceOf(DoctrineRestServiceEntity::class, $entity);
         $controllerServiceName = $entity->controllerServiceName;
         $this->assertNotEmpty($controllerServiceName);
         $this->assertContains('DbApi\V1\Rest\Artist\Controller', $controllerServiceName);
@@ -85,7 +86,7 @@ class DoctrineRestServiceResourceTest extends TestCase
         $request->setMethod('GET');
         $request->getHeaders()->addHeaders(
             [
-            'Accept' => 'application/json',
+                'Accept' => 'application/json',
             ]
         );
 
@@ -96,6 +97,7 @@ class DoctrineRestServiceResourceTest extends TestCase
         print_r($x);
 
         return;
+        /*
 
         //        $controller->setEvent($event);
         //        $controller->setServiceLocator($serviceManager);
@@ -112,7 +114,7 @@ class DoctrineRestServiceResourceTest extends TestCase
         //        $controller = new $controllerServiceName;
         //        $request    = new Request();
 
-        $query = [];
+        $query   = [];
         $query[] = ['type' => 'eq', 'field' => 'id', 'value' => $found->getId()];
 
         // Fetch test runs
@@ -126,8 +128,9 @@ class DoctrineRestServiceResourceTest extends TestCase
         $hal = $response->getBody();
 
         $renderer = $this->getServiceLocator()->get('Laminas\ApiTools\Hal\JsonRenderer');
-        $data = json_decode($renderer->render($hal), true);
+        $data     = json_decode($renderer->render($hal), true);
 
         print_r($data);
+         */
     }
 }

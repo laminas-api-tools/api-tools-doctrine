@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
@@ -22,9 +18,7 @@ use Prophecy\Prophecy\ProphecyInterface;
 
 class DoctrineRpcServiceModelFactoryFactoryTest extends TestCase
 {
-    /**
-     * @var ProphecyInterface|ContainerInterface
-     */
+    /** @var ProphecyInterface|ContainerInterface */
     private $container;
 
     protected function setUp()
@@ -34,48 +28,57 @@ class DoctrineRpcServiceModelFactoryFactoryTest extends TestCase
         $this->container = $this->prophesize(ContainerInterface::class);
     }
 
-    public function missingDependencies()
+    /** @psalm-return array<string, array{0: array<non-empty-string|class-string, bool>}> */
+    public function missingDependencies(): array
     {
         return [
-            'all' => [[
-                ModulePathSpec::class => false,
-                ConfigResourceFactory::class => false,
-                ModuleModel::class => false,
-                'SharedEventManager' => false,
-            ]],
-            'ModulePathSpec' => [[
-                ModulePathSpec::class => false,
-                ConfigResourceFactory::class => true,
-                ModuleModel::class => true,
-                'SharedEventManager' => true,
-            ]],
-            'ConfigResourceFactory' => [[
-                ModulePathSpec::class => true,
-                ConfigResourceFactory::class => false,
-                ModuleModel::class => true,
-                'SharedEventManager' => true,
-            ]],
-            'ModuleModel' => [[
-                ModulePathSpec::class => true,
-                ConfigResourceFactory::class => true,
-                ModuleModel::class => false,
-                'SharedEventManager' => true,
-            ]],
-            'SharedEventManager' => [[
-                ModulePathSpec::class => true,
-                ConfigResourceFactory::class => true,
-                ModuleModel::class => true,
-                'SharedEventManager' => false,
-            ]],
+            'all'                   => [
+                [
+                    ModulePathSpec::class        => false,
+                    ConfigResourceFactory::class => false,
+                    ModuleModel::class           => false,
+                    'SharedEventManager'         => false,
+                ],
+            ],
+            'ModulePathSpec'        => [
+                [
+                    ModulePathSpec::class        => false,
+                    ConfigResourceFactory::class => true,
+                    ModuleModel::class           => true,
+                    'SharedEventManager'         => true,
+                ],
+            ],
+            'ConfigResourceFactory' => [
+                [
+                    ModulePathSpec::class        => true,
+                    ConfigResourceFactory::class => false,
+                    ModuleModel::class           => true,
+                    'SharedEventManager'         => true,
+                ],
+            ],
+            'ModuleModel'           => [
+                [
+                    ModulePathSpec::class        => true,
+                    ConfigResourceFactory::class => true,
+                    ModuleModel::class           => false,
+                    'SharedEventManager'         => true,
+                ],
+            ],
+            'SharedEventManager'    => [
+                [
+                    ModulePathSpec::class        => true,
+                    ConfigResourceFactory::class => true,
+                    ModuleModel::class           => true,
+                    'SharedEventManager'         => false,
+                ],
+            ],
         ];
     }
 
     /**
      * @dataProvider missingDependencies
-     *
-     * @var array $dependencies
      */
-    public function testFactoryRaisesExceptionIfDependenciesAreMissing($dependencies)
+    public function testFactoryRaisesExceptionIfDependenciesAreMissing(array $dependencies)
     {
         $factory = new DoctrineRpcServiceModelFactoryFactory();
 

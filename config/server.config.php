@@ -1,71 +1,68 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server;
 
 use Laminas\ServiceManager\Factory\InvokableFactory;
+use ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOdm;
+use ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOrm;
+use ZF\Apigility\Doctrine\Server\Validator\NoObjectExists;
+use ZF\Apigility\Doctrine\Server\Validator\ObjectExists;
 
 return [
-    'service_manager' => [
+    'service_manager'                        => [
         // Legacy Zend Framework aliases
-        'aliases' => [
-            'ZfApigilityDoctrineQueryProviderManager' => 'LaminasApiToolsDoctrineQueryProviderManager',
+        'aliases'            => [
+            'ZfApigilityDoctrineQueryProviderManager'     => 'LaminasApiToolsDoctrineQueryProviderManager',
             'ZfApigilityDoctrineQueryCreateFilterManager' => 'LaminasApiToolsDoctrineQueryCreateFilterManager',
         ],
         'abstract_factories' => [
             Resource\DoctrineResourceFactory::class,
         ],
-        'factories' => [
+        'factories'          => [
             'LaminasApiToolsDoctrineQueryProviderManager'
                 => Query\Provider\Service\QueryProviderManagerFactory::class,
             'LaminasApiToolsDoctrineQueryCreateFilterManager'
                 => Query\CreateFilter\Service\QueryCreateFilterManagerFactory::class,
         ],
     ],
-
-    'api-tools-doctrine-query-provider' => [
-        'aliases' => [
+    'api-tools-doctrine-query-provider'      => [
+        'aliases'   => [
             'default_odm' => Query\Provider\DefaultOdm::class,
             'default_orm' => Query\Provider\DefaultOrm::class,
 
             // Legacy Zend Framework aliases
-            \ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOdm::class => Query\Provider\DefaultOdm::class,
-            \ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOrm::class => Query\Provider\DefaultOrm::class,
+            DefaultOdm::class => Query\Provider\DefaultOdm::class,
+            DefaultOrm::class => Query\Provider\DefaultOrm::class,
         ],
         'factories' => [
             Query\Provider\DefaultOdm::class => InvokableFactory::class,
             Query\Provider\DefaultOrm::class => InvokableFactory::class,
         ],
     ],
-
     'api-tools-doctrine-query-create-filter' => [
-        'aliases' => [
+        'aliases'   => [
             'default' => Query\CreateFilter\DefaultCreateFilter::class,
 
             // Legacy Zend Framework aliases
+            // @codingStandardsIgnoreLine Generic.Files.LineLength
             \ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter::class => Query\CreateFilter\DefaultCreateFilter::class,
         ],
         'factories' => [
             Query\CreateFilter\DefaultCreateFilter::class => InvokableFactory::class,
         ],
     ],
-
-    'view_manager' => [
+    'view_manager'                           => [
         'template_path_stack' => [
             'api-tools-doctrine' => __DIR__ . '/../view',
         ],
     ],
-
-    'validators' => [
+    'validators'                             => [
         // Legacy Zend Framework aliases
-        'aliases' => [
-            \ZF\Apigility\Doctrine\Server\Validator\NoObjectExists::class => Validator\NoObjectExists::class,
-            \ZF\Apigility\Doctrine\Server\Validator\ObjectExists::class => Validator\ObjectExists::class,
+        'aliases'   => [
+            NoObjectExists::class => Validator\NoObjectExists::class,
+            ObjectExists::class   => Validator\ObjectExists::class,
         ],
         'factories' => [
             Validator\NoObjectExists::class => Validator\NoObjectExistsFactory::class,

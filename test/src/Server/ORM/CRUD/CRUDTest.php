@@ -1,13 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Server\ORM\CRUD;
 
+use DateTime;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
@@ -31,12 +28,18 @@ use LaminasTestApiToolsDb\Entity\Product;
 use LaminasTestApiToolsDbApi\V1\Rest\Artist\ArtistResource;
 use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 use PHPUnit\Framework\Assert;
+use PHPUnit_Framework_MockObject_MockObject;
+
+use function in_array;
+use function json_decode;
+use function json_encode;
+use function print_r;
+use function sprintf;
+use function strrev;
 
 class CRUDTest extends TestCase
 {
-    /**
-     * @var EntityManager
-     */
+    /** @var EntityManager */
     protected $em;
 
     protected function setUp()
@@ -134,35 +137,37 @@ class CRUDTest extends TestCase
             ->attachByName('StringToLower');
 
         $metadataFactory = $em->getMetadataFactory();
-        $entityMetadata = $metadataFactory->getMetadataFor(Artist::class);
+        $entityMetadata  = $metadataFactory->getMetadataFor(Artist::class);
 
         /** @var DoctrineRpcServiceResource $rpcServiceResource */
         $rpcServiceResource = $serviceManager->get(DoctrineRpcServiceResource::class);
         $this->setModuleName($rpcServiceResource, 'LaminasTestApiToolsDbApi');
 
+        // phpcs:disable Generic.Files.LineLength.TooLong
         foreach ($entityMetadata->associationMappings as $mapping) {
             switch ($mapping['type']) {
                 case ClassMetadataInfo::ONE_TO_MANY:
                     $entity = $rpcServiceResource->create([
                         'service_name' => 'Artist' . $mapping['fieldName'],
-                        'route_match' => '/test/artist[/:parent_id]/' . $filter($mapping['fieldName']) . '[/:child_id]',
+                        'route_match'  => '/test/artist[/:parent_id]/' . $filter($mapping['fieldName']) . '[/:child_id]',
                         'http_methods' => [
                             'GET',
                             'PUT',
                             'POST',
                         ],
-                        'options' => [
+                        'options'      => [
                             'target_entity' => $mapping['targetEntity'],
                             'source_entity' => $mapping['sourceEntity'],
                             'field_name'    => $mapping['fieldName'],
                         ],
-                        'selector' => 'custom selector',
+                        'selector'     => 'custom selector',
                     ]);
 
                     $this->assertInstanceOf(DoctrineRpcServiceEntity::class, $entity);
                     break;
             }
         }
+        // phpcs:enable
 
         $this->reset();
 
@@ -183,7 +188,7 @@ class CRUDTest extends TestCase
             '/test/rest/artist',
             Request::METHOD_POST,
             [
-                'name' => 'ArtistOne',
+                'name'      => 'ArtistOne',
                 'createdAt' => '2016-08-09 22:30:42',
             ]
         );
@@ -206,9 +211,9 @@ class CRUDTest extends TestCase
             '/test/rest/album',
             Request::METHOD_POST,
             [
-                'name' => 'Album One',
+                'name'      => 'Album One',
                 'createdAt' => '2016-08-21 22:32:38',
-                'artist' => $artist->getId(),
+                'artist'    => $artist->getId(),
             ]
         );
         $body = json_decode($this->getResponse()->getBody(), true);
@@ -220,7 +225,6 @@ class CRUDTest extends TestCase
 
     /**
      * @dataProvider listener
-     *
      * @param string $method
      * @param string $message
      */
@@ -233,7 +237,7 @@ class CRUDTest extends TestCase
             '/test/rest/artist',
             Request::METHOD_POST,
             [
-                'name' => 'ArtistEleven',
+                'name'      => 'ArtistEleven',
                 'createdAt' => '2016-08-21 22:33:17',
             ]
         );
@@ -275,7 +279,7 @@ class CRUDTest extends TestCase
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->getRequest()->setMethod(Request::METHOD_GET);
 
-        $spy = (object) ['caught' => false];
+        $spy          = (object) ['caught' => false];
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
             DoctrineResource::class,
@@ -326,7 +330,7 @@ class CRUDTest extends TestCase
 
     public function testCreateByExplicitlySettingEntityFactoryInConstructor()
     {
-        /** @var InstantiatorInterface|\PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
+        /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
         $entityFactoryMock = $this->getMockBuilder(InstantiatorInterface::class)->getMock();
         $entityFactoryMock->expects(self::once())
             ->method('instantiate')
@@ -338,9 +342,9 @@ class CRUDTest extends TestCase
         /** @var ServiceManager $sm */
         $sm = $this->getApplication()->getServiceManager();
 
-        $config = $sm->get('config');
-        $resourceName = 'LaminasTestApiToolsDbApi\V1\Rest\Artist\ArtistResource';
-        $resourceConfig = $config['api-tools']['doctrine-connected'][$resourceName];
+        $config                           = $sm->get('config');
+        $resourceName                     = 'LaminasTestApiToolsDbApi\V1\Rest\Artist\ArtistResource';
+        $resourceConfig                   = $config['api-tools']['doctrine-connected'][$resourceName];
         $resourceConfig['entity_factory'] = 'ResourceInstantiator';
         $config['api-tools']['doctrine-connected'][$resourceName] = $resourceConfig;
 
@@ -360,7 +364,7 @@ class CRUDTest extends TestCase
             '/test/rest/artist',
             Request::METHOD_POST,
             [
-                'name' => 'ArtistTwelve',
+                'name'      => 'ArtistTwelve',
                 'createdAt' => '2017-03-01 08:56:32',
             ]
         );
@@ -401,7 +405,7 @@ class CRUDTest extends TestCase
     public function testFetchWithRelation()
     {
         $artist = $this->createArtist('NewArtist');
-        $album = $this->createAlbum('NewAlbum', $artist);
+        $album  = $this->createAlbum('NewAlbum', $artist);
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->getRequest()->setMethod(Request::METHOD_GET);
 
@@ -414,7 +418,6 @@ class CRUDTest extends TestCase
 
     /**
      * @dataProvider listener
-     *
      * @param string $method
      * @param string $message
      */
@@ -475,7 +478,6 @@ class CRUDTest extends TestCase
 
     /**
      * @dataProvider listener
-     *
      * @param string $method
      * @param string $message
      */
@@ -500,7 +502,7 @@ class CRUDTest extends TestCase
     {
         $artist = $this->createArtist('Artist Patch');
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PATCH);
@@ -522,7 +524,6 @@ class CRUDTest extends TestCase
 
     /**
      * @dataProvider listener
-     *
      * @param string $method
      * @param string $message
      */
@@ -531,7 +532,7 @@ class CRUDTest extends TestCase
         $artist = $this->createArtist('Artist Patch ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_PATCH_PRE);
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PATCH);
@@ -556,15 +557,15 @@ class CRUDTest extends TestCase
 
         $patchList = [
             [
-                'id' => $artist1->getId(),
+                'id'   => $artist1->getId(),
                 'name' => 'oneNewName',
             ],
             [
-                'id' => $artist2->getId(),
+                'id'   => $artist2->getId(),
                 'name' => 'twoNewName',
             ],
             [
-                'id' => $artist3->getId(),
+                'id'   => $artist3->getId(),
                 'name' => 'threeNewName',
             ],
         ];
@@ -572,7 +573,7 @@ class CRUDTest extends TestCase
         $this->em->clear();
 
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PATCH);
@@ -593,7 +594,6 @@ class CRUDTest extends TestCase
 
     /**
      * @dataProvider listener
-     *
      * @param string $method
      * @param string $message
      */
@@ -602,13 +602,13 @@ class CRUDTest extends TestCase
         $artist = $this->createArtist('Artist Patch List ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_PATCH_LIST_PRE);
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PATCH);
         $this->getRequest()->setContent(json_encode([
             [
-                'id' => $artist->getId(),
+                'id'   => $artist->getId(),
                 'name' => 'Artist Edit',
             ],
         ]));
@@ -628,12 +628,12 @@ class CRUDTest extends TestCase
     {
         $artist = $this->createArtist('Artist Put');
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PUT);
         $this->getRequest()->setContent(json_encode([
-            'name' => 'Artist Put Edit',
+            'name'      => 'Artist Put Edit',
             'createdAt' => '2016-08-21 22:10:11',
         ]));
 
@@ -653,7 +653,6 @@ class CRUDTest extends TestCase
 
     /**
      * @dataProvider listener
-     *
      * @param string $method
      * @param string $message
      */
@@ -662,12 +661,12 @@ class CRUDTest extends TestCase
         $artist = $this->createArtist('Artist Put ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_UPDATE_PRE);
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PUT);
         $this->getRequest()->setContent(json_encode([
-            'name' => 'Artist Put Edit',
+            'name'      => 'Artist Put Edit',
             'createdAt' => '2016-08-21 22:10:19',
         ]));
 
@@ -685,7 +684,7 @@ class CRUDTest extends TestCase
     public function testDelete()
     {
         $artist = $this->createArtist('Artist Delete');
-        $id = $artist->getId();
+        $id     = $artist->getId();
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->getRequest()->setMethod(Request::METHOD_DELETE);
 
@@ -701,7 +700,6 @@ class CRUDTest extends TestCase
 
     /**
      * @dataProvider listener
-     *
      * @param string $method
      * @param string $message
      */
@@ -728,7 +726,7 @@ class CRUDTest extends TestCase
     public function testDeleteEntityNotFound()
     {
         $artist = $this->createArtist();
-        $id = $artist->getId() + 1;
+        $id     = $artist->getId() + 1;
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->getRequest()->setMethod(Request::METHOD_DELETE);
 
@@ -742,7 +740,7 @@ class CRUDTest extends TestCase
     public function testDeleteEntityDeleted()
     {
         $artist = $this->createArtist();
-        $id = $artist->getId();
+        $id     = $artist->getId();
         $this->em->remove($artist);
         $this->em->flush();
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -770,7 +768,7 @@ class CRUDTest extends TestCase
         $this->em->clear();
 
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_DELETE);
@@ -790,7 +788,6 @@ class CRUDTest extends TestCase
 
     /**
      * @dataProvider listener
-     *
      * @param string $method
      * @param string $message
      */
@@ -811,7 +808,7 @@ class CRUDTest extends TestCase
         $this->em->clear();
 
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_DELETE);
@@ -851,7 +848,7 @@ class CRUDTest extends TestCase
         $this->markTestIncomplete('Doctrine RPC Services are not fully implemented.');
 
         $artist = $this->createArtist('Artist RPC');
-        $album = $this->createAlbum('Album RPC', $artist);
+        $album  = $this->createAlbum('Album RPC', $artist);
 
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
 
@@ -867,7 +864,7 @@ class CRUDTest extends TestCase
     protected function validateTriggeredEvents(array $expectedEvents)
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $eventCatcher = $serviceManager->get(EventCatcher::class);
+        $eventCatcher   = $serviceManager->get(EventCatcher::class);
 
         $this->assertEquals($expectedEvents, $eventCatcher->getCaughtEvents());
     }
@@ -878,7 +875,7 @@ class CRUDTest extends TestCase
     protected function validateTriggeredEventsContains(array $expectedEvents)
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $eventCatcher = $serviceManager->get(EventCatcher::class);
+        $eventCatcher   = $serviceManager->get(EventCatcher::class);
 
         foreach ($expectedEvents as $event) {
             $this->assertTrue(
@@ -899,7 +896,7 @@ class CRUDTest extends TestCase
     {
         $artist = new Artist();
         $artist->setName($name ?: 'Artist name');
-        $artist->setCreatedAt(new \DateTime());
+        $artist->setCreatedAt(new DateTime());
         $this->em->persist($artist);
         $this->em->flush();
 
@@ -908,15 +905,14 @@ class CRUDTest extends TestCase
 
     /**
      * @param null|string $name
-     * @param null|Artist $artist
      * @return Album
      */
-    protected function createAlbum($name = null, Artist $artist = null)
+    protected function createAlbum($name = null, ?Artist $artist = null)
     {
         $album = new Album();
         $album->setName($name ?: 'Album name');
         $album->setArtist($artist ?: $this->createArtist());
-        $album->setCreatedAt(new \DateTime());
+        $album->setCreatedAt(new DateTime());
         $this->em->persist($album);
         $this->em->flush();
 
@@ -935,7 +931,8 @@ class CRUDTest extends TestCase
         return $product;
     }
 
-    public function listener()
+    /** @psalm-return array<string, array{0: string, 1: string}> */
+    public function listener(): array
     {
         return [
             //          $methodToAttachListener,     $detailMessage

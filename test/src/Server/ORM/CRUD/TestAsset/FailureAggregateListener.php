@@ -1,18 +1,16 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Server\ORM\CRUD\TestAsset;
 
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\EventManager\ListenerAggregateTrait;
-use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
-use Laminas\ApiTools\ApiProblem\ApiProblem;
+
+use function sprintf;
 
 class FailureAggregateListener implements ListenerAggregateInterface
 {
@@ -38,7 +36,6 @@ class FailureAggregateListener implements ListenerAggregateInterface
     }
 
     /**
-     * @param DoctrineResourceEvent $event
      * @return ApiProblem
      */
     public function failure(DoctrineResourceEvent $event)

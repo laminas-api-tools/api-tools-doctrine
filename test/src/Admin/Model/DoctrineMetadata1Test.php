@@ -1,17 +1,18 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
 use Doctrine\ORM\Tools\SchemaTool;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource;
 use Laminas\Filter\FilterChain;
 use Laminas\Http\Request;
 use LaminasTest\ApiTools\Doctrine\TestCase;
+
+use function json_decode;
 
 class DoctrineMetadata1Test extends TestCase
 {
@@ -27,7 +28,7 @@ class DoctrineMetadata1Test extends TestCase
 
     protected function tearDown()
     {
-        # FIXME: Drop database from in-memory
+        // FIXME: Drop database from in-memory
     }
 
     /**
@@ -36,7 +37,7 @@ class DoctrineMetadata1Test extends TestCase
     public function testDoctrineMetadataResource()
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $em = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
 
         $this->getRequest()->getHeaders()->addHeaders([
             'Accept' => 'application/json',
@@ -58,27 +59,27 @@ class DoctrineMetadata1Test extends TestCase
     public function testDoctrineService()
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $em = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
 
         $tool = new SchemaTool($em);
-        $res = $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
+        $res  = $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
         // Create DB
         $resourceDefinition = [
-            "objectManager" => "doctrine.entitymanager.orm_default",
-            "serviceName" => "Artist",
-            "entityClass" => "Db\\Entity\\Artist",
-            "routeIdentifierName" => "artist_id",
+            "objectManager"        => "doctrine.entitymanager.orm_default",
+            "serviceName"          => "Artist",
+            "entityClass"          => "Db\\Entity\\Artist",
+            "routeIdentifierName"  => "artist_id",
             "entityIdentifierName" => "id",
-            "routeMatch" => "/db-test/artist",
+            "routeMatch"           => "/db-test/artist",
         ];
 
-        $this->resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $this->resource = $serviceManager->get(DoctrineRestServiceResource::class);
         $this->resource->setModuleName('DbApi');
 
         $entity = $this->resource->create($resourceDefinition);
 
-        $this->assertInstanceOf('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity', $entity);
+        $this->assertInstanceOf(DoctrineRestServiceEntity::class, $entity);
         $controllerServiceName = $entity->controllerServiceName;
         $this->assertNotEmpty($controllerServiceName);
         $this->assertContains('DbApi\V1\Rest\Artist\Controller', $controllerServiceName);
@@ -87,36 +88,38 @@ class DoctrineMetadata1Test extends TestCase
         $filter->attachByName('WordCamelCaseToUnderscore')
             ->attachByName('StringToLower');
 
-        $em = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $em              = $serviceManager->get('doctrine.entitymanager.orm_default');
         $metadataFactory = $em->getMetadataFactory();
-        $entityMetadata = $metadataFactory->getMetadataFor("Db\\Entity\\Artist");
+        $entityMetadata  = $metadataFactory->getMetadataFor("Db\\Entity\\Artist");
 
+        // phpcs:disable Generic.Files.LineLength.TooLong
         foreach ($entityMetadata->associationMappings as $mapping) {
             switch ($mapping['type']) {
                 case 4:
                     $rpcServiceResource = $serviceManager->get(
-                        'Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource'
+                        DoctrineRpcServiceResource::class
                     );
                     $rpcServiceResource->setModuleName('DbApi');
                     $rpcServiceResource->create([
                         'service_name' => 'Artist' . $mapping['fieldName'],
-                        'route' => '/db-test/artist[/:parent_id]/' . $filter($mapping['fieldName']) . '[/:child_id]',
+                        'route'        => '/db-test/artist[/:parent_id]/' . $filter($mapping['fieldName']) . '[/:child_id]',
                         'http_methods' => [
                             'GET',
                             'PUT',
                             'POST',
                         ],
-                        'options' => [
+                        'options'      => [
                             'target_entity' => $mapping['targetEntity'],
                             'source_entity' => $mapping['sourceEntity'],
-                            'field_name' => $mapping['fieldName'],
+                            'field_name'    => $mapping['fieldName'],
                         ],
-                        'selector' => 'custom selector',
+                        'selector'     => 'custom selector',
                     ]);
                     break;
                 default:
                     break;
             }
         }
+        // phpcs:enable
     }
 }

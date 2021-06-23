@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
@@ -12,6 +8,7 @@ use Laminas\Stdlib\ArraySerializableInterface;
 
 class DoctrineMetadataServiceEntity implements ArraySerializableInterface
 {
+    // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint,WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCapsProperty
     protected $name;
     protected $namespace;
     protected $rootEntityName;
@@ -49,7 +46,9 @@ class DoctrineMetadataServiceEntity implements ArraySerializableInterface
     protected $namingStrategy;
     protected $reflFields;
     protected $ClassMetadataInfo_prototype;
+    // phpcs:enable
 
+    /** @return $this */
     public function exchangeArray(array $data)
     {
         foreach ($data as $field => $value) {
@@ -173,45 +172,46 @@ class DoctrineMetadataServiceEntity implements ArraySerializableInterface
         return $this;
     }
 
+    /** @return array<string, mixed> */
     public function getArrayCopy()
     {
         return [
-            'name' => $this->name,
-            'namespace' => $this->namespace,
-            'rootEntityName' => $this->rootEntityName,
-            'customGeneratorDefinition' => $this->customGeneratorDefinition,
-            'customRepositoryClassName' => $this->customRepositoryClassName,
-            'isMappedSuperclass' => $this->isMappedSuperclass,
-            'parentClasses' => $this->parentClasses,
-            'subClasses' => $this->subClasses,
-            'namedQueries' => $this->namedQueries,
-            'namedNativeQueries' => $this->namedNativeQueries,
-            'sqlResultSetMappings' => $this->sqlResultSetMappings,
-            'identifier' => $this->identifier,
-            'inheritanceType' => $this->inheritanceType,
-            'generatorType' => $this->generatorType,
-            'fieldMappings' => $this->fieldMappings,
-            'fieldNames' => $this->fieldNames,
-            'columnNames' => $this->columnNames,
-            'discriminatorValue' => $this->discriminatorValue,
-            'discriminatorMap' => $this->discriminatorMap,
-            'discriminatorColumn' => $this->discriminatorColumn,
-            'table' => $this->table,
-            'lifecycleCallbacks' => $this->lifecycleCallbacks,
-            'entityListeners' => $this->entityListeners,
-            'associationMappings' => $this->associationMappings,
-            'isIdentifierComposite' => $this->isIdentifierComposite,
-            'containsForeignIdentifier' => $this->containsForeignIdentifier,
-            'idGenerator' => $this->idGenerator,
-            'sequenceGeneratorDefinition' => $this->sequenceGeneratorDefinition,
-            'tableGeneratorDefinition' => $this->tableGeneratorDefinition,
-            'changeTrackingPolicy' => $this->changeTrackingPolicy,
-            'isVersioned' => $this->isVersioned,
-            'versionField' => $this->versionField,
-            'reflClass' => $this->reflClass,
-            'isReadOnly' => $this->isReadOnly,
-            '*namingStrategy' => $this->namingStrategy,
-            'reflFields' => $this->reflFields,
+            'name'                                             => $this->name,
+            'namespace'                                        => $this->namespace,
+            'rootEntityName'                                   => $this->rootEntityName,
+            'customGeneratorDefinition'                        => $this->customGeneratorDefinition,
+            'customRepositoryClassName'                        => $this->customRepositoryClassName,
+            'isMappedSuperclass'                               => $this->isMappedSuperclass,
+            'parentClasses'                                    => $this->parentClasses,
+            'subClasses'                                       => $this->subClasses,
+            'namedQueries'                                     => $this->namedQueries,
+            'namedNativeQueries'                               => $this->namedNativeQueries,
+            'sqlResultSetMappings'                             => $this->sqlResultSetMappings,
+            'identifier'                                       => $this->identifier,
+            'inheritanceType'                                  => $this->inheritanceType,
+            'generatorType'                                    => $this->generatorType,
+            'fieldMappings'                                    => $this->fieldMappings,
+            'fieldNames'                                       => $this->fieldNames,
+            'columnNames'                                      => $this->columnNames,
+            'discriminatorValue'                               => $this->discriminatorValue,
+            'discriminatorMap'                                 => $this->discriminatorMap,
+            'discriminatorColumn'                              => $this->discriminatorColumn,
+            'table'                                            => $this->table,
+            'lifecycleCallbacks'                               => $this->lifecycleCallbacks,
+            'entityListeners'                                  => $this->entityListeners,
+            'associationMappings'                              => $this->associationMappings,
+            'isIdentifierComposite'                            => $this->isIdentifierComposite,
+            'containsForeignIdentifier'                        => $this->containsForeignIdentifier,
+            'idGenerator'                                      => $this->idGenerator,
+            'sequenceGeneratorDefinition'                      => $this->sequenceGeneratorDefinition,
+            'tableGeneratorDefinition'                         => $this->tableGeneratorDefinition,
+            'changeTrackingPolicy'                             => $this->changeTrackingPolicy,
+            'isVersioned'                                      => $this->isVersioned,
+            'versionField'                                     => $this->versionField,
+            'reflClass'                                        => $this->reflClass,
+            'isReadOnly'                                       => $this->isReadOnly,
+            '*namingStrategy'                                  => $this->namingStrategy,
+            'reflFields'                                       => $this->reflFields,
             'Doctrine\ORM\Mapping\ClassMetadataInfo_prototype' => $this->ClassMetadataInfo_prototype,
         ];
     }

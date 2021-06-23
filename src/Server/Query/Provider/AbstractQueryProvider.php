@@ -1,14 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\ORM\QueryBuilder;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use Laminas\ApiTools\Doctrine\Server\Paginator\Adapter\DoctrineOrmAdapter;
 use Laminas\ApiTools\Rest\ResourceEvent;
@@ -16,15 +14,11 @@ use Laminas\Paginator\Adapter\AdapterInterface;
 
 abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, QueryProviderInterface
 {
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     protected $objectManager;
 
     /**
      * Set the object manager
-     *
-     * @param ObjectManager $objectManager
      */
     public function setObjectManager(ObjectManager $objectManager)
     {
@@ -42,7 +36,6 @@ abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, Que
     }
 
     /**
-     * @param ResourceEvent $event
      * @param string $entityClass
      * @param array $parameters
      * @return mixed This will return an ORM or ODM Query\Builder
@@ -50,24 +43,22 @@ abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, Que
     abstract public function createQuery(ResourceEvent $event, $entityClass, $parameters);
 
     /**
-     * @param $queryBuilder
+     * @param QueryBuilder|Builder $queryBuilder
      * @return AdapterInterface
      */
     public function getPaginatedQuery($queryBuilder)
     {
-        $adapter = new DoctrineOrmAdapter($queryBuilder->getQuery(), false);
-
-        return $adapter;
+        return new DoctrineOrmAdapter($queryBuilder->getQuery(), false);
     }
 
     /**
-     * @param $entityClass
+     * @param string $entityClass
      * @return int
      */
     public function getCollectionTotal($entityClass)
     {
-        $queryBuilder = $this->getObjectManager()->createQueryBuilder();
-        $cmf = $this->getObjectManager()->getMetadataFactory();
+        $queryBuilder   = $this->getObjectManager()->createQueryBuilder();
+        $cmf            = $this->getObjectManager()->getMetadataFactory();
         $entityMetaData = $cmf->getMetadataFor($entityClass);
 
         $identifier = $entityMetaData->getIdentifier();

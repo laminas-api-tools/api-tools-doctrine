@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Server\Event\Listener;
 
@@ -15,6 +11,9 @@ use Laminas\ApiTools\Doctrine\Server\Event\Listener\CollectionListener;
 use Laminas\Hydrator\HydratorInterface;
 use LaminasTestApiToolsDb\Entity\Artist;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
+use ReflectionMethod;
+use ReflectionProperty;
 
 class CollectionListenerTest extends TestCase
 {
@@ -26,10 +25,10 @@ class CollectionListenerTest extends TestCase
     public function testProcessNewEntity($withEntityFactory)
     {
         $artist = $this->getMockBuilder(Artist::class)->getMock();
-        $data = [];
+        $data   = [];
 
-        /** @var ObjectManager|\PHPUnit_Framework_MockObject_MockObject $om */
-        $om = $this->getMockBuilder(ObjectManager::class)->getMock();
+        /** @var ObjectManager|PHPUnit_Framework_MockObject_MockObject $om */
+        $om            = $this->getMockBuilder(ObjectManager::class)->getMock();
         $classMetadata = $this->getMockBuilder(ClassMetadata::class)
                 ->disableOriginalConstructor()
                 ->getMock();
@@ -53,7 +52,7 @@ class CollectionListenerTest extends TestCase
             ->with($data, self::isInstanceOf(Artist::class));
 
         if ($withEntityFactory) {
-            /** @var InstantiatorInterface|\PHPUnit_Framework_MockObject_MockObject $entityFactory */
+            /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactory */
             $entityFactory = $this->getMockBuilder(InstantiatorInterface::class)->getMock();
 
             $entityFactory->expects(self::once())
@@ -67,16 +66,17 @@ class CollectionListenerTest extends TestCase
         $listener = new CollectionListener($entityFactory);
         $listener->setObjectManager($om);
 
-        $hydratorMapProperty = new \ReflectionProperty($listener, 'entityHydratorMap');
+        $hydratorMapProperty = new ReflectionProperty($listener, 'entityHydratorMap');
         $hydratorMapProperty->setAccessible(true);
         $hydratorMapProperty->setValue($listener, [Artist::class => $hydrator]);
 
-        $method = new \ReflectionMethod($listener, 'processEntity');
+        $method = new ReflectionMethod($listener, 'processEntity');
         $method->setAccessible(true);
         $method->invokeArgs($listener, [Artist::class, $data]);
     }
 
-    public function trueFalseProvider()
+    /** @psalm-return array<array-key, array{0: bool}> */
+    public function trueFalseProvider(): array
     {
         return [[false], [true]];
     }

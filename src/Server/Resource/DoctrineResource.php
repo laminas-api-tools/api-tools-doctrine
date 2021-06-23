@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
@@ -21,12 +17,14 @@ use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
 use Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
 use Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface;
+use Laminas\ApiTools\Hal\Collection;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
 use Laminas\ApiTools\Rest\RestController;
 use Laminas\EventManager\EventInterface;
 use Laminas\EventManager\EventManager;
 use Laminas\EventManager\EventManagerAwareInterface;
 use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ResponseCollection;
 use Laminas\EventManager\SharedEventManager;
 use Laminas\Hydrator\HydratorAwareInterface;
 use Laminas\Hydrator\HydratorInterface;
@@ -34,70 +32,60 @@ use Laminas\Mvc\ModuleRouteListener;
 use ReflectionClass;
 use Traversable;
 
+use function array_diff_key;
+use function array_flip;
+use function array_key_exists;
+use function array_merge;
+use function array_unique;
+use function count;
+use function explode;
+use function in_array;
+use function is_array;
+use function is_object;
+use function is_string;
+use function md5;
+use function method_exists;
+use function rand;
+
 class DoctrineResource extends AbstractResourceListener implements
     ObjectManagerAwareInterface,
     EventManagerAwareInterface,
     HydratorAwareInterface
 {
-    /**
-     * @var SharedEventManager Interface
-     */
+    /** @var SharedEventManager Interface */
     protected $sharedEventManager;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     protected $objectManager;
 
-    /**
-     * @var EventManagerInterface
-     */
+    /** @var EventManagerInterface */
     protected $events;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $eventIdentifier = ['Laminas\ApiTools\Doctrine\DoctrineResource'];
 
-    /**
-     * @var array|QueryProviderInterface
-     */
+    /** @var array|QueryProviderInterface */
     protected $queryProviders;
 
-    /**
-     * @var string entityIdentifierName
-     */
+    /** @var string entityIdentifierName */
     protected $entityIdentifierName;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $routeIdentifierName;
 
-    /**
-     * @var QueryCreateFilterInterface
-     */
+    /** @var QueryCreateFilterInterface */
     protected $queryCreateFilter;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $multiKeyDelimiter = '.';
 
-    /**
-     * @var HydratorInterface
-     */
+    /** @var HydratorInterface */
     protected $hydrator;
 
-    /**
-     * @var InstantiatorInterface|null
-     */
+    /** @var InstantiatorInterface|null */
     private $entityFactory;
 
-    /**
-     * @param InstantiatorInterface|null $entityFactory
-     */
-    public function __construct(InstantiatorInterface $entityFactory = null)
+    public function __construct(?InstantiatorInterface $entityFactory = null)
     {
         $this->entityFactory = $entityFactory;
     }
@@ -111,7 +99,6 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @param SharedEventManager $sharedEventManager
      * @return $this
      */
     public function setSharedEventManager(SharedEventManager $sharedEventManager)
@@ -128,14 +115,14 @@ class DoctrineResource extends AbstractResourceListener implements
      * identifiers, in addition to any string or array of strings set to the
      * $this->eventIdentifier property.
      *
-     * @param EventManagerInterface $events
      * @return $this
      */
     public function setEventManager(EventManagerInterface $events)
     {
-        $identifiers = [__CLASS__, get_class($this)];
+        $identifiers = [self::class, static::class];
         if (isset($this->eventIdentifier)) {
-            if (is_string($this->eventIdentifier)
+            if (
+                is_string($this->eventIdentifier)
                 || is_array($this->eventIdentifier)
                 || $this->eventIdentifier instanceof Traversable
             ) {
@@ -191,8 +178,8 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @param array|\Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface[]
-     * @throws InvalidArgumentException if parameter is not an array or \Traversable object
+     * @param array|QueryProviderInterface[] $queryProviders
+     * @throws InvalidArgumentException If parameter is not an array or \Traversable object.
      */
     public function setQueryProviders($queryProviders)
     {
@@ -218,7 +205,7 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @param $method
+     * @param string $method
      * @return QueryProviderInterface
      */
     public function getQueryProvider($method)
@@ -241,7 +228,7 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @param string
+     * @param string $value
      * @return $this
      */
     public function setEntityIdentifierName($value)
@@ -270,7 +257,6 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @param QueryCreateFilterInterface $value
      * @return $this
      */
     public function setQueryCreateFilter(QueryCreateFilterInterface $value)
@@ -308,7 +294,6 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @param HydratorInterface $hydrator
      * @return $this
      */
     public function setHydrator(HydratorInterface $hydrator)
@@ -496,7 +481,7 @@ class DoctrineResource extends AbstractResourceListener implements
         $event->setResourceEvent($this->getEvent());
         $event->setEntityId($id);
         $eventManager = $this->getEventManager();
-        $response = $eventManager->triggerEvent($event);
+        $response     = $eventManager->triggerEvent($event);
         if ($response->last() instanceof ApiProblem) {
             return $response->last();
         }
@@ -525,7 +510,7 @@ class DoctrineResource extends AbstractResourceListener implements
     {
         // Build query
         $queryProvider = $this->getQueryProvider('fetch_all');
-        $queryBuilder = $queryProvider->createQuery($this->getEvent(), $this->getEntityClass(), $data);
+        $queryBuilder  = $queryProvider->createQuery($this->getEvent(), $this->getEntityClass(), $data);
 
         if ($queryBuilder instanceof ApiProblem) {
             return $queryBuilder;
@@ -540,7 +525,7 @@ class DoctrineResource extends AbstractResourceListener implements
             return $response->last();
         }
 
-        $adapter = $queryProvider->getPaginatedQuery($queryBuilder);
+        $adapter    = $queryProvider->getPaginatedQuery($queryBuilder);
         $reflection = new ReflectionClass($this->getCollectionClass());
         $collection = $reflection->newInstance($adapter);
 
@@ -559,10 +544,10 @@ class DoctrineResource extends AbstractResourceListener implements
         $this->getSharedEventManager()->attach(
             RestController::class,
             'getList.post',
-            function (EventInterface $e) use ($queryProvider, $entityClass, $data) {
-                /** @var \Laminas\ApiTools\Hal\Collection $halCollection */
+            function (EventInterface $e) {
+                /** @var Collection $halCollection */
                 $halCollection = $e->getParam('collection');
-                $collection = $halCollection->getCollection();
+                $collection    = $halCollection->getCollection();
 
                 $collection->setItemCountPerPage($halCollection->getPageSize());
                 $collection->setCurrentPageNumber($halCollection->getPage());
@@ -667,10 +652,10 @@ class DoctrineResource extends AbstractResourceListener implements
      * Listeners can also return an ApiProblem, which will be returned immediately.
      * It is also possible to throw Exceptions, which will result in an ApiProblem eventually.
      *
-     * @param $name
-     * @param $entity
-     * @param $data mixed The original data supplied to the resource method, if any
-     * @return \Laminas\EventManager\ResponseCollection
+     * @param string $name
+     * @param object $entity
+     * @param mixed $data The original data supplied to the resource method, if any
+     * @return ResponseCollection
      */
     protected function triggerDoctrineEvent($name, $entity, $data = null)
     {
@@ -681,23 +666,22 @@ class DoctrineResource extends AbstractResourceListener implements
         $event->setResourceEvent($this->getEvent());
 
         $eventManager = $this->getEventManager();
-        $response = $eventManager->triggerEvent($event);
-        return $response;
+        return $eventManager->triggerEvent($event);
     }
 
     /**
      * Gets an entity by route params and/or the specified id
      *
-     * @param $id
-     * @param $method
+     * @param string|int $id
+     * @param string $method
      * @param null|array $data parameters
      * @return object
      */
     protected function findEntity($id, $method, $data = null)
     {
         // Match identity identifier name(s) with id(s)
-        $ids = explode($this->getMultiKeyDelimiter(), $id);
-        $keys = explode($this->getMultiKeyDelimiter(), $this->getEntityIdentifierName());
+        $ids      = explode($this->getMultiKeyDelimiter(), (string) $id);
+        $keys     = explode($this->getMultiKeyDelimiter(), $this->getEntityIdentifierName());
         $criteria = [];
 
         if (count($ids) !== count($keys)) {
@@ -714,11 +698,11 @@ class DoctrineResource extends AbstractResourceListener implements
             $criteria[$identifier] = $ids[$index];
         }
 
-        $classMetaData = $this->getObjectManager()->getClassMetadata($this->getEntityClass());
-        $routeMatch = $this->getEvent()->getRouteMatch();
+        $classMetaData       = $this->getObjectManager()->getClassMetadata($this->getEntityClass());
+        $routeMatch          = $this->getEvent()->getRouteMatch();
         $associationMappings = $classMetaData->getAssociationNames();
-        $fieldNames = $classMetaData->getFieldNames();
-        $routeParams = $routeMatch->getParams();
+        $fieldNames          = $classMetaData->getFieldNames();
+        $routeParams         = $routeMatch->getParams();
 
         if (array_key_exists($this->getRouteIdentifierName(), $routeParams)) {
             unset($routeParams[$this->getRouteIdentifierName()]);
@@ -731,7 +715,7 @@ class DoctrineResource extends AbstractResourceListener implements
             ModuleRouteListener::MODULE_NAMESPACE,
             ModuleRouteListener::ORIGINAL_CONTROLLER,
         ];
-        $allowedRouteParams = array_diff_key($routeParams, array_flip($reservedRouteParams));
+        $allowedRouteParams  = array_diff_key($routeParams, array_flip($reservedRouteParams));
 
         /**
          * Append query selection parameters by route match.
@@ -744,7 +728,7 @@ class DoctrineResource extends AbstractResourceListener implements
 
         // Build query
         $queryProvider = $this->getQueryProvider($method);
-        $queryBuilder = $queryProvider->createQuery($this->getEvent(), $this->getEntityClass(), $data);
+        $queryBuilder  = $queryProvider->createQuery($this->getEvent(), $this->getEntityClass(), $data);
 
         if ($queryBuilder instanceof ApiProblem) {
             return $queryBuilder;
@@ -755,7 +739,7 @@ class DoctrineResource extends AbstractResourceListener implements
             if ($queryBuilder instanceof MongoDBQueryBuilder) {
                 $queryBuilder->field($key)->equals($value);
             } else {
-                $parameterName = 'a' . md5(rand());
+                $parameterName = 'a' . md5((string) rand());
                 $queryBuilder->andwhere($queryBuilder->expr()->eq('row.' . $key, ":$parameterName"));
                 $queryBuilder->setParameter($parameterName, $value, $classMetaData->getTypeOfField($key));
             }

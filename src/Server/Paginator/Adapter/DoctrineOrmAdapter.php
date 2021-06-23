@@ -1,31 +1,28 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Paginator\Adapter;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Laminas\Paginator\Adapter\AdapterInterface;
 
+use function array_key_exists;
+
 class DoctrineOrmAdapter extends Paginator implements AdapterInterface
 {
-    /**
-     * @var array
-    */
+    /** @var array */
     public $cache = [];
 
     /**
-     * @param $offset
-     * @param $itemCountPerPage
+     * @param int $offset
+     * @param int $itemCountPerPage
      * @return array
      */
     public function getItems($offset, $itemCountPerPage)
     {
-        if (array_key_exists($offset, $this->cache)
+        if (
+            array_key_exists($offset, $this->cache)
             && array_key_exists($itemCountPerPage, $this->cache[$offset])
         ) {
             return $this->cache[$offset][$itemCountPerPage];

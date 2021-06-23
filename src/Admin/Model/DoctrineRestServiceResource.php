@@ -1,25 +1,20 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
+use Exception;
 use Laminas\ApiTools\Admin\Model\DocumentationModel;
 use Laminas\ApiTools\Admin\Model\InputFilterModel;
 use Laminas\ApiTools\Admin\Model\RestServiceResource;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 
+use function is_object;
+use function sprintf;
+
 class DoctrineRestServiceResource extends RestServiceResource
 {
-    /**
-     * @param DoctrineRestServiceModelFactory $restFactory
-     * @param InputFilterModel $inputFilterModel
-     * @param DocumentationModel $documentationModel
-     */
     public function __construct(
         DoctrineRestServiceModelFactory $restFactory,
         InputFilterModel $inputFilterModel,
@@ -32,6 +27,7 @@ class DoctrineRestServiceResource extends RestServiceResource
      * Set module name
      *
      * @deprecated since 2.1.0, and no longer used internally.
+     *
      * @param string $moduleName
      * @return DoctrineRestServiceResource
      */
@@ -69,7 +65,7 @@ class DoctrineRestServiceResource extends RestServiceResource
             $data = (array) $data;
         }
 
-        $type = DoctrineRestServiceModelFactory::TYPE_DEFAULT;
+        $type         = DoctrineRestServiceModelFactory::TYPE_DEFAULT;
         $creationData = new NewDoctrineServiceEntity();
 
         $creationData->exchangeArray($data);
@@ -77,7 +73,7 @@ class DoctrineRestServiceResource extends RestServiceResource
 
         try {
             $service = $model->createService($creationData);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new ApiProblem(
                 409,
                 sprintf('Unable to create Doctrine REST service: %s', $e->getMessage())

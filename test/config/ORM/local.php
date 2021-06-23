@@ -1,21 +1,18 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
+use Doctrine\DBAL\Driver\PDOSqlite\Driver;
 use LaminasTestApiToolsDb\Type\RevType;
 
 return [
     'doctrine' => [
-        'connection' => [
+        'connection'    => [
             'orm_default' => [
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
-                'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
-                'params' => [
+                'driverClass'   => Driver::class,
+                'params'        => [
                     'memory' => true,
                 ],
             ],

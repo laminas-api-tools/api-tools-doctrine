@@ -1,23 +1,38 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine;
 
 use Laminas\Mvc\Application;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use ReflectionClass;
+use ReflectionObject;
+
+use function array_diff;
+use function array_unshift;
+use function copy;
+use function glob;
+use function is_dir;
+use function rmdir;
+use function scandir;
+use function sprintf;
+use function unlink;
+
+use const DIRECTORY_SEPARATOR;
 
 class TestCase extends AbstractHttpControllerTestCase
 {
+    /** @var array */
     private $enabledModules = [];
 
+    /**
+     * @param array $config
+     * @return $this
+     */
     public function setApplicationConfig($config)
     {
-        $r = (new \ReflectionClass(Application::class))->getConstructor();
+        $r          = (new ReflectionClass(Application::class))->getConstructor();
         $appVersion = $r->getNumberOfRequiredParameters() === 2 ? 2 : 3;
 
         if ($appVersion === 3) {
@@ -27,17 +42,17 @@ class TestCase extends AbstractHttpControllerTestCase
         $this->enabledModules = $config['module_listener_options']['module_paths'];
         $this->clearAssets();
 
-        parent::setApplicationConfig($config);
+        return parent::setApplicationConfig($config);
     }
 
     protected function tearDown()
     {
         $this->clearAssets();
 
-        return parent::tearDown();
+        parent::tearDown();
     }
 
-    private function removeDir($dir)
+    private function removeDir(string $dir): void
     {
         $files = array_diff(scandir($dir), ['.', '..']);
         foreach ($files as $file) {
@@ -45,7 +60,7 @@ class TestCase extends AbstractHttpControllerTestCase
             is_dir($path) ? $this->removeDir($path) : unlink($path);
         }
 
-        return rmdir($dir);
+        rmdir($dir);
     }
 
     private function clearAssets()
@@ -59,9 +74,9 @@ class TestCase extends AbstractHttpControllerTestCase
         }
     }
 
-    protected function setModuleName($resource, $moduleName)
+    protected function setModuleName(object $resource, string $moduleName): void
     {
-        $r = new \ReflectionObject($resource);
+        $r    = new ReflectionObject($resource);
         $prop = $r->getProperty('moduleName');
         $prop->setAccessible(true);
         $prop->setValue($resource, $moduleName);

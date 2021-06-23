@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
@@ -12,14 +8,15 @@ use Laminas\ApiTools\Admin\Exception;
 use Laminas\ApiTools\Admin\Model\RestServiceModelFactory;
 use Laminas\EventManager\EventManager;
 use Laminas\ServiceManager\ServiceManager;
+use ReflectionClass;
+
+use function sprintf;
 
 class DoctrineRestServiceModelFactory extends RestServiceModelFactory
 {
-    const TYPE_DEFAULT = DoctrineRestServiceModel::class;
+    public const TYPE_DEFAULT = DoctrineRestServiceModel::class;
 
-    /**
-     * @var ServiceManager
-     */
+    /** @var ServiceManager */
     protected $serviceManager;
 
     /**
@@ -35,7 +32,6 @@ class DoctrineRestServiceModelFactory extends RestServiceModelFactory
     /**
      * Set service manager
      *
-     * @param ServiceManager $serviceManager
      * @return DoctrineRestServiceModelFactory
      */
     public function setServiceManager(ServiceManager $serviceManager)
@@ -82,7 +78,7 @@ class DoctrineRestServiceModelFactory extends RestServiceModelFactory
      */
     private function createEventManager()
     {
-        $r = new \ReflectionClass(EventManager::class);
+        $r = new ReflectionClass(EventManager::class);
 
         if ($r->hasMethod('setSharedManager')) {
             // laminas-eventmanager v2 initialization

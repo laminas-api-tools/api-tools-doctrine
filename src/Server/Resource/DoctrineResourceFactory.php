@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
@@ -17,18 +13,24 @@ use Laminas\ApiTools\Hal\Plugin\Hal;
 use Laminas\Hydrator\HydratorInterface;
 use Laminas\ServiceManager\AbstractFactoryInterface;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
+
+use function class_exists;
+use function is_array;
+use function is_subclass_of;
+use function ltrim;
+use function sprintf;
 
 class DoctrineResourceFactory implements AbstractFactoryInterface
 {
     /**
      * Can this factory create the requested service?
      *
-     * @param ContainerInterface $container
      * @param string $requestedName
      * @return bool
-     * @throws \Laminas\ServiceManager\Exception\ServiceNotFoundException
+     * @throws ServiceNotFoundException
      */
     public function canCreate(ContainerInterface $container, $requestedName)
     {
@@ -38,15 +40,17 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
 
         $config = $container->get('config');
 
-        if (! isset($config['api-tools']['doctrine-connected'])
+        if (
+            ! isset($config['api-tools']['doctrine-connected'])
             || ! is_array($config['api-tools']['doctrine-connected'])
         ) {
             return false;
         }
 
-        $config = $config['api-tools']['doctrine-connected'];//[$requestedName];
+        $config = $config['api-tools']['doctrine-connected']; //[$requestedName];
 
-        if (! isset($config[$requestedName])
+        if (
+            ! isset($config[$requestedName])
             || ! is_array($config[$requestedName])
             || ! $this->isValidConfig($config[$requestedName], $requestedName, $container)
         ) {
@@ -61,7 +65,6 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      *
      * Provided for backwards compatiblity; proxies to canCreate().
      *
-     * @param ServiceLocatorInterface $container
      * @param string $name
      * @param string $requestedName
      * @return bool
@@ -74,26 +77,25 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     /**
      * Create and return the doctrine-connected resource.
      *
-     * @param ContainerInterface $container
      * @param string $requestedName
      * @param null|array $options
      * @return DoctrineResource
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $config = $container->get('config');
+        $config                  = $container->get('config');
         $doctrineConnectedConfig = $config['api-tools']['doctrine-connected'][$requestedName];
-        $doctrineHydratorConfig = $config['doctrine-hydrator'];
+        $doctrineHydratorConfig  = $config['doctrine-hydrator'];
 
         $restConfig = null;
         foreach ($config['api-tools-rest'] as $restControllerConfig) {
-            if ($restControllerConfig['listener'] == $requestedName) {
+            if ($restControllerConfig['listener'] === $requestedName) {
                 $restConfig = $restControllerConfig;
                 break;
             }
         }
 
-        if (is_null($restConfig)) {
+        if (null === $restConfig) {
             throw new RuntimeException(
                 sprintf('No api-tools-rest configuration found for resource %s', $requestedName)
             );
@@ -105,9 +107,9 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
             ? $container->get($doctrineConnectedConfig['entity_factory'])
             : null;
 
-        $hydrator = $this->loadHydrator($container, $doctrineConnectedConfig, $doctrineHydratorConfig);
-        $queryProviders = $this->loadQueryProviders($container, $doctrineConnectedConfig, $objectManager);
-        $queryCreateFilter = $this->loadQueryCreateFilter($container, $doctrineConnectedConfig, $objectManager);
+        $hydrator            = $this->loadHydrator($container, $doctrineConnectedConfig, $doctrineHydratorConfig);
+        $queryProviders      = $this->loadQueryProviders($container, $doctrineConnectedConfig, $objectManager);
+        $queryCreateFilter   = $this->loadQueryCreateFilter($container, $doctrineConnectedConfig, $objectManager);
         $configuredListeners = $this->loadConfiguredListeners($container, $doctrineConnectedConfig);
 
         /** @var DoctrineResource $listener */
@@ -138,14 +140,14 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param array $config
      * @param string $requestedName
      * @return string
-     * @throws ServiceNotCreatedException if the discovered resource class
+     * @throws ServiceNotCreatedException If the discovered resource class
      *     does not exist or is not a subclass of DoctrineResource.
      */
     protected function getResourceClassFromConfig($config, $requestedName)
     {
         $defaultClass = DoctrineResource::class;
 
-        $resourceClass = isset($config['class']) ? $config['class'] : $requestedName;
+        $resourceClass = $config['class'] ?? $requestedName;
         $resourceClass = $this->normalizeClassname($resourceClass);
 
         if (! class_exists($resourceClass) || ! is_subclass_of($resourceClass, $defaultClass)) {
@@ -168,12 +170,12 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      *
      * @param array $config
      * @param string $requestedName
-     * @param ContainerInterface $container
      * @return bool
      */
     protected function isValidConfig(array $config, $requestedName, ContainerInterface $container)
     {
-        if (! isset($config['object_manager'])
+        if (
+            ! isset($config['object_manager'])
             || ! $container->has($config['object_manager'])
         ) {
             return false;
@@ -187,7 +189,6 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      *
      * Provided for backwards compatibility; proxies to __invoke().
      *
-     * @param ServiceLocatorInterface $container
      * @param string $name
      * @param string $requestedName
      * @return DoctrineResource
@@ -207,7 +208,6 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     }
 
     /**
-     * @param ContainerInterface $container
      * @param array $doctrineConnectedConfig
      * @param array $doctrineHydratorConfig
      * @return HydratorInterface
@@ -235,18 +235,16 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
         // allowing multiple hydrators per resource.
         if (isset($doctrineConnectedConfig['hydrator'])) {
             $entityClass = $doctrineHydratorConfig[$doctrineConnectedConfig['hydrator']]['entity_class'];
-            $viewHelpers  = $container->get('ViewHelperManager');
+            $viewHelpers = $container->get('ViewHelperManager');
             /** @var Hal $hal */
             $hal = $viewHelpers->get('Hal');
             $hal->getEntityHydratorManager()->addHydrator($entityClass, $doctrineConnectedConfig['hydrator']);
         }
 
-
         return $hydratorManager->get($doctrineConnectedConfig['hydrator']);
     }
 
     /**
-     * @param ContainerInterface $container
      * @param array $config
      * @param ObjectManager $objectManager
      * @return QueryCreateFilterInterface
@@ -254,7 +252,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     protected function loadQueryCreateFilter(ContainerInterface $container, array $config, $objectManager)
     {
         $createFilterManager = $container->get('LaminasApiToolsDoctrineQueryCreateFilterManager');
-        $filterManagerAlias = isset($config['query_create_filter']) ? $config['query_create_filter'] : 'default';
+        $filterManagerAlias  = $config['query_create_filter'] ?? 'default';
 
         /** @var QueryCreateFilterInterface $queryCreateFilter */
         $queryCreateFilter = $createFilterManager->get($filterManagerAlias);
@@ -266,7 +264,6 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     }
 
     /**
-     * @param ContainerInterface $serviceLocator
      * @param array $config
      * @param ObjectManager $objectManager
      * @return array
@@ -275,14 +272,16 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     protected function loadQueryProviders(ContainerInterface $serviceLocator, array $config, $objectManager)
     {
         $queryProviders = [];
-        $queryManager = $serviceLocator->get('LaminasApiToolsDoctrineQueryProviderManager');
+        $queryManager   = $serviceLocator->get('LaminasApiToolsDoctrineQueryProviderManager');
 
         // Load default query provider
-        if (class_exists(EntityManager::class)
+        if (
+            class_exists(EntityManager::class)
             && $objectManager instanceof EntityManager
         ) {
             $queryProviders['default'] = $queryManager->get('default_orm');
-        } elseif (class_exists(DocumentManager::class)
+        } elseif (
+            class_exists(DocumentManager::class)
             && $objectManager instanceof DocumentManager
         ) {
             $queryProviders['default'] = $queryManager->get('default_odm');
@@ -306,7 +305,6 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
     }
 
     /**
-     * @param ContainerInterface $container
      * @param array $config
      * @return array
      */

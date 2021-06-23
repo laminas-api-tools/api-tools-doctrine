@@ -1,20 +1,13 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 return [
     'doctrine' => [
-        'connection' => [
+        'connection'    => [
             'odm_default' => [
-                'server' => 'localhost',
-                'port' => '27017',
-                'user' => '',
-                'password' => '',
-                'dbname' => 'laminas_api-tools_doctrine_server_test',
+                'connectionString' => getenv('TESTS_LAMINAS_API_TOOLS_DOCTRINE_EXTMONGODB_CONNECTSTRING'),
+                'dbname'           => getenv('TESTS_LAMINAS_API_TOOLS_DOCTRINE_EXTMONGODB_DATABASE'),
             ],
         ],
         'configuration' => [

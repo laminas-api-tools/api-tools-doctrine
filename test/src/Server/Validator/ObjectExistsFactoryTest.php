@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Server\Validator;
 
@@ -19,30 +15,24 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ObjectExistsFactoryTest extends TestCase
 {
-    /**
-     * @var ObjectProphecy|ServiceManager
-     */
+    /** @var ObjectProphecy|ServiceManager */
     private $serviceManager;
 
-    /**
-     * @var ValidatorPluginManager
-     */
+    /** @var ValidatorPluginManager */
     private $validators;
 
-    /**
-     * @var ObjectProphecy|ObjectRepository
-     */
+    /** @var ObjectProphecy|ObjectRepository */
     private $objectRepository;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $config = include __DIR__ . '/../../../../config/server.config.php';
+        $config           = include __DIR__ . '/../../../../config/server.config.php';
         $validatorsConfig = $config['validators'];
 
         $this->objectRepository = $this->prophesize(ObjectRepository::class);
-        $this->serviceManager = $this->prophesize(ServiceManager::class);
+        $this->serviceManager   = $this->prophesize(ServiceManager::class);
 
         $this->validators = new ValidatorPluginManager($this->serviceManager->reveal(), $validatorsConfig);
     }
@@ -53,7 +43,7 @@ class ObjectExistsFactoryTest extends TestCase
             ObjectExists::class,
             [
                 'object_repository' => $this->objectRepository->reveal(),
-                'fields' => 'foo',
+                'fields'            => 'foo',
             ]
         );
 
@@ -72,7 +62,7 @@ class ObjectExistsFactoryTest extends TestCase
             ObjectExists::class,
             [
                 'entity_class' => 'MyEntity',
-                'fields' => 'foo',
+                'fields'       => 'foo',
             ]
         );
 

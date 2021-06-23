@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
@@ -12,6 +8,9 @@ use Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Laminas\ApiTools\Admin\Model\AbstractAutodiscoveryModel;
+
+use function strrpos;
+use function substr;
 
 class DoctrineAutodiscoveryModel extends AbstractAutodiscoveryModel
 {
@@ -65,9 +64,9 @@ class DoctrineAutodiscoveryModel extends AbstractAutodiscoveryModel
                     case 'string':
                         $field['filters'] = $this->filters['text'];
                         if (! empty($mapping['length'])) {
-                            $validator = $this->validators['text'];
+                            $validator                   = $this->validators['text'];
                             $validator['options']['max'] = $mapping['length'];
-                            $field['validators'][] = $validator;
+                            $field['validators'][]       = $validator;
                         }
                         break;
                     case 'integer':

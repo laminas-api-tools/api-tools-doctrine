@@ -1,28 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTestApiToolsGeneral\Listener;
 
 use Laminas\ApiTools\Doctrine\DoctrineResource;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
 
+use function array_unique;
+use function method_exists;
+
 class EventCatcher
 {
     const EVENT_IDENTIFIER = DoctrineResource::class;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $listeners = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $caughtEvents = [];
 
-    /**
-     * @param SharedEventManagerInterface $events
-     */
     public function attachShared(SharedEventManagerInterface $events)
     {
         $listener = $events->attach(self::EVENT_IDENTIFIER, '*', [$this, 'listen']);
@@ -34,9 +32,6 @@ class EventCatcher
         $this->listeners[] = $listener;
     }
 
-    /**
-     * @param SharedEventManagerInterface $events
-     */
     public function detachShared(SharedEventManagerInterface $events)
     {
         $eventManagerVersion = method_exists($events, 'getEvents') ? 2 : 3;
@@ -57,9 +52,6 @@ class EventCatcher
         }
     }
 
-    /**
-     * @param Event $e
-     */
     public function listen(Event $e)
     {
         $this->caughtEvents[] = $e->getName();

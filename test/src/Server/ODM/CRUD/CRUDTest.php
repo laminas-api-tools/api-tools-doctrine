@@ -1,13 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Server\ODM\CRUD;
 
+use DateTime;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
@@ -22,12 +19,14 @@ use LaminasTest\ApiTools\Doctrine\TestCase;
 use LaminasTestApiToolsDbMongo\Document\Meta;
 use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 use MongoClient;
+use PHPUnit_Framework_MockObject_MockObject;
+
+use function json_decode;
+use function json_encode;
 
 class CRUDTest extends TestCase
 {
-    /**
-     * @var DocumentManager
-     */
+    /** @var DocumentManager */
     protected $dm;
 
     protected function setUp()
@@ -72,7 +71,7 @@ class CRUDTest extends TestCase
         $this->reset();
 
         $serviceManager = $this->getApplication()->getServiceManager();
-        $this->dm = $serviceManager->get('doctrine.documentmanager.odm_default');
+        $this->dm       = $serviceManager->get('doctrine.documentmanager.odm_default');
     }
 
     protected function clearData()
@@ -80,8 +79,8 @@ class CRUDTest extends TestCase
         $config = $this->getApplication()->getConfig();
         $config = $config['doctrine']['connection']['odm_default'];
 
-        $connection = new MongoClient('mongodb://' . $config['server'] . ':' . $config['port']);
-        $db = $connection->{$config['dbname']};
+        $connection = new MongoClient($config['connectionString']);
+        $db         = $connection->{$config['dbname']};
         $collection = $db->meta;
         $collection->remove();
     }
@@ -94,7 +93,7 @@ class CRUDTest extends TestCase
             '/test/meta',
             Request::METHOD_POST,
             [
-                'name' => 'MetaOne',
+                'name'      => 'MetaOne',
                 'createdAt' => '2016-08-21 23:04:19',
             ]
         );
@@ -135,7 +134,7 @@ class CRUDTest extends TestCase
 
     public function testCreateByExplicitlySettingEntityFactoryInConstructor()
     {
-        /** @var InstantiatorInterface|\PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
+        /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
         $entityFactoryMock = $this->getMockBuilder(InstantiatorInterface::class)->getMock();
         $entityFactoryMock->expects(self::once())
             ->method('instantiate')
@@ -147,9 +146,9 @@ class CRUDTest extends TestCase
         /** @var ServiceManager $sm */
         $sm = $this->getApplication()->getServiceManager();
 
-        $config = $sm->get('config');
-        $resourceName = 'LaminasTestApiToolsDbMongoApi\V1\Rest\Meta\MetaResource';
-        $resourceConfig = $config['api-tools']['doctrine-connected'][$resourceName];
+        $config                           = $sm->get('config');
+        $resourceName                     = 'LaminasTestApiToolsDbMongoApi\V1\Rest\Meta\MetaResource';
+        $resourceConfig                   = $config['api-tools']['doctrine-connected'][$resourceName];
         $resourceConfig['entity_factory'] = 'ResourceInstantiator';
         $config['api-tools']['doctrine-connected'][$resourceName] = $resourceConfig;
 
@@ -169,7 +168,7 @@ class CRUDTest extends TestCase
             '/test/meta',
             Request::METHOD_POST,
             [
-                'name' => 'MetaOne',
+                'name'      => 'MetaOne',
                 'createdAt' => '2016-08-21 23:04:19',
             ]
         );
@@ -202,7 +201,7 @@ class CRUDTest extends TestCase
 
     public function testFetchWithListenerThatReturnsApiProblem()
     {
-        $meta = $this->createMeta('Meta Fetch ApiProblem');
+        $meta         = $this->createMeta('Meta Fetch ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
             DoctrineResource::class,
@@ -287,7 +286,7 @@ class CRUDTest extends TestCase
     {
         $meta = $this->createMeta('Meta Patch');
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PATCH);
@@ -309,7 +308,7 @@ class CRUDTest extends TestCase
 
     public function testPatchWithListenerThatReturnsApiProblem()
     {
-        $meta = $this->createMeta('Meta Patch ApiProblem');
+        $meta         = $this->createMeta('Meta Patch ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
             DoctrineResource::class,
@@ -320,7 +319,7 @@ class CRUDTest extends TestCase
             }
         );
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PATCH);
@@ -338,12 +337,12 @@ class CRUDTest extends TestCase
     {
         $meta = $this->createMeta('Meta Put');
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PUT);
         $this->getRequest()->setContent(json_encode([
-            'name' => 'Meta Put Edit',
+            'name'      => 'Meta Put Edit',
             'createdAt' => '2016-08-22 00:08:19',
         ]));
 
@@ -363,7 +362,7 @@ class CRUDTest extends TestCase
 
     public function testPutWithListenerThatReturnsApiProblem()
     {
-        $meta = $this->createMeta('Meta Put ApiProblem');
+        $meta         = $this->createMeta('Meta Put ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
             DoctrineResource::class,
@@ -374,12 +373,12 @@ class CRUDTest extends TestCase
             }
         );
         $this->getRequest()->getHeaders()->addHeaders([
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ]);
         $this->getRequest()->setMethod(Request::METHOD_PUT);
         $this->getRequest()->setContent(json_encode([
-            'name' => 'Meta Put Edit',
+            'name'      => 'Meta Put Edit',
             'createdAt' => '2016-08-21 22:10:19',
         ]));
 
@@ -394,7 +393,7 @@ class CRUDTest extends TestCase
     public function testDelete()
     {
         $meta = $this->createMeta('Meta Delete');
-        $id = $meta->getId();
+        $id   = $meta->getId();
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->getRequest()->setMethod(Request::METHOD_DELETE);
 
@@ -410,7 +409,7 @@ class CRUDTest extends TestCase
 
     public function testDeleteWithListenerThatReturnsApiProblem()
     {
-        $meta = $this->createMeta('Meta Delete ApiProblem');
+        $meta         = $this->createMeta('Meta Delete ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
             DoctrineResource::class,
@@ -436,7 +435,7 @@ class CRUDTest extends TestCase
     public function testDeleteEntityNotFound()
     {
         $meta = $this->createMeta();
-        $id = $meta->getId() . '0';
+        $id   = $meta->getId() . '0';
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->getRequest()->setMethod(Request::METHOD_DELETE);
 
@@ -450,7 +449,7 @@ class CRUDTest extends TestCase
     public function testDeleteEntityDeleted()
     {
         $meta = $this->createMeta();
-        $id = $meta->getId();
+        $id   = $meta->getId();
         $this->dm->remove($meta);
         $this->dm->flush();
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -469,7 +468,7 @@ class CRUDTest extends TestCase
     protected function validateTriggeredEvents(array $expectedEvents)
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $eventCatcher = $serviceManager->get(EventCatcher::class);
+        $eventCatcher   = $serviceManager->get(EventCatcher::class);
 
         $this->assertEquals($expectedEvents, $eventCatcher->getCaughtEvents());
     }
@@ -482,7 +481,7 @@ class CRUDTest extends TestCase
     {
         $meta = new Meta();
         $meta->setName($name ?: 'Meta Name');
-        $meta->setCreatedAt(new \DateTime());
+        $meta->setCreatedAt(new DateTime());
         $this->dm->persist($meta);
         $this->dm->flush();
 
