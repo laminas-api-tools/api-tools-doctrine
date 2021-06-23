@@ -11,8 +11,6 @@ use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
 use LaminasTest\ApiTools\Doctrine\TestCase;
 
-use function print_r;
-
 class DoctrineRestServiceResourceTest extends TestCase
 {
     protected function setUp(): void
@@ -33,12 +31,12 @@ class DoctrineRestServiceResourceTest extends TestCase
     /**
      * @see https://github.com/zfcampus/zf-apigility/issues/18
      */
-    public function testCreateReturnsRestServiceEntityWithControllerServiceNamePopulated()
+    public function testCreateReturnsRestServiceEntityWithControllerServiceNamePopulated(): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
         $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
 
-        $tool = new SchemaTool($em);
+        new SchemaTool($em);
 
         // Create DB
         $resourceDefinition = [
@@ -76,10 +74,8 @@ class DoctrineRestServiceResourceTest extends TestCase
             ]
         );
 
-        $x = $this->dispatch('/db-api/artist');
+        $this->dispatch('/db-api/artist');
 
         $this->resource->delete('DbApi\\V1\\Rest\\Artist\\Controller');
-
-        print_r($x);
     }
 }

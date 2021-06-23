@@ -31,10 +31,10 @@ class DoctrineMetadata2Test extends TestCase
     /**
      * @see https://github.com/zfcampus/zf-apigility/issues/18
      */
-    public function testDoctrineService()
+    public function testDoctrineService(): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $serviceManager->get('doctrine.entitymanager.orm_default');
 
         $this->getRequest()->getHeaders()->addHeaders([
             'Accept' => 'application/json',
@@ -66,7 +66,7 @@ class DoctrineMetadata2Test extends TestCase
         $this->resource->setModuleName('DbApi');
         $this->assertEquals($this->resource->getModuleName(), 'DbApi');
 
-        $entity = $this->resource->patch(
+        $this->resource->patch(
             'DbApi\\V1\\Rest\\Artist\\Controller',
             [
                 'routematch'             => '/doctrine-changed/test',

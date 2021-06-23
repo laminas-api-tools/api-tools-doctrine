@@ -16,6 +16,7 @@ use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\Hydrator\HydratorInterface;
 use Laminas\InputFilter\CollectionInputFilter;
 use Laminas\InputFilter\InputFilterInterface;
+use Laminas\InputFilter\InputInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\ArrayObject;
 use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
@@ -280,7 +281,7 @@ class CollectionListener implements ListenerAggregateInterface
 
     /**
      * @param string $association
-     * @return InputFilterInterface
+     * @return InputFilterInterface|InputInterface
      */
     protected function getAssociatedEntityInputFilter($association, InputFilterInterface $inputFilter)
     {

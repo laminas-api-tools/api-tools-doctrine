@@ -1,0 +1,2480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.8.1@f73f2299dbc59a3e6c4d66cff4605176e728ee69">
+  <file src="config/admin.config.php">
+    <UndefinedClass occurrences="25">
+      <code>Controller\DoctrineAutodiscovery</code>
+      <code>Controller\DoctrineAutodiscovery</code>
+      <code>Controller\DoctrineAutodiscovery</code>
+      <code>Controller\DoctrineAutodiscovery</code>
+      <code>Controller\DoctrineAutodiscovery</code>
+      <code>Controller\DoctrineAutodiscovery</code>
+      <code>Controller\DoctrineAutodiscovery</code>
+      <code>Controller\DoctrineMetadataService</code>
+      <code>Controller\DoctrineMetadataService</code>
+      <code>Controller\DoctrineMetadataService</code>
+      <code>Controller\DoctrineMetadataService</code>
+      <code>Controller\DoctrineMetadataService</code>
+      <code>Controller\DoctrineRestService</code>
+      <code>Controller\DoctrineRestService</code>
+      <code>Controller\DoctrineRestService</code>
+      <code>Controller\DoctrineRestService</code>
+      <code>Controller\DoctrineRestService</code>
+      <code>Controller\DoctrineRpcService</code>
+      <code>Controller\DoctrineRpcService</code>
+      <code>Controller\DoctrineRpcService</code>
+      <code>Controller\DoctrineRpcService</code>
+      <code>Controller\DoctrineRpcService</code>
+      <code>DoctrineAutodiscovery</code>
+      <code>Server\Validator\NoObjectExists</code>
+      <code>Server\Validator\ObjectExists</code>
+    </UndefinedClass>
+  </file>
+  <file src="config/server.config.php">
+    <UndefinedClass occurrences="6">
+      <code>NoObjectExists</code>
+      <code>ObjectExists</code>
+      <code>Validator\NoObjectExists</code>
+      <code>Validator\NoObjectExists</code>
+      <code>Validator\ObjectExists</code>
+      <code>Validator\ObjectExists</code>
+    </UndefinedClass>
+  </file>
+  <file src="src/Admin/Controller/DoctrineAutodiscoveryController.php">
+    <MixedArgument occurrences="3">
+      <code>$adapter</code>
+      <code>$module</code>
+      <code>$version</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="3">
+      <code>$adapter</code>
+      <code>$module</code>
+      <code>$version</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="3">
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+    </MixedMethodCall>
+    <PropertyNotSetInConstructor occurrences="5">
+      <code>DoctrineAutodiscoveryController</code>
+      <code>DoctrineAutodiscoveryController</code>
+      <code>DoctrineAutodiscoveryController</code>
+      <code>DoctrineAutodiscoveryController</code>
+      <code>DoctrineAutodiscoveryController</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Admin/Controller/DoctrineAutodiscoveryControllerFactory.php">
+    <DeprecatedInterface occurrences="1">
+      <code>DoctrineAutodiscoveryControllerFactory</code>
+    </DeprecatedInterface>
+    <DeprecatedMethod occurrences="1">
+      <code>getServiceLocator</code>
+    </DeprecatedMethod>
+    <ParamNameMismatch occurrences="1">
+      <code>$container</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/Admin/Model/DoctrineAutodiscoveryModel.php">
+    <MixedArgument occurrences="1">
+      <code>$mapping['fieldName']</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="4">
+      <code>$mapping['fieldName']</code>
+      <code>$mapping['fieldName']</code>
+      <code>$mapping['type']</code>
+      <code>$validator['options']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="1">
+      <code>$validator['options']</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="6">
+      <code>$field['filters']</code>
+      <code>$field['filters']</code>
+      <code>$field['validators'][]</code>
+      <code>$mapping</code>
+      <code>$validator</code>
+      <code>$validator['options']['max']</code>
+    </MixedAssignment>
+    <NoInterfaceProperties occurrences="1">
+      <code>$classMetadata-&gt;fieldMappings</code>
+    </NoInterfaceProperties>
+    <PossiblyFalseOperand occurrences="1">
+      <code>strrpos($classMetadata-&gt;getName(), '\\')</code>
+    </PossiblyFalseOperand>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>DoctrineAutodiscoveryModel</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Admin/Model/DoctrineAutodiscoveryModelFactory.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$container</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Admin/Model/DoctrineMetadataServiceEntity.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>$this</code>
+    </ImplementedReturnTypeMismatch>
+    <MissingConstructor occurrences="36">
+      <code>$associationMappings</code>
+      <code>$changeTrackingPolicy</code>
+      <code>$columnNames</code>
+      <code>$containsForeignIdentifier</code>
+      <code>$customGeneratorDefinition</code>
+      <code>$customRepositoryClassName</code>
+      <code>$discriminatorColumn</code>
+      <code>$discriminatorMap</code>
+      <code>$discriminatorValue</code>
+      <code>$entityListeners</code>
+      <code>$fieldMappings</code>
+      <code>$fieldNames</code>
+      <code>$generatorType</code>
+      <code>$idGenerator</code>
+      <code>$identifier</code>
+      <code>$inheritanceType</code>
+      <code>$isIdentifierComposite</code>
+      <code>$isMappedSuperclass</code>
+      <code>$isReadOnly</code>
+      <code>$isVersioned</code>
+      <code>$lifecycleCallbacks</code>
+      <code>$name</code>
+      <code>$namedNativeQueries</code>
+      <code>$namedQueries</code>
+      <code>$namespace</code>
+      <code>$namingStrategy</code>
+      <code>$parentClasses</code>
+      <code>$reflClass</code>
+      <code>$reflFields</code>
+      <code>$rootEntityName</code>
+      <code>$sequenceGeneratorDefinition</code>
+      <code>$sqlResultSetMappings</code>
+      <code>$subClasses</code>
+      <code>$table</code>
+      <code>$tableGeneratorDefinition</code>
+      <code>$versionField</code>
+    </MissingConstructor>
+    <MixedAssignment occurrences="37">
+      <code>$this-&gt;associationMappings</code>
+      <code>$this-&gt;changeTrackingPolicy</code>
+      <code>$this-&gt;columnNames</code>
+      <code>$this-&gt;containsForeignIdentifier</code>
+      <code>$this-&gt;customGeneratorDefinition</code>
+      <code>$this-&gt;customRepositoryClassName</code>
+      <code>$this-&gt;discriminatorColumn</code>
+      <code>$this-&gt;discriminatorMap</code>
+      <code>$this-&gt;discriminatorValue</code>
+      <code>$this-&gt;entityListeners</code>
+      <code>$this-&gt;fieldMappings</code>
+      <code>$this-&gt;fieldNames</code>
+      <code>$this-&gt;generatorType</code>
+      <code>$this-&gt;idGenerator</code>
+      <code>$this-&gt;identifier</code>
+      <code>$this-&gt;inheritanceType</code>
+      <code>$this-&gt;isIdentifierComposite</code>
+      <code>$this-&gt;isMappedSuperclass</code>
+      <code>$this-&gt;isReadOnly</code>
+      <code>$this-&gt;isVersioned</code>
+      <code>$this-&gt;lifecycleCallbacks</code>
+      <code>$this-&gt;name</code>
+      <code>$this-&gt;namedNativeQueries</code>
+      <code>$this-&gt;namedQueries</code>
+      <code>$this-&gt;namespace</code>
+      <code>$this-&gt;namingStrategy</code>
+      <code>$this-&gt;parentClasses</code>
+      <code>$this-&gt;reflClass</code>
+      <code>$this-&gt;reflFields</code>
+      <code>$this-&gt;rootEntityName</code>
+      <code>$this-&gt;sequenceGeneratorDefinition</code>
+      <code>$this-&gt;sqlResultSetMappings</code>
+      <code>$this-&gt;subClasses</code>
+      <code>$this-&gt;table</code>
+      <code>$this-&gt;tableGeneratorDefinition</code>
+      <code>$this-&gt;versionField</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <ParamNameMismatch occurrences="1">
+      <code>$data</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/Admin/Model/DoctrineMetadataServiceResource.php">
+    <InvalidStringClass occurrences="2">
+      <code>new $entityClass()</code>
+      <code>new $entityClass()</code>
+    </InvalidStringClass>
+    <LessSpecificReturnStatement occurrences="2">
+      <code>$metadataEntity</code>
+      <code>$return</code>
+    </LessSpecificReturnStatement>
+    <MissingConstructor occurrences="1">
+      <code>$serviceManager</code>
+    </MissingConstructor>
+    <MixedArgument occurrences="2">
+      <code>$objectManagerAlias</code>
+      <code>$objectManagerClass</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="4">
+      <code>$objectManager</code>
+      <code>$objectManager</code>
+      <code>$objectManagerAlias</code>
+      <code>$objectManagerClass</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="4">
+      <code>exchangeArray</code>
+      <code>exchangeArray</code>
+      <code>getMetadataFactory</code>
+      <code>getMetadataFactory</code>
+    </MixedMethodCall>
+    <MoreSpecificImplementedParamType occurrences="5">
+      <code>$data</code>
+      <code>$data</code>
+      <code>$entityClassName</code>
+      <code>$id</code>
+      <code>$id</code>
+    </MoreSpecificImplementedParamType>
+    <MoreSpecificReturnType occurrences="2">
+      <code>RestServiceEntity[]|ApiProblem</code>
+      <code>RestServiceEntity|ApiProblem</code>
+    </MoreSpecificReturnType>
+    <ParamNameMismatch occurrences="1">
+      <code>$entityClassName</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/Admin/Model/DoctrineMetadataServiceResourceFactory.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$container</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Admin/Model/DoctrineRestServiceEntity.php">
+    <MissingConstructor occurrences="2">
+      <code>$hydratorName</code>
+      <code>$objectManager</code>
+    </MissingConstructor>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAssignment occurrences="5">
+      <code>$data['by_value']</code>
+      <code>$data['hydrator_name']</code>
+      <code>$data['object_manager']</code>
+      <code>$data['strategies']</code>
+      <code>$data['use_generated_hydrator']</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="7">
+      <code>$data</code>
+      <code>$this-&gt;byValue</code>
+      <code>$this-&gt;hydratorName</code>
+      <code>$this-&gt;hydratorStrategies</code>
+      <code>$this-&gt;objectManager</code>
+      <code>$this-&gt;useGeneratedHydrator</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array&lt;string, mixed&gt;</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$data</code>
+    </MixedReturnStatement>
+    <NonInvariantDocblockPropertyType occurrences="1">
+      <code>$hydratorName</code>
+    </NonInvariantDocblockPropertyType>
+    <ParamNameMismatch occurrences="1">
+      <code>$data</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/Admin/Model/DoctrineRestServiceModel.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>$this-&gt;events</code>
+    </DocblockTypeContradiction>
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>self</code>
+    </ImplementedReturnTypeMismatch>
+    <MissingClosureParamType occurrences="1">
+      <code>$r</code>
+    </MissingClosureParamType>
+    <MixedArgument occurrences="43">
+      <code>$collectionClass</code>
+      <code>$collectionClass</code>
+      <code>$collectionClass</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$configHydrator</code>
+      <code>$configKey</code>
+      <code>$configKey</code>
+      <code>$configResource</code>
+      <code>$config['api-tools-rest']</code>
+      <code>$config['api-tools-versioning']['uri']</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$details-&gt;objectManager</code>
+      <code>$details-&gt;objectManager</code>
+      <code>$details-&gt;objectManager</code>
+      <code>$details-&gt;routeIdentifierName</code>
+      <code>$details-&gt;routeMatch</code>
+      <code>$details-&gt;serviceName</code>
+      <code>$entity-&gt;getArrayCopy()</code>
+      <code>$entityClass</code>
+      <code>$filter-&gt;filter($resourceName)</code>
+      <code>$filter-&gt;filter($this-&gt;module)</code>
+      <code>$filter-&gt;filter($this-&gt;module)</code>
+      <code>$module</code>
+      <code>$module</code>
+      <code>$module</code>
+      <code>$original-&gt;controllerServiceName</code>
+      <code>$resourceClass</code>
+      <code>$restCollectionClass</code>
+      <code>$restConfig</code>
+      <code>$restResourceClass</code>
+      <code>$routeName</code>
+      <code>$routeName</code>
+      <code>$routeName</code>
+      <code>$routeName</code>
+      <code>$service-&gt;resourceClass</code>
+      <code>$strategy</code>
+      <code>$update-&gt;hydratorName</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="3">
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="15">
+      <code>$configResource['hydrator']</code>
+      <code>$config['accept_whitelist']</code>
+      <code>$config['api-tools']</code>
+      <code>$config['api-tools-content-validation'][$entity-&gt;controllerServiceName]</code>
+      <code>$config['api-tools-hal']['metadata_map']</code>
+      <code>$config['api-tools-rest'][$entity-&gt;controllerServiceName]</code>
+      <code>$config['api-tools-rest'][$entity-&gt;controllerServiceName]</code>
+      <code>$config['api-tools-versioning']['uri']</code>
+      <code>$config['content_type_whitelist']</code>
+      <code>$config['controllers']</code>
+      <code>$config['doctrine-hydrator'][$configResource['hydrator']]</code>
+      <code>$config['doctrine-hydrator'][$hydratorName]</code>
+      <code>$config['router']['routes'][$routeName]['options']['route']</code>
+      <code>$restConfig['listener']</code>
+      <code>$restConfig['listener']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="3">
+      <code>$restConfig['controllerServiceName']</code>
+      <code>$restConfig['module']</code>
+      <code>$restConfig['resource_class']</code>
+    </MixedArrayAssignment>
+    <MixedArrayOffset occurrences="15">
+      <code>$config['api-tools']['doctrine-connected'][$entity-&gt;resourceClass]</code>
+      <code>$config['api-tools']['doctrine-connected'][$entity-&gt;resourceClass]</code>
+      <code>$config['api-tools-content-validation'][$entity-&gt;controllerServiceName]</code>
+      <code>$config['api-tools-hal']['metadata_map'][$entity-&gt;entityClass]</code>
+      <code>$config['api-tools-rest'][$entity-&gt;controllerServiceName]</code>
+      <code>$config['api-tools-rest'][$entity-&gt;controllerServiceName]</code>
+      <code>$config['doctrine-hydrator'][$configResource['hydrator']]</code>
+      <code>$config['doctrine-hydrator'][$configResource['hydrator']]</code>
+      <code>$config['doctrine-hydrator'][$hydratorName]</code>
+      <code>$config['router']['routes'][$routeName]</code>
+      <code>$patch[$configKey]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="43">
+      <code>$acceptWhitelist</code>
+      <code>$collectionClass</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$configHydrator</code>
+      <code>$configKey</code>
+      <code>$configKey</code>
+      <code>$configKey</code>
+      <code>$configResource</code>
+      <code>$config['api-tools-hal']['metadata_map'][$entityClass]['hydrator']</code>
+      <code>$contentTypeWhitelist</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$entity</code>
+      <code>$hydratorName</code>
+      <code>$hydratorName</code>
+      <code>$hydratorStrategies</code>
+      <code>$module</code>
+      <code>$module</code>
+      <code>$module</code>
+      <code>$objectManager</code>
+      <code>$patch[$configKey]</code>
+      <code>$patch['hydrator']</code>
+      <code>$patch['object_manager']</code>
+      <code>$resource</code>
+      <code>$resourceClass</code>
+      <code>$restCollectionClass</code>
+      <code>$restConfig</code>
+      <code>$restConfig['resource_class']</code>
+      <code>$restResourceClass</code>
+      <code>$route</code>
+      <code>$route</code>
+      <code>$routeName</code>
+      <code>$routeName</code>
+      <code>$routeName</code>
+      <code>$service</code>
+      <code>$strategy</code>
+      <code>$uriKey</code>
+      <code>$validator</code>
+      <code>$whitelist</code>
+      <code>$whitelist</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>DoctrineRestServiceEntity|false</code>
+      <code>string</code>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="1">
+      <code>getArrayCopy</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="5">
+      <code>$module</code>
+      <code>$resource</code>
+      <code>$service</code>
+      <code>$service</code>
+      <code>$service</code>
+    </MixedOperand>
+    <MixedPropertyFetch occurrences="1">
+      <code>$entity-&gt;resourceClass</code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement occurrences="3">
+      <code>$config['api-tools-rest'][$controllerServiceName]['collection_class']</code>
+      <code>$config['api-tools-rest'][$controllerServiceName]['entity_class']</code>
+      <code>$eventResults-&gt;last()</code>
+    </MixedReturnStatement>
+    <NullableReturnStatement occurrences="2">
+      <code>null</code>
+      <code>null</code>
+    </NullableReturnStatement>
+    <ParamNameMismatch occurrences="1">
+      <code>$events</code>
+    </ParamNameMismatch>
+    <PossiblyFalseArgument occurrences="7">
+      <code>$original</code>
+      <code>$original</code>
+      <code>$original</code>
+      <code>$original</code>
+      <code>$original</code>
+      <code>$service</code>
+      <code>$service</code>
+    </PossiblyFalseArgument>
+    <PossiblyInvalidPropertyFetch occurrences="1">
+      <code>$service-&gt;resourceClass</code>
+    </PossiblyInvalidPropertyFetch>
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>$events</code>
+      <code>$renderer</code>
+      <code>$routeNameFilter</code>
+      <code>$serviceManager</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>$this-&gt;renderer instanceof PhpRenderer</code>
+      <code>$this-&gt;routeNameFilter instanceof FilterChain</code>
+    </RedundantConditionGivenDocblockType>
+    <TooManyArguments occurrences="1">
+      <code>trigger</code>
+    </TooManyArguments>
+    <UndefinedVariable occurrences="1">
+      <code>$response</code>
+    </UndefinedVariable>
+  </file>
+  <file src="src/Admin/Model/DoctrineRestServiceModelFactory.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>DoctrineRestServiceModel</code>
+    </ImplementedReturnTypeMismatch>
+    <MixedArrayAssignment occurrences="1">
+      <code>$this-&gt;models[$type][$module]</code>
+    </MixedArrayAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>DoctrineRestServiceModel</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;models[$type][$module]</code>
+    </MixedReturnStatement>
+    <PossiblyNullArgument occurrences="1">
+      <code>$moduleEntity</code>
+    </PossiblyNullArgument>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$serviceManager</code>
+    </PropertyNotSetInConstructor>
+    <UndefinedMethod occurrences="1">
+      <code>setSharedManager</code>
+    </UndefinedMethod>
+  </file>
+  <file src="src/Admin/Model/DoctrineRestServiceModelFactoryFactory.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$container</code>
+    </ArgumentTypeCoercion>
+    <MixedArgument occurrences="6">
+      <code>$container-&gt;get(ConfigResourceFactory::class)</code>
+      <code>$container-&gt;get(ModuleModel::class)</code>
+      <code>$container-&gt;get(ModulePathSpec::class)</code>
+      <code>$sharedEvents</code>
+      <code>ConfigResourceFactory::class</code>
+      <code>ConfigResourceFactory::class</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$sharedEvents</code>
+    </MixedAssignment>
+    <UndefinedClass occurrences="2">
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+    </UndefinedClass>
+  </file>
+  <file src="src/Admin/Model/DoctrineRestServiceResource.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>$this-&gt;model instanceof DoctrineRestServiceModel</code>
+    </DocblockTypeContradiction>
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;model</code>
+    </InvalidReturnStatement>
+    <LessSpecificReturnStatement occurrences="2">
+      <code>$service</code>
+      <code>parent::fetch($id)</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$data</code>
+      <code>$id</code>
+    </MoreSpecificImplementedParamType>
+    <MoreSpecificReturnType occurrences="2">
+      <code>DoctrineRestServiceEntity|ApiProblem</code>
+      <code>DoctrineRestServiceEntity|ApiProblem</code>
+    </MoreSpecificReturnType>
+    <PropertyNotSetInConstructor occurrences="7">
+      <code>DoctrineRestServiceResource</code>
+      <code>DoctrineRestServiceResource</code>
+      <code>DoctrineRestServiceResource</code>
+      <code>DoctrineRestServiceResource</code>
+      <code>DoctrineRestServiceResource</code>
+      <code>DoctrineRestServiceResource</code>
+      <code>DoctrineRestServiceResource</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Admin/Model/DoctrineRestServiceResourceFactory.php">
+    <MixedArgument occurrences="3">
+      <code>$container-&gt;get(DoctrineRestServiceModelFactory::class)</code>
+      <code>$container-&gt;get(DocumentationModel::class)</code>
+      <code>$container-&gt;get(InputFilterModel::class)</code>
+    </MixedArgument>
+  </file>
+  <file src="src/Admin/Model/DoctrineRpcServiceModel.php">
+    <MixedArgument occurrences="12">
+      <code>$config['api-tools-rpc-doctrine-controller']</code>
+      <code>$config['api-tools-versioning']['uri']</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$data['route_name']</code>
+      <code>$entity-&gt;controllerClass</code>
+      <code>$routeName</code>
+      <code>$serviceName</code>
+      <code>$serviceName</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="3">
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+      <code>$controllerService</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="8">
+      <code>$config[$routeName]</code>
+      <code>$config['api-tools-versioning']['uri']</code>
+      <code>$config['options']</code>
+      <code>$contentNegotiationConfig['accept_whitelist']</code>
+      <code>$contentNegotiationConfig['content_type_whitelist']</code>
+      <code>$contentNegotiationConfig['controllers']</code>
+      <code>$rpcConfig['http_methods']</code>
+      <code>$rpcConfig['route_name']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="4">
+      <code>$config['api-tools-content-negotiation'][$headerType]</code>
+      <code>$config['api-tools-content-negotiation']['controllers']</code>
+      <code>$config['api-tools-rpc'][$controllerService]</code>
+      <code>$config['router']['routes']</code>
+    </MixedArrayAssignment>
+    <MixedArrayOffset occurrences="1">
+      <code>$config['router']['routes'][$routeName]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="15">
+      <code>$config</code>
+      <code>$config</code>
+      <code>$contentNegotiationConfig</code>
+      <code>$controllerData</code>
+      <code>$controllerService</code>
+      <code>$data['accept_whitelist']</code>
+      <code>$data['content_type_whitelist']</code>
+      <code>$data['http_methods']</code>
+      <code>$data['route_name']</code>
+      <code>$data['selector']</code>
+      <code>$fullClassName</code>
+      <code>$routeName</code>
+      <code>$routeName</code>
+      <code>$rpcConfig</code>
+      <code>$serviceName</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="2">
+      <code>false|string</code>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedPropertyFetch occurrences="1">
+      <code>$controllerData-&gt;service</code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement occurrences="2">
+      <code>$config['options']['route']</code>
+      <code>$filter-&gt;filter($string)</code>
+    </MixedReturnStatement>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$filter</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>$this-&gt;filter instanceof FilterChain</code>
+    </RedundantConditionGivenDocblockType>
+    <UndefinedClass occurrences="1">
+      <code>InvokableFactory</code>
+    </UndefinedClass>
+  </file>
+  <file src="src/Admin/Model/DoctrineRpcServiceModelFactory.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>DoctrineRpcServiceModel</code>
+    </ImplementedReturnTypeMismatch>
+    <MixedInferredReturnType occurrences="1">
+      <code>DoctrineRpcServiceModel</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;models[$module]</code>
+    </MixedReturnStatement>
+    <PossiblyNullArgument occurrences="1">
+      <code>$moduleEntity</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Admin/Model/DoctrineRpcServiceModelFactoryFactory.php">
+    <MixedArgument occurrences="6">
+      <code>$configFactory</code>
+      <code>$moduleModel</code>
+      <code>$modulePathSpec</code>
+      <code>$sharedEvents</code>
+      <code>ConfigResourceFactory::class</code>
+      <code>ConfigResourceFactory::class</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="4">
+      <code>$configFactory</code>
+      <code>$moduleModel</code>
+      <code>$modulePathSpec</code>
+      <code>$sharedEvents</code>
+    </MixedAssignment>
+    <UndefinedClass occurrences="2">
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+    </UndefinedClass>
+  </file>
+  <file src="src/Admin/Model/DoctrineRpcServiceResource.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>$this-&gt;model instanceof DoctrineRpcServiceModel</code>
+    </DocblockTypeContradiction>
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;model</code>
+    </InvalidReturnStatement>
+    <InvalidScalarArgument occurrences="1">
+      <code>$e-&gt;getCode()</code>
+    </InvalidScalarArgument>
+    <LessSpecificReturnStatement occurrences="2">
+      <code>$service</code>
+      <code>parent::fetch($id)</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$data</code>
+      <code>$id</code>
+    </MoreSpecificImplementedParamType>
+    <MoreSpecificReturnType occurrences="2">
+      <code>DoctrineRpcServiceEntity|ApiProblem</code>
+      <code>DoctrineRpcServiceEntity|ApiProblem</code>
+    </MoreSpecificReturnType>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$creationData['http_methods']</code>
+    </PossiblyInvalidArgument>
+    <PropertyNotSetInConstructor occurrences="7">
+      <code>DoctrineRpcServiceResource</code>
+      <code>DoctrineRpcServiceResource</code>
+      <code>DoctrineRpcServiceResource</code>
+      <code>DoctrineRpcServiceResource</code>
+      <code>DoctrineRpcServiceResource</code>
+      <code>DoctrineRpcServiceResource</code>
+      <code>DoctrineRpcServiceResource</code>
+    </PropertyNotSetInConstructor>
+    <TooManyArguments occurrences="1">
+      <code>createService</code>
+    </TooManyArguments>
+  </file>
+  <file src="src/Admin/Model/DoctrineRpcServiceResourceFactory.php">
+    <MixedArgument occurrences="4">
+      <code>$container-&gt;get('ControllerManager')</code>
+      <code>$container-&gt;get(DoctrineRpcServiceModelFactory::class)</code>
+      <code>$container-&gt;get(DocumentationModel::class)</code>
+      <code>$container-&gt;get(InputFilterModel::class)</code>
+    </MixedArgument>
+  </file>
+  <file src="src/Admin/Model/NewDoctrineServiceEntity.php">
+    <MissingConstructor occurrences="2">
+      <code>$hydratorName</code>
+      <code>$objectManager</code>
+    </MissingConstructor>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAssignment occurrences="5">
+      <code>$data['by_value']</code>
+      <code>$data['hydrator_name']</code>
+      <code>$data['object_manager']</code>
+      <code>$data['strategies']</code>
+      <code>$data['use_generated_hydrator']</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="7">
+      <code>$data</code>
+      <code>$this-&gt;byValue</code>
+      <code>$this-&gt;hydratorName</code>
+      <code>$this-&gt;hydratorStrategies</code>
+      <code>$this-&gt;objectManager</code>
+      <code>$this-&gt;useGeneratedHydrator</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array&lt;string, mixed&gt;</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$data</code>
+    </MixedReturnStatement>
+    <NonInvariantDocblockPropertyType occurrences="1">
+      <code>$hydratorName</code>
+    </NonInvariantDocblockPropertyType>
+    <ParamNameMismatch occurrences="1">
+      <code>$data</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/Admin/Module.php">
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>include __DIR__ . '/../../config/admin.config.php'</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Server/Event/DoctrineResourceEvent.php">
+    <PropertyNotSetInConstructor occurrences="7">
+      <code>$data</code>
+      <code>$entityClassName</code>
+      <code>$entityId</code>
+      <code>$objectManager</code>
+      <code>$resourceEvent</code>
+      <code>DoctrineResourceEvent</code>
+      <code>DoctrineResourceEvent</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Server/Event/Listener/CollectionListener.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$associationTargetClass</code>
+    </ArgumentTypeCoercion>
+    <DocblockTypeContradiction occurrences="1">
+      <code>! $metadata</code>
+    </DocblockTypeContradiction>
+    <InvalidPropertyAssignmentValue occurrences="3">
+      <code>$this-&gt;entityHydratorMap</code>
+      <code>$this-&gt;entityHydratorMap</code>
+      <code>[]</code>
+    </InvalidPropertyAssignmentValue>
+    <LessSpecificReturnStatement occurrences="2">
+      <code>$hydratorMap[$entityClass]</code>
+      <code>$this-&gt;entityHydratorMap[$entityClass]</code>
+    </LessSpecificReturnStatement>
+    <MixedArgument occurrences="14">
+      <code>$association</code>
+      <code>$association</code>
+      <code>$association</code>
+      <code>$association</code>
+      <code>$association</code>
+      <code>$event-&gt;getTarget()-&gt;getServiceManager()</code>
+      <code>$listener</code>
+      <code>$subEntityData</code>
+      <code>$subEntityData</code>
+      <code>$subEntityData</code>
+      <code>$this-&gt;entityCollectionValuedAssociations[$entity]</code>
+      <code>$this-&gt;getEntityHydratorMap()[$entityClass]</code>
+      <code>$this-&gt;getRootEntity()</code>
+      <code>$this-&gt;iterateEntity($this-&gt;getRootEntity(), $this-&gt;getObjectData(), $this-&gt;getInputFilter())</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$data</code>
+      <code>$data</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="2">
+      <code>$configParams['entity_class']</code>
+      <code>$config[DoctrineHydratorFactory::FACTORY_NAMESPACE]</code>
+    </MixedArrayAccess>
+    <MixedArrayOffset occurrences="2">
+      <code>$data[$association]</code>
+      <code>$this-&gt;entityHydratorMap[$configParams['entity_class']]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="13">
+      <code>$association</code>
+      <code>$association</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$configParams</code>
+      <code>$hydrator</code>
+      <code>$hydratorKey</code>
+      <code>$hydratorManager</code>
+      <code>$identifierValues[$identifierName]</code>
+      <code>$listener</code>
+      <code>$subEntityData</code>
+      <code>$subEntityData</code>
+      <code>$this-&gt;rootEntity</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="2">
+      <code>ArrayObject</code>
+      <code>ClassMetadata</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="2">
+      <code>getServiceManager</code>
+      <code>new $targetEntityClassName()</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;classMetadataMap[$entity]</code>
+      <code>$this-&gt;entityCollectionValuedAssociations[$entity]</code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>AbstractHydrator|DoctrineObject</code>
+    </MoreSpecificReturnType>
+    <PossiblyFalsePropertyAssignmentValue occurrences="1">
+      <code>false</code>
+    </PossiblyFalsePropertyAssignmentValue>
+    <PossiblyInvalidArgument occurrences="2">
+      <code>$hydratorMap</code>
+      <code>$this-&gt;getAssociatedEntityInputFilter($association, $inputFilter)</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidArrayAccess occurrences="2">
+      <code>$hydratorMap[$entityClass]</code>
+      <code>$this-&gt;getEntityHydratorMap()[$entityClass]</code>
+    </PossiblyInvalidArrayAccess>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>getServiceManager</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullArgument occurrences="3">
+      <code>$data</code>
+      <code>$event-&gt;getResourceEvent()-&gt;getInputFilter()</code>
+      <code>$this-&gt;getEntityHydratorMap()[$entityClass]</code>
+    </PossiblyNullArgument>
+    <PossiblyNullArrayAccess occurrences="2">
+      <code>$hydratorMap[$entityClass]</code>
+      <code>$this-&gt;getEntityHydratorMap()[$entityClass]</code>
+    </PossiblyNullArrayAccess>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>hydrate</code>
+    </PossiblyUndefinedMethod>
+    <PropertyNotSetInConstructor occurrences="5">
+      <code>$inputFilter</code>
+      <code>$objectData</code>
+      <code>$objectManager</code>
+      <code>$rootEntity</code>
+      <code>$serviceManager</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="3">
+      <code>$stripEmptyAssociations === true &amp;&amp; ! empty($data) &amp;&amp; is_array($data)</code>
+      <code>$this-&gt;entityHydratorMap === null</code>
+      <code>is_array($data)</code>
+    </RedundantConditionGivenDocblockType>
+    <TooManyArguments occurrences="1">
+      <code>getIdentifierFieldNames</code>
+    </TooManyArguments>
+  </file>
+  <file src="src/Server/Module.php">
+    <MixedAssignment occurrences="2">
+      <code>$serviceListener</code>
+      <code>$sm</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="3">
+      <code>addServiceManager</code>
+      <code>addServiceManager</code>
+      <code>get</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="1">
+      <code>include __DIR__ . '/../../config/server.config.php'</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Server/Paginator/Adapter/DoctrineOdmAdapter.php">
+    <InvalidClass occurrences="4">
+      <code>Builder</code>
+      <code>Builder</code>
+      <code>Builder</code>
+      <code>Builder</code>
+    </InvalidClass>
+    <MixedInferredReturnType occurrences="2">
+      <code>array</code>
+      <code>count</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="2">
+      <code>count</code>
+      <code>toArray</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="2">
+      <code>$queryBuilder-&gt;getQuery()-&gt;execute()-&gt;count()</code>
+      <code>$queryBuilder-&gt;getQuery()-&gt;execute()-&gt;toArray()</code>
+    </MixedReturnStatement>
+    <NullArgument occurrences="1">
+      <code>null</code>
+    </NullArgument>
+  </file>
+  <file src="src/Server/Paginator/Adapter/DoctrineOrmAdapter.php">
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;cache[$offset]</code>
+    </MixedArgument>
+    <MixedArrayAssignment occurrences="1">
+      <code>$this-&gt;cache[$offset][$itemCountPerPage]</code>
+    </MixedArrayAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;cache[$offset][$itemCountPerPage]</code>
+      <code>$this-&gt;cache[$offset][$itemCountPerPage]</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Server/Query/CreateFilter/AbstractCreateFilter.php">
+    <MissingConstructor occurrences="1">
+      <code>$objectManager</code>
+    </MissingConstructor>
+  </file>
+  <file src="src/Server/Query/CreateFilter/Service/QueryCreateFilterManager.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$e-&gt;getCode()</code>
+    </InvalidScalarArgument>
+    <NonInvariantDocblockPropertyType occurrences="1">
+      <code>$instanceOf</code>
+    </NonInvariantDocblockPropertyType>
+  </file>
+  <file src="src/Server/Query/Provider/AbstractQueryProvider.php">
+    <MissingConstructor occurrences="2">
+      <code>$objectManager</code>
+      <code>$objectManager</code>
+    </MissingConstructor>
+    <MixedAssignment occurrences="1">
+      <code>$queryBuilder</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="4">
+      <code>from</code>
+      <code>getQuery</code>
+      <code>getSingleScalarResult</code>
+      <code>select</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="1">
+      <code>$identifier[0]</code>
+    </MixedOperand>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$queryBuilder</code>
+    </MoreSpecificImplementedParamType>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$queryBuilder-&gt;getQuery()</code>
+    </PossiblyInvalidArgument>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>createQueryBuilder</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Server/Query/Provider/DefaultOdm.php">
+    <InvalidClass occurrences="2">
+      <code>$queryBuilder</code>
+      <code>Builder</code>
+    </InvalidClass>
+    <MixedAssignment occurrences="1">
+      <code>$queryBuilder</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>int</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="4">
+      <code>count</code>
+      <code>execute</code>
+      <code>find</code>
+      <code>getQuery</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="1">
+      <code>$queryBuilder-&gt;getQuery()-&gt;execute()-&gt;count()</code>
+    </MixedReturnStatement>
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$entityClass</code>
+      <code>$queryBuilder</code>
+    </MoreSpecificImplementedParamType>
+    <UndefinedInterfaceMethod occurrences="2">
+      <code>createQueryBuilder</code>
+      <code>createQueryBuilder</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Server/Query/Provider/DefaultOrm.php">
+    <MixedAssignment occurrences="1">
+      <code>$queryBuilder</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="2">
+      <code>from</code>
+      <code>select</code>
+    </MixedMethodCall>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>createQueryBuilder</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Server/Query/Provider/Service/QueryProviderManager.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$e-&gt;getCode()</code>
+    </InvalidScalarArgument>
+    <NonInvariantDocblockPropertyType occurrences="1">
+      <code>$instanceOf</code>
+    </NonInvariantDocblockPropertyType>
+  </file>
+  <file src="src/Server/Resource/DoctrineResource.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>$entityClass</code>
+      <code>$this-&gt;getCollectionClass()</code>
+    </ArgumentTypeCoercion>
+    <DocblockTypeContradiction occurrences="6">
+      <code>! is_array($queryProviders)</code>
+      <code>$data instanceof ApiProblem</code>
+      <code>$this-&gt;events instanceof EventManagerInterface</code>
+      <code>$this-&gt;hydrator</code>
+      <code>is_string($this-&gt;eventIdentifier)</code>
+    </DocblockTypeContradiction>
+    <ImplementedReturnTypeMismatch occurrences="2">
+      <code>$this</code>
+      <code>ObjectManager|EntityManagerInterface</code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidArgument occurrences="4">
+      <code>$data</code>
+      <code>$this-&gt;getEntityClass()</code>
+      <code>$this-&gt;getEntityClass()</code>
+      <code>true</code>
+    </InvalidArgument>
+    <InvalidReturnStatement occurrences="2">
+      <code>$result</code>
+      <code>$return</code>
+    </InvalidReturnStatement>
+    <InvalidScalarArgument occurrences="1">
+      <code>$this-&gt;getEntityClass()</code>
+    </InvalidScalarArgument>
+    <InvalidStringClass occurrences="1">
+      <code>new $entityClass()</code>
+    </InvalidStringClass>
+    <MixedArgument occurrences="11">
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$queryBuilder</code>
+      <code>$result</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="3">
+      <code>$identifiers</code>
+      <code>$key</code>
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="2">
+      <code>$row[$this-&gt;getEntityIdentifierName()]</code>
+      <code>$row[$this-&gt;getEntityIdentifierName()]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="15">
+      <code>$criteria[$routeMatchParam]</code>
+      <code>$entity</code>
+      <code>$preEventData</code>
+      <code>$preEventData</code>
+      <code>$preEventData</code>
+      <code>$preEventData</code>
+      <code>$preEventData</code>
+      <code>$queryBuilder</code>
+      <code>$queryBuilder</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$row</code>
+      <code>$row</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>QueryProviderInterface</code>
+      <code>array</code>
+      <code>object</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="15">
+      <code>andwhere</code>
+      <code>beginTransaction</code>
+      <code>beginTransaction</code>
+      <code>commit</code>
+      <code>commit</code>
+      <code>eq</code>
+      <code>expr</code>
+      <code>getQuery</code>
+      <code>getQuery</code>
+      <code>getRequest</code>
+      <code>getSingleResult</code>
+      <code>rollback</code>
+      <code>rollback</code>
+      <code>setParameter</code>
+      <code>toArray</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="5">
+      <code>$entity</code>
+      <code>$queryProviders[$method]</code>
+      <code>$queryProviders['default']</code>
+      <code>$results-&gt;last()</code>
+      <code>$results-&gt;last()</code>
+    </MixedReturnStatement>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$data</code>
+    </MoreSpecificImplementedParamType>
+    <ParamNameMismatch occurrences="2">
+      <code>$data</code>
+      <code>$events</code>
+    </ParamNameMismatch>
+    <PossiblyInvalidArgument occurrences="2">
+      <code>$this-&gt;getObjectManager()</code>
+      <code>$this-&gt;getObjectManager()</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidMethodCall occurrences="3">
+      <code>getRequest</code>
+      <code>setCurrentPageNumber</code>
+      <code>setItemCountPerPage</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullArgument occurrences="1">
+      <code>$data</code>
+    </PossiblyNullArgument>
+    <PossiblyNullReference occurrences="2">
+      <code>getParams</code>
+      <code>getRequest</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="8">
+      <code>getConnection</code>
+      <code>getConnection</code>
+      <code>getConnection</code>
+      <code>getConnection</code>
+      <code>getConnection</code>
+      <code>getConnection</code>
+      <code>setCurrentPageNumber</code>
+      <code>setItemCountPerPage</code>
+    </PossiblyUndefinedMethod>
+    <PropertyNotSetInConstructor occurrences="13">
+      <code>$entityIdentifierName</code>
+      <code>$events</code>
+      <code>$hydrator</code>
+      <code>$objectManager</code>
+      <code>$queryCreateFilter</code>
+      <code>$queryProviders</code>
+      <code>$routeIdentifierName</code>
+      <code>$sharedEventManager</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="3">
+      <code>is_array($this-&gt;eventIdentifier)</code>
+      <code>isset($this-&gt;eventIdentifier)</code>
+    </RedundantConditionGivenDocblockType>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$routeMatch</code>
+      <code>$this-&gt;getEvent()-&gt;getRouteMatch()</code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod occurrences="2">
+      <code>$queryProviders</code>
+      <code>$queryProviders</code>
+    </UndefinedInterfaceMethod>
+    <UnusedMethodCall occurrences="1">
+      <code>getEntityClass</code>
+    </UnusedMethodCall>
+  </file>
+  <file src="src/Server/Resource/DoctrineResourceFactory.php">
+    <DeprecatedInterface occurrences="1">
+      <code>DoctrineResourceFactory</code>
+    </DeprecatedInterface>
+    <InvalidStringClass occurrences="1">
+      <code>new $resourceClass($entityFactory)</code>
+    </InvalidStringClass>
+    <MixedArgument occurrences="16">
+      <code>$config['object_manager']</code>
+      <code>$container-&gt;get('Application')-&gt;getEventManager()-&gt;getSharedManager()</code>
+      <code>$doctrineConnectedConfig</code>
+      <code>$doctrineConnectedConfig</code>
+      <code>$doctrineConnectedConfig['entity_factory']</code>
+      <code>$doctrineConnectedConfig['hydrator']</code>
+      <code>$doctrineConnectedConfig['object_manager']</code>
+      <code>$doctrineHydratorConfig</code>
+      <code>$entityClass</code>
+      <code>$listener</code>
+      <code>$objectManager</code>
+      <code>$objectManager</code>
+      <code>$objectManager</code>
+      <code>$resourceClass</code>
+      <code>$restConfig['entity_identifier_name']</code>
+      <code>$restConfig['route_identifier_name']</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="11">
+      <code>$config['api-tools']</code>
+      <code>$config['api-tools']['doctrine-connected']</code>
+      <code>$config['api-tools']['doctrine-connected']</code>
+      <code>$config['api-tools-rest']</code>
+      <code>$config['doctrine-hydrator']</code>
+      <code>$doctrineConnectedConfig['entity_factory']</code>
+      <code>$doctrineConnectedConfig['object_manager']</code>
+      <code>$doctrineHydratorConfig[$doctrineConnectedConfig['hydrator']]['entity_class']</code>
+      <code>$restConfig['entity_identifier_name']</code>
+      <code>$restConfig['route_identifier_name']</code>
+      <code>$restControllerConfig['listener']</code>
+    </MixedArrayAccess>
+    <MixedArrayOffset occurrences="2">
+      <code>$doctrineHydratorConfig[$doctrineConnectedConfig['hydrator']]</code>
+      <code>$queryProviders[$method]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="24">
+      <code>$config</code>
+      <code>$config</code>
+      <code>$configuredListener</code>
+      <code>$createFilterManager</code>
+      <code>$doctrineConnectedConfig</code>
+      <code>$doctrineHydratorConfig</code>
+      <code>$entityClass</code>
+      <code>$entityFactory</code>
+      <code>$filterManagerAlias</code>
+      <code>$hydratorManager</code>
+      <code>$listener</code>
+      <code>$listeners[]</code>
+      <code>$method</code>
+      <code>$objectManager</code>
+      <code>$plugin</code>
+      <code>$provider</code>
+      <code>$queryManager</code>
+      <code>$queryProviders[$method]</code>
+      <code>$queryProviders['default']</code>
+      <code>$queryProviders['default']</code>
+      <code>$resourceClass</code>
+      <code>$restConfig</code>
+      <code>$restControllerConfig</code>
+      <code>$viewHelpers</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>HydratorInterface</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="11">
+      <code>attach</code>
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>getEventManager</code>
+      <code>getSharedManager</code>
+      <code>has</code>
+      <code>setObjectManager</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="1">
+      <code>$hydratorManager-&gt;get($doctrineConnectedConfig['hydrator'])</code>
+    </MixedReturnStatement>
+    <NullableReturnStatement occurrences="3">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </NullableReturnStatement>
+    <ParamNameMismatch occurrences="2">
+      <code>$container</code>
+      <code>$container</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/Server/Validator/NoObjectExistsFactory.php">
+    <DeprecatedInterface occurrences="1">
+      <code>NoObjectExistsFactory</code>
+    </DeprecatedInterface>
+    <DeprecatedMethod occurrences="1">
+      <code>getServiceLocator</code>
+    </DeprecatedMethod>
+    <MixedAssignment occurrences="1">
+      <code>$objectRepository</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getRepository</code>
+    </MixedMethodCall>
+    <ParamNameMismatch occurrences="1">
+      <code>$container</code>
+    </ParamNameMismatch>
+    <PossiblyNullArgument occurrences="1">
+      <code>$options</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Server/Validator/ObjectExistsFactory.php">
+    <DeprecatedInterface occurrences="1">
+      <code>ObjectExistsFactory</code>
+    </DeprecatedInterface>
+    <DeprecatedMethod occurrences="1">
+      <code>getServiceLocator</code>
+    </DeprecatedMethod>
+    <MixedAssignment occurrences="1">
+      <code>$objectRepository</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getRepository</code>
+    </MixedMethodCall>
+    <ParamNameMismatch occurrences="1">
+      <code>$container</code>
+    </ParamNameMismatch>
+    <PossiblyNullArgument occurrences="1">
+      <code>$options</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="test/config/ORM/local.php">
+    <DeprecatedClass occurrences="1">
+      <code>Driver::class</code>
+    </DeprecatedClass>
+    <UndefinedClass occurrences="2">
+      <code>RevType</code>
+      <code>RevType</code>
+    </UndefinedClass>
+  </file>
+  <file src="test/config/testing.config.php">
+    <DeprecatedClass occurrences="1">
+      <code>Driver::class</code>
+    </DeprecatedClass>
+  </file>
+  <file src="test/src/Admin/Controller/DoctrineAutodiscoveryControllerFactoryTest.php">
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;container-&gt;reveal()</code>
+    </MixedArgument>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineAutodiscoveryModelFactoryTest.php">
+    <MixedArgument occurrences="3">
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>$this-&gt;container-&gt;reveal()</code>
+    </MixedArgument>
+    <MixedMethodCall occurrences="3">
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="6">
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+      <code>reveal</code>
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineAutodiscoveryModelTest.php">
+    <MixedArgument occurrences="6">
+      <code>$a['service_name']</code>
+      <code>$b['service_name']</code>
+      <code>$result[0]['fields']</code>
+      <code>$result[0]['fields']</code>
+      <code>$result[1]['fields']</code>
+      <code>$result[2]['fields']</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1"/>
+    <MixedArrayAccess occurrences="12">
+      <code>$result[0]['entity_class']</code>
+      <code>$result[0]['entity_class']</code>
+      <code>$result[0]['fields']</code>
+      <code>$result[0]['fields']</code>
+      <code>$result[0]['service_name']</code>
+      <code>$result[0]['service_name']</code>
+      <code>$result[1]['entity_class']</code>
+      <code>$result[1]['fields']</code>
+      <code>$result[1]['service_name']</code>
+      <code>$result[2]['entity_class']</code>
+      <code>$result[2]['fields']</code>
+      <code>$result[2]['service_name']</code>
+    </MixedArrayAccess>
+    <NullArgument occurrences="4">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </NullArgument>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>assertIsArray</code>
+      <code>assertIsArray</code>
+    </RedundantConditionGivenDocblockType>
+    <UndefinedClass occurrences="4">
+      <code>Album</code>
+      <code>Artist</code>
+      <code>Meta</code>
+      <code>Product</code>
+    </UndefinedClass>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineMetadata1Test.php">
+    <MixedArgument occurrences="7">
+      <code>$body</code>
+      <code>$body</code>
+      <code>$controllerServiceName</code>
+      <code>$em</code>
+      <code>$filter($mapping['fieldName'])</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="7">
+      <code>$body['name']</code>
+      <code>$mapping['fieldName']</code>
+      <code>$mapping['fieldName']</code>
+      <code>$mapping['fieldName']</code>
+      <code>$mapping['sourceEntity']</code>
+      <code>$mapping['targetEntity']</code>
+      <code>$mapping['type']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="8">
+      <code>$body</code>
+      <code>$body</code>
+      <code>$em</code>
+      <code>$em</code>
+      <code>$entityMetadata</code>
+      <code>$mapping</code>
+      <code>$metadataFactory</code>
+      <code>$rpcServiceResource</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="7">
+      <code>addHeaders</code>
+      <code>create</code>
+      <code>create</code>
+      <code>getMetadataFactory</code>
+      <code>getMetadataFor</code>
+      <code>setModuleName</code>
+      <code>setModuleName</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="1">
+      <code>$mapping['fieldName']</code>
+    </MixedOperand>
+    <MixedPropertyFetch occurrences="1">
+      <code>$entityMetadata-&gt;associationMappings</code>
+    </MixedPropertyFetch>
+    <UndefinedInterfaceMethod occurrences="3">
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getHeaders</code>
+    </UndefinedInterfaceMethod>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;resource</code>
+    </UndefinedThisPropertyAssignment>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineMetadata2Test.php">
+    <MixedArgument occurrences="5">
+      <code>$body</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="8">
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['controller_service_name']</code>
+      <code>$rpc['controller_service_name']</code>
+      <code>$service['controller_service_name']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="6">
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$rpc</code>
+      <code>$service</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="12">
+      <code>addHeaders</code>
+      <code>delete</code>
+      <code>delete</code>
+      <code>getModel</code>
+      <code>getModel</code>
+      <code>getModuleName</code>
+      <code>getModuleName</code>
+      <code>getModuleName</code>
+      <code>patch</code>
+      <code>patch</code>
+      <code>setModuleName</code>
+      <code>setModuleName</code>
+    </MixedMethodCall>
+    <UndefinedInterfaceMethod occurrences="5">
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getHeaders</code>
+    </UndefinedInterfaceMethod>
+    <UndefinedThisPropertyAssignment occurrences="2">
+      <code>$this-&gt;resource</code>
+      <code>$this-&gt;rpcResource</code>
+    </UndefinedThisPropertyAssignment>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineMetadataServiceResourceFactoryTest.php">
+    <MixedArgument occurrences="2">
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>$this-&gt;container-&gt;reveal()</code>
+    </MixedArgument>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineRestServiceModelFactoryFactoryTest.php">
+    <MixedArgument occurrences="4">
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>ConfigResourceFactory::class</code>
+      <code>ConfigResourceFactory::class</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$dependency</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="1">
+      <code>$presence</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="9">
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="11">
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+    <UndefinedClass occurrences="7">
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+    </UndefinedClass>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineRestServiceResourceFactoryTest.php">
+    <InvalidReturnStatement occurrences="1"/>
+    <InvalidReturnType occurrences="1"/>
+    <MixedArgument occurrences="2">
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>$this-&gt;container-&gt;reveal()</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$dependency</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="1">
+      <code>$presence</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="7">
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="9">
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineRestServiceResourceTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'Db\Entity\Artist'</code>
+    </ArgumentTypeCoercion>
+    <MissingFile occurrences="1">
+      <code>include __DIR__ . '/../../../../../config/application.config.php'</code>
+    </MissingFile>
+    <MixedArgument occurrences="4">
+      <code>$artist</code>
+      <code>$controllerServiceName</code>
+      <code>$em</code>
+      <code>include __DIR__ . '/../../../../../config/application.config.php'</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$artist</code>
+      <code>$em</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="7">
+      <code>addHeaders</code>
+      <code>create</code>
+      <code>delete</code>
+      <code>getId</code>
+      <code>setCreatedAt</code>
+      <code>setModuleName</code>
+      <code>setName</code>
+    </MixedMethodCall>
+    <UndefinedClass occurrences="2">
+      <code>'Db\Entity\Artist'</code>
+      <code>Artist</code>
+    </UndefinedClass>
+    <UndefinedInterfaceMethod occurrences="2">
+      <code>getHeaders</code>
+      <code>setMethod</code>
+    </UndefinedInterfaceMethod>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;resource</code>
+    </UndefinedThisPropertyAssignment>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineRpcServiceModelFactoryFactoryTest.php">
+    <MixedArgument occurrences="4">
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>ConfigResourceFactory::class</code>
+      <code>ConfigResourceFactory::class</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$dependency</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="1">
+      <code>$presence</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="9">
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="11">
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+    <UndefinedClass occurrences="7">
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+      <code>ConfigResourceFactory</code>
+    </UndefinedClass>
+  </file>
+  <file src="test/src/Admin/Model/DoctrineRpcServiceResourceFactoryTest.php">
+    <MixedArgument occurrences="2">
+      <code>$this-&gt;container-&gt;reveal()</code>
+      <code>$this-&gt;container-&gt;reveal()</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$dependency</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="1">
+      <code>$presence</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="9">
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="11">
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="test/src/Server/Event/Listener/CollectionListenerTest.php">
+    <MixedArgument occurrences="3">
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+    </MixedArgument>
+    <MixedMethodCall occurrences="8">
+      <code>method</code>
+      <code>method</code>
+      <code>method</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>with</code>
+      <code>with</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <PossiblyInvalidArgument occurrences="2">
+      <code>$entityFactory</code>
+      <code>$om</code>
+    </PossiblyInvalidArgument>
+    <UndefinedClass occurrences="8">
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="5">
+      <code>$entityFactory</code>
+      <code>$entityFactory</code>
+      <code>$om</code>
+      <code>$om</code>
+      <code>$om</code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod occurrences="3">
+      <code>expects</code>
+      <code>expects</code>
+      <code>expects</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="test/src/Server/ODM/CRUD/CRUDTest.php">
+    <MissingClosureParamType occurrences="1">
+      <code>$class</code>
+    </MissingClosureParamType>
+    <MixedArgument occurrences="31">
+      <code>$body['_embedded']['meta']</code>
+      <code>$body['_embedded']['meta']</code>
+      <code>$config</code>
+      <code>$config['connectionString']</code>
+      <code>$meta</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>DoctrineResource::class</code>
+      <code>DoctrineResource::class</code>
+      <code>DoctrineResource::class</code>
+      <code>DoctrineResource::class</code>
+      <code>DoctrineResource::class</code>
+      <code>DoctrineResource::class</code>
+      <code>EventCatcher::class</code>
+      <code>Meta::class</code>
+      <code>Meta::class</code>
+      <code>Meta::class</code>
+      <code>Meta::class</code>
+      <code>Meta::class</code>
+      <code>Meta::class</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="23">
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['id']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['total_items']</code>
+      <code>$body['total_items']</code>
+      <code>$config['api-tools']</code>
+      <code>$config['api-tools']</code>
+      <code>$config['connectionString']</code>
+      <code>$config['dbname']</code>
+      <code>$config['doctrine']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="2">
+      <code>$config['api-tools']</code>
+      <code>$resourceConfig['entity_factory']</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="25">
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$collection</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config['api-tools']['doctrine-connected'][$resourceName]</code>
+      <code>$db</code>
+      <code>$eventCatcher</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$meta</code>
+      <code>$resourceConfig</code>
+      <code>$this-&gt;dm</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>Meta</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="29">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>format</code>
+      <code>getCaughtEvents</code>
+      <code>getCreatedAt</code>
+      <code>getId</code>
+      <code>getName</code>
+      <code>getName</code>
+      <code>method</code>
+      <code>new $class()</code>
+      <code>remove</code>
+      <code>setCreatedAt</code>
+      <code>setName</code>
+      <code>willReturnCallback</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="2">
+      <code>$id</code>
+      <code>$id</code>
+    </MixedOperand>
+    <MixedPropertyFetch occurrences="1">
+      <code>$db-&gt;meta</code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement occurrences="1">
+      <code>$meta</code>
+    </MixedReturnStatement>
+    <PossiblyNullReference occurrences="10">
+      <code>attach</code>
+      <code>attach</code>
+      <code>attach</code>
+      <code>attach</code>
+      <code>attach</code>
+      <code>attach</code>
+      <code>getCreatedAt</code>
+      <code>getId</code>
+      <code>getName</code>
+      <code>getName</code>
+    </PossiblyNullReference>
+    <UndefinedClass occurrences="16">
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>EventCatcher</code>
+      <code>Meta</code>
+      <code>Meta</code>
+      <code>Meta</code>
+      <code>Meta</code>
+      <code>Meta</code>
+      <code>Meta</code>
+      <code>Meta</code>
+      <code>Meta</code>
+      <code>Meta</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="20">
+      <code>$entityFactoryMock</code>
+      <code>$entityFactoryMock</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta</code>
+      <code>$meta1</code>
+      <code>$meta2</code>
+      <code>Meta</code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod occurrences="42">
+      <code>expects</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getConfig</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="test/src/Server/ORM/CRUD/CRUDTest.php">
+    <MissingClosureParamType occurrences="1">
+      <code>$class</code>
+    </MissingClosureParamType>
+    <MixedArgument occurrences="50">
+      <code>$album-&gt;getId()</code>
+      <code>$artist</code>
+      <code>$artist-&gt;getId()</code>
+      <code>$body['_embedded']['artist']</code>
+      <code>$body['_embedded']['artist']</code>
+      <code>$config</code>
+      <code>$event</code>
+      <code>$eventCatcher-&gt;getCaughtEvents()</code>
+      <code>$filter($mapping['fieldName'])</code>
+      <code>$product</code>
+      <code>$product-&gt;getId()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>$this-&gt;getResponse()-&gt;getBody()</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>Artist::class</code>
+      <code>DoctrineResource::class</code>
+      <code>DoctrineResource::class</code>
+      <code>EventCatcher::class</code>
+      <code>EventCatcher::class</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="38">
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['_embedded']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['detail']</code>
+      <code>$body['id']</code>
+      <code>$body['id']</code>
+      <code>$body['id']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['name']</code>
+      <code>$body['total_items']</code>
+      <code>$body['total_items']</code>
+      <code>$body['version']</code>
+      <code>$config['api-tools']</code>
+      <code>$config['api-tools']</code>
+      <code>$config['api-tools']</code>
+      <code>$mapping['fieldName']</code>
+      <code>$mapping['fieldName']</code>
+      <code>$mapping['fieldName']</code>
+      <code>$mapping['sourceEntity']</code>
+      <code>$mapping['targetEntity']</code>
+      <code>$mapping['type']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="3">
+      <code>$config['api-tools']</code>
+      <code>$config['api-tools']</code>
+      <code>$resourceConfig['entity_factory']</code>
+    </MixedArrayAssignment>
+    <MixedArrayOffset occurrences="1">
+      <code>$config['api-tools']['doctrine-connected'][ArtistResource::class]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="35">
+      <code>$artist</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$body</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config['api-tools']['doctrine-connected'][$resourceName]</code>
+      <code>$event</code>
+      <code>$eventCatcher</code>
+      <code>$eventCatcher</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$mapping</code>
+      <code>$product</code>
+      <code>$resourceConfig</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>Album</code>
+      <code>Artist</code>
+      <code>Product</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="45">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>addHeaders</code>
+      <code>format</code>
+      <code>getCaughtEvents</code>
+      <code>getCaughtEvents</code>
+      <code>getCreatedAt</code>
+      <code>getId</code>
+      <code>getId</code>
+      <code>getId</code>
+      <code>getId</code>
+      <code>getName</code>
+      <code>getName</code>
+      <code>method</code>
+      <code>new $class()</code>
+      <code>setCreatedAt</code>
+      <code>setName</code>
+      <code>willReturnCallback</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="4">
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$mapping['fieldName']</code>
+    </MixedOperand>
+    <MixedReturnStatement occurrences="2">
+      <code>$artist</code>
+      <code>$product</code>
+    </MixedReturnStatement>
+    <NoInterfaceProperties occurrences="1">
+      <code>$entityMetadata-&gt;associationMappings</code>
+    </NoInterfaceProperties>
+    <PossiblyNullReference occurrences="9">
+      <code>attach</code>
+      <code>attach</code>
+      <code>getCreatedAt</code>
+      <code>getId</code>
+      <code>getId</code>
+      <code>getId</code>
+      <code>getId</code>
+      <code>getName</code>
+      <code>getName</code>
+    </PossiblyNullReference>
+    <UndefinedClass occurrences="26">
+      <code>?Artist</code>
+      <code>Album</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>Artist</code>
+      <code>ArtistResource</code>
+      <code>DoctrineResource</code>
+      <code>DoctrineResource</code>
+      <code>EventCatcher</code>
+      <code>EventCatcher</code>
+      <code>Product</code>
+      <code>Product</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="54">
+      <code>$album</code>
+      <code>$album</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist</code>
+      <code>$artist1</code>
+      <code>$artist1</code>
+      <code>$artist1</code>
+      <code>$artist1</code>
+      <code>$artist1</code>
+      <code>$artist1</code>
+      <code>$artist1</code>
+      <code>$artist2</code>
+      <code>$artist2</code>
+      <code>$artist2</code>
+      <code>$artist2</code>
+      <code>$artist2</code>
+      <code>$artist2</code>
+      <code>$artist2</code>
+      <code>$artist3</code>
+      <code>$artist3</code>
+      <code>$artist3</code>
+      <code>$artist3</code>
+      <code>$artist3</code>
+      <code>$artist3</code>
+      <code>$entityFactoryMock</code>
+      <code>$entityFactoryMock</code>
+      <code>$product</code>
+      <code>$product</code>
+      <code>$product</code>
+      <code>$product</code>
+      <code>$product</code>
+      <code>$product</code>
+      <code>Album</code>
+      <code>Artist</code>
+      <code>Product</code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod occurrences="77">
+      <code>expects</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getBody</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>setAllowOverride</code>
+      <code>setAllowOverride</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setService</code>
+      <code>setService</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="test/src/Server/Validator/NoObjectExistsFactoryTest.php">
+    <MixedArgument occurrences="3">
+      <code>$validatorsConfig</code>
+      <code>NoObjectExists::class</code>
+      <code>NoObjectExists::class</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>$config['validators']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="2">
+      <code>$config</code>
+      <code>$validatorsConfig</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>willReturn</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+    <UndefinedClass occurrences="2">
+      <code>NoObjectExists</code>
+      <code>NoObjectExists</code>
+    </UndefinedClass>
+  </file>
+  <file src="test/src/Server/Validator/ObjectExistsFactoryTest.php">
+    <MixedArgument occurrences="3">
+      <code>$validatorsConfig</code>
+      <code>ObjectExists::class</code>
+      <code>ObjectExists::class</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>$config['validators']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="2">
+      <code>$config</code>
+      <code>$validatorsConfig</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>willReturn</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>reveal</code>
+      <code>reveal</code>
+    </PossiblyUndefinedMethod>
+    <UndefinedClass occurrences="2">
+      <code>ObjectExists</code>
+      <code>ObjectExists</code>
+    </UndefinedClass>
+  </file>
+  <file src="test/src/TestCase.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>parent::setApplicationConfig($config)</code>
+    </LessSpecificReturnStatement>
+    <MixedArgument occurrences="1">
+      <code>$config['modules']</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>$config['module_listener_options']['module_paths']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="2">
+      <code>$file</code>
+      <code>$this-&gt;enabledModules</code>
+    </MixedAssignment>
+    <MixedOperand occurrences="1">
+      <code>$file</code>
+    </MixedOperand>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$config</code>
+    </MoreSpecificImplementedParamType>
+    <MoreSpecificReturnType occurrences="1">
+      <code>$this</code>
+    </MoreSpecificReturnType>
+    <ParamNameMismatch occurrences="1">
+      <code>$config</code>
+    </ParamNameMismatch>
+    <PossiblyNullReference occurrences="1">
+      <code>getNumberOfRequiredParameters</code>
+    </PossiblyNullReference>
+  </file>
+</files>

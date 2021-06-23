@@ -83,7 +83,7 @@ class DoctrineRpcServiceModelFactoryFactoryTest extends TestCase
     /**
      * @dataProvider missingDependencies
      */
-    public function testFactoryRaisesExceptionIfDependenciesAreMissing(array $dependencies)
+    public function testFactoryRaisesExceptionIfDependenciesAreMissing(array $dependencies): void
     {
         $factory = new DoctrineRpcServiceModelFactoryFactory();
 
@@ -96,7 +96,7 @@ class DoctrineRpcServiceModelFactoryFactoryTest extends TestCase
         $factory($this->container->reveal());
     }
 
-    public function testFactoryReturnsConfiguredDoctrineRpcServiceModelFactory()
+    public function testFactoryReturnsConfiguredDoctrineRpcServiceModelFactory(): void
     {
         $factory               = new DoctrineRpcServiceModelFactoryFactory();
         $pathSpec              = $this->prophesize(ModulePathSpec::class)->reveal();

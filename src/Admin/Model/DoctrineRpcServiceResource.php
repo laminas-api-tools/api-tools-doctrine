@@ -7,6 +7,7 @@ namespace Laminas\ApiTools\Doctrine\Admin\Model;
 use Exception;
 use Laminas\ApiTools\Admin\Model\DocumentationModel;
 use Laminas\ApiTools\Admin\Model\InputFilterModel;
+use Laminas\ApiTools\Admin\Model\RpcServiceModel;
 use Laminas\ApiTools\Admin\Model\RpcServiceResource;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\Exception\CreationException;
@@ -42,7 +43,7 @@ class DoctrineRpcServiceResource extends RpcServiceResource
     }
 
     /**
-     * @return DoctrineRpcServiceModel
+     * @return RpcServiceModel
      */
     public function getModel()
     {

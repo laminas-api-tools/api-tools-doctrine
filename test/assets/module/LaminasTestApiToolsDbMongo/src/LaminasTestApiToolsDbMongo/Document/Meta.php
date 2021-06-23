@@ -22,7 +22,10 @@ class Meta
         return $this->name;
     }
 
-    public function setName($value)
+    /**
+     * @return static
+     */
+    public function setName(string $value): self
     {
         $this->name = $value;
 
@@ -36,12 +39,17 @@ class Meta
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $value)
+    public function setCreatedAt(DateTime $value): void
     {
         $this->createdAt = $value;
     }
 
-    public function getArrayCopy()
+    /**
+     * @return array
+     *
+     * @psalm-return array{name: mixed, createdAt: mixed}
+     */
+    public function getArrayCopy(): array
     {
         return [
             'name'      => $this->getName(),
@@ -49,7 +57,7 @@ class Meta
         ];
     }
 
-    public function exchangeArray($values)
+    public function exchangeArray($values): void
     {
         $this->setName($values['name'] ?? null);
         $this->setCreatedAt($values['createdAt'] ?? null);

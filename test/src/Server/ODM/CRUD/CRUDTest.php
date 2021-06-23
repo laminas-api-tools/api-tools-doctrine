@@ -47,7 +47,7 @@ class CRUDTest extends TestCase
         parent::tearDown();
     }
 
-    protected function buildODMApi()
+    protected function buildODMApi(): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
 
@@ -74,7 +74,7 @@ class CRUDTest extends TestCase
         $this->dm       = $serviceManager->get('doctrine.documentmanager.odm_default');
     }
 
-    protected function clearData()
+    protected function clearData(): void
     {
         $config = $this->getApplication()->getConfig();
         $config = $config['doctrine']['connection']['odm_default'];
@@ -85,7 +85,7 @@ class CRUDTest extends TestCase
         $collection->remove();
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
 
@@ -107,7 +107,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testCreateWithListenerThatReturnsApiProblem()
+    public function testCreateWithListenerThatReturnsApiProblem(): void
     {
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach(
@@ -132,7 +132,7 @@ class CRUDTest extends TestCase
         $this->assertEquals('LaminasTestCreateFailure', $body['detail']);
     }
 
-    public function testCreateByExplicitlySettingEntityFactoryInConstructor()
+    public function testCreateByExplicitlySettingEntityFactoryInConstructor(): void
     {
         /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
         $entityFactoryMock = $this->getMockBuilder(InstantiatorInterface::class)->getMock();
@@ -182,7 +182,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testFetch()
+    public function testFetch(): void
     {
         $meta = $this->createMeta('Meta Fetch');
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -199,7 +199,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testFetchWithListenerThatReturnsApiProblem()
+    public function testFetchWithListenerThatReturnsApiProblem(): void
     {
         $meta         = $this->createMeta('Meta Fetch ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
@@ -222,7 +222,7 @@ class CRUDTest extends TestCase
         $this->assertEquals('LaminasTestFetchFailure', $body['detail']);
     }
 
-    public function testFetchAll()
+    public function testFetchAll(): void
     {
         $meta1 = $this->createMeta('Meta 1');
         $meta2 = $this->createMeta('Meta 2');
@@ -243,7 +243,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testFetchAllEmptyCollection()
+    public function testFetchAllEmptyCollection(): void
     {
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->getRequest()->setMethod(Request::METHOD_GET);
@@ -260,7 +260,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testFetchAllWithListenerThatReturnsApiProblem()
+    public function testFetchAllWithListenerThatReturnsApiProblem(): void
     {
         $this->createMeta('Meta FetchAll ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
@@ -282,7 +282,7 @@ class CRUDTest extends TestCase
         $this->assertEquals('LaminasTestFetchAllFailure', $body['detail']);
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $meta = $this->createMeta('Meta Patch');
         $this->getRequest()->getHeaders()->addHeaders([
@@ -306,7 +306,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testPatchWithListenerThatReturnsApiProblem()
+    public function testPatchWithListenerThatReturnsApiProblem(): void
     {
         $meta         = $this->createMeta('Meta Patch ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
@@ -333,7 +333,7 @@ class CRUDTest extends TestCase
         $this->assertEquals('LaminasTestPatchFailure', $body['detail']);
     }
 
-    public function testPut()
+    public function testPut(): void
     {
         $meta = $this->createMeta('Meta Put');
         $this->getRequest()->getHeaders()->addHeaders([
@@ -360,7 +360,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testPutWithListenerThatReturnsApiProblem()
+    public function testPutWithListenerThatReturnsApiProblem(): void
     {
         $meta         = $this->createMeta('Meta Put ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
@@ -390,7 +390,7 @@ class CRUDTest extends TestCase
         $this->assertEquals('LaminasTestPutFailure', $body['detail']);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $meta = $this->createMeta('Meta Delete');
         $id   = $meta->getId();
@@ -407,7 +407,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testDeleteWithListenerThatReturnsApiProblem()
+    public function testDeleteWithListenerThatReturnsApiProblem(): void
     {
         $meta         = $this->createMeta('Meta Delete ApiProblem');
         $sharedEvents = $this->getApplication()->getEventManager()->getSharedManager();
@@ -432,7 +432,7 @@ class CRUDTest extends TestCase
         $this->assertEquals($meta->getId(), $foundEntity->getId());
     }
 
-    public function testDeleteEntityNotFound()
+    public function testDeleteEntityNotFound(): void
     {
         $meta = $this->createMeta();
         $id   = $meta->getId() . '0';
@@ -446,7 +446,7 @@ class CRUDTest extends TestCase
         $this->assertNull($this->dm->getRepository(Meta::class)->find($id));
     }
 
-    public function testDeleteEntityDeleted()
+    public function testDeleteEntityDeleted(): void
     {
         $meta = $this->createMeta();
         $id   = $meta->getId();
@@ -465,7 +465,7 @@ class CRUDTest extends TestCase
     /**
      * @param array $expectedEvents
      */
-    protected function validateTriggeredEvents(array $expectedEvents)
+    protected function validateTriggeredEvents(array $expectedEvents): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
         $eventCatcher   = $serviceManager->get(EventCatcher::class);

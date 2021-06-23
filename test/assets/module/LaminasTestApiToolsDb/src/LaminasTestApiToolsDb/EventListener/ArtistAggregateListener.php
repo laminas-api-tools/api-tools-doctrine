@@ -20,9 +20,9 @@ class ArtistAggregateListener implements ListenerAggregateInterface
         );
     }
 
-    public function createPost(DoctrineResourceEvent $event)
+    public function createPost(DoctrineResourceEvent $event): void
     {
-        $objectManager = $event->getObjectManager();
+        $event->getObjectManager();
 
         $event->getEntity();
         $event->getData();

@@ -107,7 +107,8 @@ class DoctrineRpcServiceModel
      * Fetch all services
      *
      * @param string $version
-     * @return DoctrineRpcServiceEntity[]
+     * @return (DoctrineRpcServiceEntity|false)[]
+     * @psalm-return list<DoctrineRpcServiceEntity|false>
      */
     public function fetchAll($version = null)
     {
@@ -164,7 +165,7 @@ class DoctrineRpcServiceModel
      * @param array $httpMethods
      * @param null|string $selector
      * @param array $options
-     * @return DoctrineRpcServiceEntity
+     * @return DoctrineRpcServiceEntity|false
      */
     public function createService($serviceName, $route, $httpMethods, $selector, $options)
     {
@@ -208,10 +209,12 @@ class DoctrineRpcServiceModel
 
     /**
      * Delete the files which were automatically created
+     *
+     * @return void
      */
     public function deleteFiles(DoctrineRpcServiceEntity $entity)
     {
-        $config = $this->configResource->fetch(true);
+        $this->configResource->fetch(true);
 
         $reflector = new ReflectionClass($entity->controllerClass);
         unlink($reflector->getFileName());
@@ -421,7 +424,7 @@ class DoctrineRpcServiceModel
      *
      * @param string $controllerService
      * @param string $routeMatch
-     * @return true
+     * @return bool
      */
     public function updateRoute($controllerService, $routeMatch)
     {
@@ -500,6 +503,7 @@ class DoctrineRpcServiceModel
      * Removes the route configuration for a named route
      *
      * @param string $routeName
+     * @return void
      */
     public function deleteRouteConfig($routeName)
     {
@@ -516,6 +520,7 @@ class DoctrineRpcServiceModel
      * Delete the RPC configuration for a named RPC service
      *
      * @param string $serviceName
+     * @return void
      */
     public function deleteDoctrineRpcConfig($serviceName)
     {
@@ -551,6 +556,7 @@ class DoctrineRpcServiceModel
      * service
      *
      * @param string $serviceName
+     * @return void
      */
     public function deleteContentNegotiationConfig($serviceName)
     {

@@ -13,6 +13,8 @@
         <ignoreFiles>
             <directory name=".github"/>
             <directory name="vendor"/>
+            <directory name="test/assets"/>
+            <directory name="test/data"/>
         </ignoreFiles>
     </projectFiles>
 

@@ -16,7 +16,7 @@ use function usort;
 
 class DoctrineAutodiscoveryModelTest extends TestCase
 {
-    public function testORMAutodiscoveryEntitiesWithFields()
+    public function testORMAutodiscoveryEntitiesWithFields(): void
     {
         $this->setApplicationConfig(
             include __DIR__ . '/../../../config/ORM/application.config.php'
@@ -47,7 +47,7 @@ class DoctrineAutodiscoveryModelTest extends TestCase
         $this->assertCount(1, $result[2]['fields']);
     }
 
-    public function testODMAutodiscoveryEntitiesWithFields()
+    public function testODMAutodiscoveryEntitiesWithFields(): void
     {
         $this->setApplicationConfig(
             include __DIR__ . '/../../../config/ODM/application.config.php'

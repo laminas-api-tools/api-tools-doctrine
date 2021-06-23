@@ -447,7 +447,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Update an existing service
      *
-     * @return DoctrineRestServiceEntity
+     * @return DoctrineRestServiceEntity|false
      */
     public function updateService(DoctrineRestServiceEntity $update)
     {
@@ -477,7 +477,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * @todo Remove content-negotiation and/or HAL configuration?
      * @param string $controllerService
      * @param bool $recursive
-     * @return true
+     * @return ApiProblem|true
      */
     public function deleteService($controllerService, $recursive = false)
     {
@@ -495,7 +495,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
             Utility::recursiveDelete(dirname($reflection->getFileName()));
         }
         $this->deleteRoute($service);
-        $response = $this->deleteDoctrineRestConfig($service);
+        $this->deleteDoctrineRestConfig($service);
 
         if ($response instanceof ApiProblem) {
             return $response;
@@ -676,6 +676,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * @param string $controllerService
      * @param string $resourceClass
      * @param string $routeName
+     * @return void
      */
     public function createRestConfig(DoctrineRestServiceEntity $details, $controllerService, $resourceClass, $routeName)
     {
@@ -706,6 +707,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * controller service name
      *
      * @param string $controllerService
+     * @return void
      */
     public function createContentNegotiationConfig(DoctrineRestServiceEntity $details, $controllerService)
     {
@@ -732,12 +734,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * @param string $entityClass
      * @param string $collectionClass
      * @param string $routeName
+     * @return void
      */
     public function createDoctrineConfig(DoctrineRestServiceEntity $details, $entityClass, $collectionClass, $routeName)
     {
-        $entityValue        = $details->getArrayCopy();
-        $objectManager      = $this->getServiceManager()->get($details->objectManager);
-        $hydratorStrategies = [];
+        $details->getArrayCopy();
+        $this->getServiceManager()->get($details->objectManager);
 
         // The abstract_factories key is set to the value so these factories do not get duplicaed with each resource
         $config = [
@@ -760,6 +762,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * @param string $entityClass
      * @param string $collectionClass
      * @param string $routeName
+     * @return void
      * @throws CreationException
      */
     public function createDoctrineHydratorConfig(
@@ -771,7 +774,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
         $entityValue = $details->getArrayCopy();
 
         // Verify the object manager exists
-        $objectManager      = $this->getServiceManager()->get($details->objectManager);
+        $this->getServiceManager()->get($details->objectManager);
         $hydratorStrategies = $entityValue['strategies'] ?? [];
 
         foreach ($hydratorStrategies as $strategy) {
@@ -802,6 +805,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * @param string $entityClass
      * @param string $collectionClass
      * @param string $routeName
+     * @return void
      */
     public function createHalConfig(DoctrineRestServiceEntity $details, $entityClass, $collectionClass, $routeName)
     {
@@ -831,6 +835,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update the route for an existing service
+     *
+     * @return void
      */
     public function updateRoute(DoctrineRestServiceEntity $original, DoctrineRestServiceEntity $update)
     {
@@ -857,6 +863,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update REST configuration
+     *
+     * @return void
      */
     public function updateRestConfig(DoctrineRestServiceEntity $original, DoctrineRestServiceEntity $update)
     {
@@ -888,10 +896,11 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update Doctrine hydrator configuration
+     *
+     * @return void
      */
     public function updateDoctrineHydratorConfig(DoctrineRestServiceEntity $original, DoctrineRestServiceEntity $update)
     {
-        $patch = [];
         foreach ($this->doctrineHydratorOptions as $property => $configKey) {
             if ($update->$property === null) {
                 continue;
@@ -903,6 +912,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update the content negotiation configuration for the service
+     *
+     * @return void
      */
     public function updateContentNegotiationConfig(
         DoctrineRestServiceEntity $original,
@@ -931,6 +942,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update Doctrine configuration
+     *
+     * @return void
      */
     public function updateDoctrineConfig(DoctrineRestServiceEntity $original, DoctrineRestServiceEntity $update)
     {
@@ -945,6 +958,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Delete the files which were automatically created
+     *
+     * @return void
      */
     public function deleteFiles(DoctrineRestServiceEntity $entity)
     {
@@ -962,6 +977,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Delete the route associated with the given service
+     *
+     * @return void
      */
     public function deleteRoute(DoctrineRestServiceEntity $entity)
     {
@@ -981,13 +998,15 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Delete the REST configuration associated with the given
      * service
+     *
+     * @return void
      */
     public function deleteDoctrineRestConfig(DoctrineRestServiceEntity $entity)
     {
         // Get hydrator name
-        $config             = $this->configResource->fetch(true);
-        $hydratorName       = $config['api-tools-hal']['metadata_map'][$entity->entityClass]['hydrator'];
-        $objectManagerClass = $config['doctrine-hydrator'][$hydratorName]['object_manager'];
+        $config       = $this->configResource->fetch(true);
+        $hydratorName = $config['api-tools-hal']['metadata_map'][$entity->entityClass]['hydrator'];
+        $config['doctrine-hydrator'][$hydratorName]['object_manager'];
 
         $key = ['doctrine-hydrator', $hydratorName];
         $this->configResource->deleteKey($key);
@@ -1129,6 +1148,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * Retrieve route information for a given service based on the configuration available
      *
      * @param array $config
+     * @return void
      */
     protected function getRouteInfo(DoctrineRestServiceEntity $metadata, array $config)
     {
@@ -1151,6 +1171,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      *
      * @param string $controllerServiceName
      * @param array $config
+     * @return void
      */
     protected function mergeContentNegotiationConfig(
         $controllerServiceName,
@@ -1187,6 +1208,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      *
      * @param string $controllerServiceName
      * @param array $config
+     * @return void
      */
     protected function mergeHalConfig($controllerServiceName, DoctrineRestServiceEntity $metadata, array $config)
     {

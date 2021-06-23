@@ -64,7 +64,7 @@ class TestCase extends AbstractHttpControllerTestCase
         rmdir($dir);
     }
 
-    private function clearAssets()
+    private function clearAssets(): void
     {
         foreach ($this->enabledModules as $module => $path) {
             $configPath = sprintf('%s/config/', $path);

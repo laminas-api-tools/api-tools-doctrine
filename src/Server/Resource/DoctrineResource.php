@@ -160,7 +160,7 @@ class DoctrineResource extends AbstractResourceListener implements
     /**
      * Set the object manager
      *
-     * @param ObjectManager|EntityManagerInterface $objectManager
+     * @return void
      */
     public function setObjectManager(ObjectManager $objectManager)
     {
@@ -179,6 +179,7 @@ class DoctrineResource extends AbstractResourceListener implements
 
     /**
      * @param array|QueryProviderInterface[] $queryProviders
+     * @return void
      * @throws InvalidArgumentException If parameter is not an array or \Traversable object.
      */
     public function setQueryProviders($queryProviders)
@@ -197,7 +198,7 @@ class DoctrineResource extends AbstractResourceListener implements
     }
 
     /**
-     * @return array|QueryProviderInterface[]
+     * @return QueryProviderInterface|array
      */
     public function getQueryProviders()
     {
@@ -539,7 +540,7 @@ class DoctrineResource extends AbstractResourceListener implements
         }
 
         // Add event to set extra HAL data
-        $entityClass = $this->getEntityClass();
+        $this->getEntityClass();
 
         $this->getSharedEventManager()->attach(
             RestController::class,
