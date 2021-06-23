@@ -57,6 +57,9 @@
         "phpunit/phpunit": "^9.3",
         "symfony/yaml": "^2.3 || ^3.0 || ^4.0 || ^5.0"
     },
+    "conflict": {
+        "doctrine/orm": "<2.6.3"
+    },
     "suggest": {
         "api-skeletons/zf-doctrine-hydrator": "Hydrator strategies for Doctrine in Laminas API Tools",
         "api-skeletons/zf-oauth2-doctrine": "OAuth2 Doctrine Adapter for Laminas API Tools",
