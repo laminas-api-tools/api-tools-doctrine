@@ -53,7 +53,7 @@ class CRUDTest extends TestCase
         $this->buildORMApi();
     }
 
-    protected function buildORMApi()
+    protected function buildORMApi(): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
         /** @var EntityManager $em */
@@ -183,7 +183,7 @@ class CRUDTest extends TestCase
         $this->em = $em;
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
 
@@ -205,7 +205,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testCreateWithRelation()
+    public function testCreateWithRelation(): void
     {
         $artist = $this->createArtist();
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -231,7 +231,7 @@ class CRUDTest extends TestCase
      * @param string $method
      * @param string $message
      */
-    public function testCreateWithListenerThatReturnsApiProblem($method, $message)
+    public function testCreateWithListenerThatReturnsApiProblem($method, $message): void
     {
         $this->$method(DoctrineResourceEvent::EVENT_CREATE_PRE);
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -254,7 +254,7 @@ class CRUDTest extends TestCase
         );
     }
 
-    public function testFetchByCustomIdField()
+    public function testFetchByCustomIdField(): void
     {
         $product = $this->createProduct();
 
@@ -275,7 +275,7 @@ class CRUDTest extends TestCase
     /**
      * @see https://github.com/zfcampus/zf-apigility-doctrine/pull/316
      */
-    public function testFetchByCustomIdFieldIncludesApiToolsResourceEventInDoctrineResourceEvent()
+    public function testFetchByCustomIdFieldIncludesApiToolsResourceEventInDoctrineResourceEvent(): void
     {
         $product = $this->createProduct();
 
@@ -299,7 +299,7 @@ class CRUDTest extends TestCase
         $this->assertTrue($spy->caught, 'EVENT_FETCH_PRE listener was not triggered');
     }
 
-    public function testFetchEntityWithVersionFieldWithVersionParamInPath()
+    public function testFetchEntityWithVersionFieldWithVersionParamInPath(): void
     {
         $product = $this->createProduct();
 
@@ -318,7 +318,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testFetchByCustomIdFieldWithInvalidIdValue()
+    public function testFetchByCustomIdFieldWithInvalidIdValue(): void
     {
         $product = $this->createProduct();
 
@@ -331,7 +331,7 @@ class CRUDTest extends TestCase
         $this->validateTriggeredEvents([DoctrineResourceEvent::EVENT_FETCH_PRE]);
     }
 
-    public function testCreateByExplicitlySettingEntityFactoryInConstructor()
+    public function testCreateByExplicitlySettingEntityFactoryInConstructor(): void
     {
         /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
         $entityFactoryMock = $this->getMockBuilder(InstantiatorInterface::class)->getMock();
@@ -375,7 +375,7 @@ class CRUDTest extends TestCase
         $this->assertResponseStatusCode(201);
     }
 
-    public function testFetch()
+    public function testFetch(): void
     {
         $artist = $this->createArtist('Artist Name');
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -392,7 +392,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testFetchWithNonPrimaryKeyIdentifier()
+    public function testFetchWithNonPrimaryKeyIdentifier(): void
     {
         $artist = $this->createArtist('ArtistTwo');
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
@@ -405,7 +405,7 @@ class CRUDTest extends TestCase
         $this->assertEquals('ArtistTwo', $body['name']);
     }
 
-    public function testFetchWithRelation()
+    public function testFetchWithRelation(): void
     {
         $artist = $this->createArtist('NewArtist');
         $album  = $this->createAlbum('NewAlbum', $artist);
@@ -424,7 +424,7 @@ class CRUDTest extends TestCase
      * @param string $method
      * @param string $message
      */
-    public function testFetchWithListenerThatReturnsApiProblem($method, $message)
+    public function testFetchWithListenerThatReturnsApiProblem($method, $message): void
     {
         $artist = $this->createArtist('Artist Fetch ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_FETCH_PRE);
@@ -441,7 +441,7 @@ class CRUDTest extends TestCase
         );
     }
 
-    public function testFetchAll()
+    public function testFetchAll(): void
     {
         $artist1 = $this->createArtist('Artist 1');
         $artist2 = $this->createArtist('Artist 2');
@@ -462,7 +462,7 @@ class CRUDTest extends TestCase
         ]);
     }
 
-    public function testFetchAllEmptyCollection()
+    public function testFetchAllEmptyCollection(): void
     {
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
         $this->getRequest()->setMethod(Request::METHOD_GET);
@@ -484,7 +484,7 @@ class CRUDTest extends TestCase
      * @param string $method
      * @param string $message
      */
-    public function testFetchAllWithListenerThatReturnsApiProblem($method, $message)
+    public function testFetchAllWithListenerThatReturnsApiProblem($method, $message): void
     {
         $this->createArtist('Artist FetchAll ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_FETCH_ALL_PRE);
@@ -501,7 +501,7 @@ class CRUDTest extends TestCase
         );
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $artist = $this->createArtist('Artist Patch');
         $this->getRequest()->getHeaders()->addHeaders([
@@ -530,7 +530,7 @@ class CRUDTest extends TestCase
      * @param string $method
      * @param string $message
      */
-    public function testPatchWithListenerThatReturnsApiProblem($method, $message)
+    public function testPatchWithListenerThatReturnsApiProblem($method, $message): void
     {
         $artist = $this->createArtist('Artist Patch ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_PATCH_PRE);
@@ -552,7 +552,7 @@ class CRUDTest extends TestCase
         );
     }
 
-    public function testPatchList()
+    public function testPatchList(): void
     {
         $artist1 = $this->createArtist('Artist Patch List 1');
         $artist2 = $this->createArtist('Artist Patch List 2');
@@ -600,7 +600,7 @@ class CRUDTest extends TestCase
      * @param string $method
      * @param string $message
      */
-    public function testPatchListWithListenerThatReturnsApiProblem($method, $message)
+    public function testPatchListWithListenerThatReturnsApiProblem($method, $message): void
     {
         $artist = $this->createArtist('Artist Patch List ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_PATCH_LIST_PRE);
@@ -627,7 +627,7 @@ class CRUDTest extends TestCase
         );
     }
 
-    public function testPut()
+    public function testPut(): void
     {
         $artist = $this->createArtist('Artist Put');
         $this->getRequest()->getHeaders()->addHeaders([
@@ -659,7 +659,7 @@ class CRUDTest extends TestCase
      * @param string $method
      * @param string $message
      */
-    public function testPutWithListenerThatReturnsApiProblem($method, $message)
+    public function testPutWithListenerThatReturnsApiProblem($method, $message): void
     {
         $artist = $this->createArtist('Artist Put ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_UPDATE_PRE);
@@ -684,7 +684,7 @@ class CRUDTest extends TestCase
         );
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $artist = $this->createArtist('Artist Delete');
         $id     = $artist->getId();
@@ -706,7 +706,7 @@ class CRUDTest extends TestCase
      * @param string $method
      * @param string $message
      */
-    public function testDeleteWithListenerThatReturnsApiProblem($method, $message)
+    public function testDeleteWithListenerThatReturnsApiProblem($method, $message): void
     {
         $artist = $this->createArtist('Artist Delete ApiProblem');
         $this->$method(DoctrineResourceEvent::EVENT_DELETE_PRE);
@@ -726,7 +726,7 @@ class CRUDTest extends TestCase
         $this->assertEquals($artist->getId(), $foundEntity->getId());
     }
 
-    public function testDeleteEntityNotFound()
+    public function testDeleteEntityNotFound(): void
     {
         $artist = $this->createArtist();
         $id     = $artist->getId() + 1;
@@ -740,7 +740,7 @@ class CRUDTest extends TestCase
         $this->assertNull($this->em->getRepository(Artist::class)->find($id));
     }
 
-    public function testDeleteEntityDeleted()
+    public function testDeleteEntityDeleted(): void
     {
         $artist = $this->createArtist();
         $id     = $artist->getId();
@@ -756,7 +756,7 @@ class CRUDTest extends TestCase
         $this->assertNull($this->em->getRepository(Artist::class)->find($id));
     }
 
-    public function testDeleteList()
+    public function testDeleteList(): void
     {
         $artist1 = $this->createArtist('Artist Delete 1');
         $artist2 = $this->createArtist('Artist Delete 2');
@@ -794,7 +794,7 @@ class CRUDTest extends TestCase
      * @param string $method
      * @param string $message
      */
-    public function testDeleteListWithListenerThatReturnsApiProblem($method, $message)
+    public function testDeleteListWithListenerThatReturnsApiProblem($method, $message): void
     {
         $this->$method(DoctrineResourceEvent::EVENT_DELETE_LIST_PRE);
 
@@ -834,6 +834,10 @@ class CRUDTest extends TestCase
         $this->assertEquals($artist3->getId(), $foundEntity3->getId());
     }
 
+    /**
+     * @return void
+     * @psalm-return never
+     */
     public function testGetRpcNoParams()
     {
         $this->markTestIncomplete('Doctrine RPC Services are not fully implemented.');
@@ -846,6 +850,10 @@ class CRUDTest extends TestCase
         print_r($body);
     }
 
+    /**
+     * @return void
+     * @psalm-return never
+     */
     public function testGetRpcWithParams()
     {
         $this->markTestIncomplete('Doctrine RPC Services are not fully implemented.');
@@ -864,7 +872,7 @@ class CRUDTest extends TestCase
     /**
      * @param array $expectedEvents
      */
-    protected function validateTriggeredEvents(array $expectedEvents)
+    protected function validateTriggeredEvents(array $expectedEvents): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
         $eventCatcher   = $serviceManager->get(EventCatcher::class);
@@ -875,7 +883,7 @@ class CRUDTest extends TestCase
     /**
      * @param array $expectedEvents
      */
-    protected function validateTriggeredEventsContains(array $expectedEvents)
+    protected function validateTriggeredEventsContains(array $expectedEvents): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
         $eventCatcher   = $serviceManager->get(EventCatcher::class);

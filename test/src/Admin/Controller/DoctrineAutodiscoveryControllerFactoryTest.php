@@ -34,7 +34,7 @@ class DoctrineAutodiscoveryControllerFactoryTest extends TestCase
         $this->container->get(DoctrineAutodiscoveryModel::class)->willReturn($this->model);
     }
 
-    public function testInvokableFactoryReturnsDoctrineAutodiscoveryController()
+    public function testInvokableFactoryReturnsDoctrineAutodiscoveryController(): void
     {
         $factory    = new DoctrineAutodiscoveryControllerFactory();
         $controller = $factory($this->container->reveal(), DoctrineAutodiscoveryController::class);
@@ -43,7 +43,7 @@ class DoctrineAutodiscoveryControllerFactoryTest extends TestCase
         $this->assertAttributeSame($this->model, 'model', $controller);
     }
 
-    public function testLegacyFactoryReturnsDoctrineAutodiscoveryController()
+    public function testLegacyFactoryReturnsDoctrineAutodiscoveryController(): void
     {
         $controllers = $this->prophesize(AbstractPluginManager::class);
         $controllers->getServiceLocator()->willReturn($this->container->reveal());

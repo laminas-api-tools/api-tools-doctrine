@@ -22,6 +22,8 @@ class Module
 
     /**
      * Module init
+     *
+     * @return void
      */
     public function init(ModuleManager $moduleManager)
     {

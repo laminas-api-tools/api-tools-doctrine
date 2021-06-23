@@ -21,7 +21,7 @@ class EventCatcher
     /** @var array */
     protected $caughtEvents = [];
 
-    public function attachShared(SharedEventManagerInterface $events)
+    public function attachShared(SharedEventManagerInterface $events): void
     {
         $listener = $events->attach(self::EVENT_IDENTIFIER, '*', [$this, 'listen']);
 
@@ -32,7 +32,7 @@ class EventCatcher
         $this->listeners[] = $listener;
     }
 
-    public function detachShared(SharedEventManagerInterface $events)
+    public function detachShared(SharedEventManagerInterface $events): void
     {
         $eventManagerVersion = method_exists($events, 'getEvents') ? 2 : 3;
 
@@ -52,7 +52,7 @@ class EventCatcher
         }
     }
 
-    public function listen(Event $e)
+    public function listen(Event $e): void
     {
         $this->caughtEvents[] = $e->getName();
         array_unique($this->caughtEvents);

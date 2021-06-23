@@ -31,7 +31,12 @@ class DoctrineRestServiceResourceFactoryTest extends TestCase
         $this->container = $this->prophesize(ContainerInterface::class);
     }
 
-    /** @psalm-return array<string, array{0: array<class-string, bool>}> */
+    /**
+     * @return bool[][][]
+     * @psalm-return array<string, array{
+     *     0: array<class-string, bool>
+     * }>
+     */
     public function missingDependencies(): array
     {
         return [
@@ -69,7 +74,7 @@ class DoctrineRestServiceResourceFactoryTest extends TestCase
     /**
      * @dataProvider missingDependencies
      */
-    public function testFactoryRaisesExceptionIfDependenciesAreMissing(array $dependencies)
+    public function testFactoryRaisesExceptionIfDependenciesAreMissing(array $dependencies): void
     {
         $factory = new DoctrineRestServiceResourceFactory();
 
@@ -82,7 +87,7 @@ class DoctrineRestServiceResourceFactoryTest extends TestCase
         $factory($this->container->reveal());
     }
 
-    public function testFactoryReturnsConfiguredDoctrineRestServiceResource()
+    public function testFactoryReturnsConfiguredDoctrineRestServiceResource(): void
     {
         $factory            = new DoctrineRestServiceResourceFactory();
         $restFactory        = $this->prophesize(DoctrineRestServiceModelFactory::class)->reveal();

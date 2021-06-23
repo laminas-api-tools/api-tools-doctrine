@@ -40,7 +40,7 @@ class ObjectExistsFactoryTest extends TestCase
         $this->validators = new ValidatorPluginManager($this->serviceManager->reveal(), $validatorsConfig);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $validator = $this->validators->get(
             ObjectExists::class,
@@ -53,7 +53,7 @@ class ObjectExistsFactoryTest extends TestCase
         $this->assertInstanceOf(ObjectExistsOrigin::class, $validator);
     }
 
-    public function testCreateWithEntityClassProvided()
+    public function testCreateWithEntityClassProvided(): void
     {
         $entityManager = $this->prophesize(EntityManager::class);
         $entityManager->getRepository('MyEntity')->willReturn($this->objectRepository->reveal());

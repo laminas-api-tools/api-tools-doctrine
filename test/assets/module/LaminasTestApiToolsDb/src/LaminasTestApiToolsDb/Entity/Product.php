@@ -20,7 +20,7 @@ class Product
         return $this->version;
     }
 
-    public function setVersion($version)
+    public function setVersion($version): void
     {
         $this->version = $version;
     }

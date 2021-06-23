@@ -35,10 +35,10 @@ class DoctrineMetadata1Test extends TestCase
     /**
      * @see https://github.com/zfcampus/zf-apigility/issues/18
      */
-    public function testDoctrineMetadataResource()
+    public function testDoctrineMetadataResource(): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $serviceManager->get('doctrine.entitymanager.orm_default');
 
         $this->getRequest()->getHeaders()->addHeaders([
             'Accept' => 'application/json',
@@ -57,13 +57,13 @@ class DoctrineMetadata1Test extends TestCase
         $this->assertArrayHasKey('_embedded', $body);
     }
 
-    public function testDoctrineService()
+    public function testDoctrineService(): void
     {
         $serviceManager = $this->getApplication()->getServiceManager();
         $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
 
         $tool = new SchemaTool($em);
-        $res  = $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
+        $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
         // Create DB
         $resourceDefinition = [

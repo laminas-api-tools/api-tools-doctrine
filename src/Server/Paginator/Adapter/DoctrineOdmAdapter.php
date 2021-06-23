@@ -22,6 +22,7 @@ class DoctrineOdmAdapter implements AdapterInterface
 
     /**
      * @param Builder $queryBuilder
+     * @return void
      */
     public function setQueryBuilder($queryBuilder)
     {

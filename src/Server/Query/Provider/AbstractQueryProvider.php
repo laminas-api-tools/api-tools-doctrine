@@ -19,6 +19,8 @@ abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, Que
 
     /**
      * Set the object manager
+     *
+     * @return void
      */
     public function setObjectManager(ObjectManager $objectManager)
     {

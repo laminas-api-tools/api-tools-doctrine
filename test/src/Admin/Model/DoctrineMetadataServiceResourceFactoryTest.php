@@ -25,7 +25,7 @@ class DoctrineMetadataServiceResourceFactoryTest extends TestCase
         $this->container = $this->prophesize(ServiceManager::class);
     }
 
-    public function testFactoryReturnsDoctrineMetadataServiceResource()
+    public function testFactoryReturnsDoctrineMetadataServiceResource(): void
     {
         $factory = new DoctrineMetadataServiceResourceFactory();
 

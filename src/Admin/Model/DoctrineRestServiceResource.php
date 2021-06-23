@@ -7,6 +7,7 @@ namespace Laminas\ApiTools\Doctrine\Admin\Model;
 use Exception;
 use Laminas\ApiTools\Admin\Model\DocumentationModel;
 use Laminas\ApiTools\Admin\Model\InputFilterModel;
+use Laminas\ApiTools\Admin\Model\RestServiceModel;
 use Laminas\ApiTools\Admin\Model\RestServiceResource;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 
@@ -39,7 +40,7 @@ class DoctrineRestServiceResource extends RestServiceResource
 
     /**
      * @param string $type
-     * @return DoctrineRestServiceModel
+     * @return RestServiceModel
      */
     public function getModel($type = DoctrineRestServiceModelFactory::TYPE_DEFAULT)
     {

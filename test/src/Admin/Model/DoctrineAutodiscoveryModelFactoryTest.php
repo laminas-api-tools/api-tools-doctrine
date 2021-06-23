@@ -30,7 +30,7 @@ class DoctrineAutodiscoveryModelFactoryTest extends TestCase
         $this->container->willImplement(ContainerInterface::class);
     }
 
-    public function testFactoryRaisesExceptionIfConfigServiceIsMissing()
+    public function testFactoryRaisesExceptionIfConfigServiceIsMissing(): void
     {
         $factory = new DoctrineAutodiscoveryModelFactory();
 
@@ -41,7 +41,7 @@ class DoctrineAutodiscoveryModelFactoryTest extends TestCase
         $factory($this->container->reveal());
     }
 
-    public function testFactoryReturnsDoctrineAutodiscoveryModelComposingConfigAndContainer()
+    public function testFactoryReturnsDoctrineAutodiscoveryModelComposingConfigAndContainer(): void
     {
         $factory = new DoctrineAutodiscoveryModelFactory();
 
