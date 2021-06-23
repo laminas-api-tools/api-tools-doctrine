@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTestApiToolsDb\Query\Provider\Artist;
 
 use Laminas\ApiTools\Doctrine\Server\Query\Provider\AbstractQueryProvider;
@@ -8,7 +10,6 @@ use Laminas\ApiTools\Rest\ResourceEvent;
 class DefaultQueryProvider extends AbstractQueryProvider
 {
     /**
-     * @param ResourceEvent $event
      * @param string $entityClass
      * @param array $parameters
      * @return mixed This will return an ORM or ODM Query\Builder

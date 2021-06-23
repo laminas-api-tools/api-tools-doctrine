@@ -1,9 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTestApiToolsDb\Type;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Id\AbstractIdGenerator;
+
+use function md5;
+use function mt_rand;
+use function strrev;
+use function time;
 
 class RevGenerator extends AbstractIdGenerator
 {

@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Controller;
 
@@ -19,12 +15,11 @@ class DoctrineAutodiscoveryControllerFactory implements FactoryInterface
     /**
      * Create and return DoctrineAutodiscoveryController instance.
      *
-     * @param ContainerInterface $container
      * @param string $requestedName
      * @param null|array $options
      * @return DoctrineAutodiscoveryController
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         /** @var DoctrineAutodiscoveryModel $model */
         $model = $container->get(DoctrineAutodiscoveryModel::class);
@@ -37,7 +32,6 @@ class DoctrineAutodiscoveryControllerFactory implements FactoryInterface
      *
      * Provided for backwards compatibility; proxies to __invoke().
      *
-     * @param ServiceLocatorInterface $container
      * @return DoctrineAutodiscoveryController
      */
     public function createService(ServiceLocatorInterface $container)

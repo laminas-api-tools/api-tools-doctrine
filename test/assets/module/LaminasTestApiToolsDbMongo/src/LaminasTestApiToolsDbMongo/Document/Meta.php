@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTestApiToolsDbMongo\Document;
+
+use DateTime;
 
 class Meta
 {
@@ -32,7 +36,7 @@ class Meta
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $value)
+    public function setCreatedAt(DateTime $value)
     {
         $this->createdAt = $value;
     }
@@ -40,14 +44,14 @@ class Meta
     public function getArrayCopy()
     {
         return [
-            'name' => $this->getName(),
+            'name'      => $this->getName(),
             'createdAt' => $this->getCreatedAt(),
         ];
     }
 
     public function exchangeArray($values)
     {
-        $this->setName((isset($values['name'])) ? $values['name'] : null);
-        $this->setCreatedAt((isset($values['createdAt'])) ? $values['createdAt'] : null);
+        $this->setName($values['name'] ?? null);
+        $this->setCreatedAt($values['createdAt'] ?? null);
     }
 }

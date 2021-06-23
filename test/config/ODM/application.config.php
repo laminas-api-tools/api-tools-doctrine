@@ -1,13 +1,9 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 return [
-    'modules' => [
+    'modules'                 => [
         'DoctrineModule',
         'DoctrineMongoODMModule',
         'Phpro\DoctrineHydrationModule',
@@ -30,9 +26,9 @@ return [
         'config_glob_paths' => [
             __DIR__ . '/local.php',
         ],
-        'module_paths' => [
-            'LaminasTestApiToolsGeneral' => __DIR__ . '/../../assets/module/LaminasTestApiToolsGeneral',
-            'LaminasTestApiToolsDbMongo' => __DIR__ . '/../../assets/module/LaminasTestApiToolsDbMongo',
+        'module_paths'      => [
+            'LaminasTestApiToolsGeneral'    => __DIR__ . '/../../assets/module/LaminasTestApiToolsGeneral',
+            'LaminasTestApiToolsDbMongo'    => __DIR__ . '/../../assets/module/LaminasTestApiToolsDbMongo',
             'LaminasTestApiToolsDbMongoApi' => __DIR__ . '/../../assets/module/LaminasTestApiToolsDbMongoApi',
         ],
     ],

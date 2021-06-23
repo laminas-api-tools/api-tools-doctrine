@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTestApiToolsDb\Entity;
+
+use DateTime;
+use InvalidArgumentException;
 
 class Album
 {
@@ -32,7 +37,7 @@ class Album
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $value)
+    public function setCreatedAt(DateTime $value)
     {
         $this->createdAt = $value;
 
@@ -74,7 +79,7 @@ class Album
     public function setAlbum($album)
     {
         if (null !== $album && ! $album instanceof Album) {
-            throw new \InvalidArgumentException('Invalid album argument');
+            throw new InvalidArgumentException('Invalid album argument');
         }
         $this->album = $album;
         return $this;

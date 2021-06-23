@@ -1,15 +1,15 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource;
 use Laminas\Http\Request;
 use LaminasTest\ApiTools\Doctrine\TestCase;
+
+use function json_decode;
 
 class DoctrineMetadata2Test extends TestCase
 {
@@ -25,7 +25,7 @@ class DoctrineMetadata2Test extends TestCase
 
     protected function tearDown()
     {
-        # FIXME: Drop database from in-memory
+        // FIXME: Drop database from in-memory
     }
 
     /**
@@ -34,7 +34,7 @@ class DoctrineMetadata2Test extends TestCase
     public function testDoctrineService()
     {
         $serviceManager = $this->getApplication()->getServiceManager();
-        $em = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $em             = $serviceManager->get('doctrine.entitymanager.orm_default');
 
         $this->getRequest()->getHeaders()->addHeaders([
             'Accept' => 'application/json',
@@ -62,30 +62,30 @@ class DoctrineMetadata2Test extends TestCase
             $body['_embedded']['doctrine'][0]['controller_service_name']
         );
 
-        $this->resource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource');
+        $this->resource = $serviceManager->get(DoctrineRestServiceResource::class);
         $this->resource->setModuleName('DbApi');
         $this->assertEquals($this->resource->getModuleName(), 'DbApi');
 
         $entity = $this->resource->patch(
             'DbApi\\V1\\Rest\\Artist\\Controller',
             [
-                'routematch' => '/doctrine-changed/test',
-                'httpmethods' => ['GET', 'POST', 'PUT'],
-                'selector' => 'new doctrine selector',
-                'accept_whitelist' => ['new whitelist accept'],
+                'routematch'             => '/doctrine-changed/test',
+                'httpmethods'            => ['GET', 'POST', 'PUT'],
+                'selector'               => 'new doctrine selector',
+                'accept_whitelist'       => ['new whitelist accept'],
                 'content_type_whitelist' => ['new content whitelist'],
             ]
         );
 
-        $this->rpcResource = $serviceManager->get('Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource');
+        $this->rpcResource = $serviceManager->get(DoctrineRpcServiceResource::class);
         $this->rpcResource->setModuleName('DbApi');
         $this->rpcResource->patch(
             'DbApi\\V1\\Rpc\\Artistalbum\\Controller',
             [
-                'routematch' => '/doctrine-rpc-changed/test',
-                'httpmethods' => ['GET', 'POST', 'PUT'],
-                'selector' => 'new selector',
-                'accept_whitelist' => ['new whitelist'],
+                'routematch'             => '/doctrine-rpc-changed/test',
+                'httpmethods'            => ['GET', 'POST', 'PUT'],
+                'selector'               => 'new selector',
+                'accept_whitelist'       => ['new whitelist'],
                 'content_type_whitelist' => ['new content whitelist'],
             ]
         );

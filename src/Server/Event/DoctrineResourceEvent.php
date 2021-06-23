@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Event;
 
@@ -14,56 +10,42 @@ use Laminas\EventManager\Event;
 
 class DoctrineResourceEvent extends Event
 {
-    const EVENT_FETCH_PRE        = 'fetch.pre';
-    const EVENT_FETCH_POST       = 'fetch.post';
-    const EVENT_FETCH_ALL_PRE    = 'fetch-all.pre';
-    const EVENT_FETCH_ALL_POST   = 'fetch-all.post';
-    const EVENT_CREATE_PRE       = 'create.pre';
-    const EVENT_CREATE_POST      = 'create.post';
-    const EVENT_UPDATE_PRE       = 'update.pre';
-    const EVENT_UPDATE_POST      = 'update.post';
-    const EVENT_PATCH_PRE        = 'patch.pre';
-    const EVENT_PATCH_POST       = 'patch.post';
-    const EVENT_PATCH_LIST_PRE   = 'patch-list.pre';
-    const EVENT_PATCH_LIST_POST  = 'patch-list.post';
-    const EVENT_DELETE_PRE       = 'delete.pre';
-    const EVENT_DELETE_POST      = 'delete.post';
-    const EVENT_DELETE_LIST_PRE  = 'delete-list.pre';
-    const EVENT_DELETE_LIST_POST = 'delete-list.post';
+    public const EVENT_FETCH_PRE        = 'fetch.pre';
+    public const EVENT_FETCH_POST       = 'fetch.post';
+    public const EVENT_FETCH_ALL_PRE    = 'fetch-all.pre';
+    public const EVENT_FETCH_ALL_POST   = 'fetch-all.post';
+    public const EVENT_CREATE_PRE       = 'create.pre';
+    public const EVENT_CREATE_POST      = 'create.post';
+    public const EVENT_UPDATE_PRE       = 'update.pre';
+    public const EVENT_UPDATE_POST      = 'update.post';
+    public const EVENT_PATCH_PRE        = 'patch.pre';
+    public const EVENT_PATCH_POST       = 'patch.post';
+    public const EVENT_PATCH_LIST_PRE   = 'patch-list.pre';
+    public const EVENT_PATCH_LIST_POST  = 'patch-list.post';
+    public const EVENT_DELETE_PRE       = 'delete.pre';
+    public const EVENT_DELETE_POST      = 'delete.post';
+    public const EVENT_DELETE_LIST_PRE  = 'delete-list.pre';
+    public const EVENT_DELETE_LIST_POST = 'delete-list.post';
 
-    /**
-     * @var ResourceEvent
-     */
+    /** @var ResourceEvent */
     protected $resourceEvent;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $entity;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $collection;
 
-    /**
-     * @var array|mixed Should be the original data that was supplied the resource
-     */
+    /** @var array|mixed Should be the original data that was supplied the resource */
     protected $data;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $entityClassName;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $entityId;
 
-    /**
-     * @param ObjectManager
-     */
+    /** @var ObjectManager */
     protected $objectManager;
 
     /**
@@ -75,7 +57,6 @@ class DoctrineResourceEvent extends Event
     }
 
     /**
-     * @param ObjectManager $objectManager
      * @return $this
      */
     public function setObjectManager(ObjectManager $objectManager)
@@ -147,7 +128,7 @@ class DoctrineResourceEvent extends Event
     }
 
     /**
-     * @return \Laminas\ApiTools\Rest\ResourceEvent
+     * @return ResourceEvent
      */
     public function getResourceEvent()
     {
@@ -155,7 +136,7 @@ class DoctrineResourceEvent extends Event
     }
 
     /**
-     * @param \Laminas\ApiTools\Rest\ResourceEvent $resourceEvent
+     * @param ResourceEvent $resourceEvent
      * @return $this
      */
     public function setResourceEvent($resourceEvent)

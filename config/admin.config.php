@@ -1,32 +1,28 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin;
 
 use Laminas\ApiTools\Doctrine\Server;
 
 return [
-    'router' => [
+    'router'                        => [
         'routes' => [
-            'api-tools-doctrine-rpc-service' => [
-                'type' => 'segment',
-                'options' => [
-                    'route' => '/api-tools/api/module[/:name]/doctrine-rpc[/:controller_service_name]',
+            'api-tools-doctrine-rpc-service'      => [
+                'type'          => 'segment',
+                'options'       => [
+                    'route'    => '/api-tools/api/module[/:name]/doctrine-rpc[/:controller_service_name]',
                     'defaults' => [
                         'controller' => Controller\DoctrineRpcService::class,
                     ],
                 ],
                 'may_terminate' => true,
             ],
-            'api-tools-doctrine-service' => [
-                'type' => 'segment',
-                'options' => [
-                    'route' => '/api-tools/api/module[/:name]/doctrine[/:controller_service_name]',
+            'api-tools-doctrine-service'          => [
+                'type'          => 'segment',
+                'options'       => [
+                    'route'    => '/api-tools/api/module[/:name]/doctrine[/:controller_service_name]',
                     'defaults' => [
                         'controller' => Controller\DoctrineRestService::class,
                     ],
@@ -34,31 +30,30 @@ return [
                 'may_terminate' => true,
             ],
             'api-tools-doctrine-metadata-service' => [
-                'type' => 'segment',
-                'options' => [
-                    'route' => '/api-tools/api/doctrine[/:object_manager_alias]/metadata[/:name]',
+                'type'          => 'segment',
+                'options'       => [
+                    'route'    => '/api-tools/api/doctrine[/:object_manager_alias]/metadata[/:name]',
                     'defaults' => [
                         'controller' => Controller\DoctrineMetadataService::class,
                     ],
                 ],
                 'may_terminate' => true,
             ],
-            'api-tools-doctrine-autodiscovery' => [
-                'type' => 'segment',
+            'api-tools-doctrine-autodiscovery'    => [
+                'type'    => 'segment',
                 'options' => [
-                    'route' => '/api-tools/api/module/:name/:version/autodiscovery/doctrine/:object_manager_alias',
+                    'route'    => '/api-tools/api/module/:name/:version/autodiscovery/doctrine/:object_manager_alias',
                     'defaults' => [
                         'controller' => Controller\DoctrineAutodiscovery::class,
-                        'action' => 'discover',
+                        'action'     => 'discover',
                     ],
                 ],
             ],
         ],
     ],
-
-    'service_manager' => [
+    'service_manager'               => [
         // Legacy Zend Framework aliases
-        'aliases' => [
+        'aliases'   => [
             // @codingStandardsIgnoreStart Generic.Files.LineLength
             \ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModel::class => Model\DoctrineAutodiscoveryModel::class,
             \ZF\Apigility\Doctrine\Admin\Model\DoctrineMetadataServiceResource::class => Model\DoctrineMetadataServiceResource::class,
@@ -77,10 +72,9 @@ return [
             Model\DoctrineRpcServiceResource::class      => Model\DoctrineRpcServiceResourceFactory::class,
         ],
     ],
-
-    'controllers' => [
+    'controllers'                   => [
         // Legacy Zend Framework aliases
-        'aliases' => [
+        'aliases'   => [
             // @codingStandardsIgnoreLine Generic.Files.LineLength
             \ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery::class => Controller\DoctrineAutodiscovery::class,
         ],
@@ -88,24 +82,23 @@ return [
             Controller\DoctrineAutodiscovery::class => Controller\DoctrineAutodiscoveryControllerFactory::class,
         ],
     ],
-
     'api-tools-content-negotiation' => [
-        'controllers' => [
+        'controllers'            => [
             Controller\DoctrineAutodiscovery::class   => 'Json',
             Controller\DoctrineRestService::class     => 'HalJson',
             Controller\DoctrineRpcService::class      => 'HalJson',
             Controller\DoctrineMetadataService::class => 'HalJson',
         ],
-        'accept_whitelist' => [
-            Controller\DoctrineAutodiscovery::class => [
+        'accept_whitelist'       => [
+            Controller\DoctrineAutodiscovery::class   => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineRpcService::class => [
+            Controller\DoctrineRpcService::class      => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineRestService::class => [
+            Controller\DoctrineRestService::class     => [
                 'application/json',
                 'application/*+json',
             ],
@@ -115,15 +108,15 @@ return [
             ],
         ],
         'content_type_whitelist' => [
-            Controller\DoctrineAutodiscovery::class => [
+            Controller\DoctrineAutodiscovery::class   => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineRpcService::class => [
+            Controller\DoctrineRpcService::class      => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineRestService::class => [
+            Controller\DoctrineRestService::class     => [
                 'application/json',
                 'application/*+json',
             ],
@@ -133,16 +126,15 @@ return [
             ],
         ],
     ],
-
-    'api-tools-hal' => [
+    'api-tools-hal'                 => [
         'metadata_map' => [
-            Model\DoctrineRpcServiceEntity::class => [
+            Model\DoctrineRpcServiceEntity::class      => [
                 'hydrator'               => 'ArraySerializable',
                 'route_identifier_name'  => 'controller_service_name',
                 'entity_identifier_name' => 'controller_service_name',
                 'route_name'             => 'api-tools-doctrine-rpc-service',
             ],
-            Model\DoctrineRestServiceEntity::class => [
+            Model\DoctrineRestServiceEntity::class     => [
                 'hydrator'               => 'ArraySerializable',
                 'route_identifier_name'  => 'controller_service_name',
                 'entity_identifier_name' => 'controller_service_name',
@@ -156,9 +148,8 @@ return [
             ],
         ],
     ],
-
-    'api-tools-rest' => [
-        Controller\DoctrineRpcService::class => [
+    'api-tools-rest'                => [
+        Controller\DoctrineRpcService::class      => [
             'listener'                   => Model\DoctrineRpcServiceResource::class,
             'route_name'                 => 'api-tools-doctrine-rpc-service',
             'entity_class'               => Model\DoctrineRpcServiceEntity::class,
@@ -168,7 +159,7 @@ return [
             'collection_name'            => 'doctrine-rpc',
             'collection_query_whitelist' => ['version'],
         ],
-        Controller\DoctrineRestService::class => [
+        Controller\DoctrineRestService::class     => [
             'listener'                   => Model\DoctrineRestServiceResource::class,
             'route_name'                 => 'api-tools-doctrine-service',
             'entity_class'               => Model\DoctrineRestServiceEntity::class,
@@ -189,14 +180,14 @@ return [
             'collection_query_whitelist' => ['version'],
         ],
     ],
-    'api-tools-rpc' => [
+    'api-tools-rpc'                 => [
         Controller\DoctrineAutodiscovery::class => [
             'http_methods' => ['GET'],
             'route_name'   => 'api-tools-doctrine-autodiscovery',
         ],
     ],
-    'validator_metadata' => [
-        Server\Validator\ObjectExists::class => [
+    'validator_metadata'            => [
+        Server\Validator\ObjectExists::class   => [
             'entity_class' => 'string',
             'fields'       => 'string',
         ],

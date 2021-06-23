@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
@@ -12,31 +8,24 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Laminas\ApiTools\Admin\Model\NewRestServiceEntity as LaminasNewRestServiceEntity;
 use Laminas\Stdlib\ArraySerializableInterface;
 
+use function str_replace;
+use function strtolower;
+
 class NewDoctrineServiceEntity extends LaminasNewRestServiceEntity implements ArraySerializableInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $hydratorName;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     protected $objectManager;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $byValue = true;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $hydratorStrategies = [];
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $useGeneratedHydrator = true;
 
     public function exchangeArray(array $data)
@@ -66,9 +55,10 @@ class NewDoctrineServiceEntity extends LaminasNewRestServiceEntity implements Ar
         }
     }
 
+    /** @return array<string, mixed> */
     public function getArrayCopy()
     {
-        $data = parent::getArrayCopy();
+        $data                           = parent::getArrayCopy();
         $data['hydrator_name']          = $this->hydratorName;
         $data['object_manager']         = $this->objectManager;
         $data['by_value']               = $this->byValue;

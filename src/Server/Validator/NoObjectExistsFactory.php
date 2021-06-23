@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Validator;
 
@@ -26,12 +22,11 @@ class NoObjectExistsFactory implements FactoryInterface
     protected $options = [];
 
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
      * @param null|array $options
      * @return NoObjectExists
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         if (isset($options['entity_class'])) {
             $objectRepository = $container
@@ -49,7 +44,6 @@ class NoObjectExistsFactory implements FactoryInterface
      *
      * Proxies to `__invoke()`.
      *
-     * @param ServiceLocatorInterface $container
      * @return NoObjectExists
      */
     public function createService(ServiceLocatorInterface $container)

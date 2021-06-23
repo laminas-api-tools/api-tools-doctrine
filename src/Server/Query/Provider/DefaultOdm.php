@@ -1,13 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
+use Doctrine\Odm\MongoDB\Query\Builder;
 use Laminas\ApiTools\Doctrine\Server\Paginator\Adapter\DoctrineOdmAdapter;
 use Laminas\ApiTools\Rest\ResourceEvent;
 
@@ -18,7 +15,7 @@ class DefaultOdm extends AbstractQueryProvider
      */
     public function createQuery(ResourceEvent $event, $entityClass, $parameters)
     {
-        /** @var \Doctrine\Odm\MongoDB\Query\Builder $queryBuilder */
+        /** @var Builder $queryBuilder */
         $queryBuilder = $this->getObjectManager()->createQueryBuilder();
         $queryBuilder->find($entityClass);
 
@@ -26,26 +23,22 @@ class DefaultOdm extends AbstractQueryProvider
     }
 
     /**
-     * @param $queryBuilder
+     * @param Builder $queryBuilder
      * @return DoctrineOdmAdapter
      */
     public function getPaginatedQuery($queryBuilder)
     {
-        $adapter = new DoctrineOdmAdapter($queryBuilder);
-
-        return $adapter;
+        return new DoctrineOdmAdapter($queryBuilder);
     }
 
     /**
-     * @param $entityClass
+     * @param string $entityClass
      * @return int
      */
     public function getCollectionTotal($entityClass)
     {
         $queryBuilder = $this->getObjectManager()->createQueryBuilder();
         $queryBuilder->find($entityClass);
-        $count = $queryBuilder->getQuery()->execute()->count();
-
-        return $count;
+        return $queryBuilder->getQuery()->execute()->count();
     }
 }

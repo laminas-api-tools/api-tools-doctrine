@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
@@ -15,6 +11,7 @@ use Laminas\ApiTools\Admin\Utility;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Configuration\ConfigResource;
 use Laminas\ApiTools\Rest\Exception\CreationException;
+use Laminas\EventManager\EventInterface;
 use Laminas\EventManager\EventManager;
 use Laminas\EventManager\EventManagerAwareInterface;
 use Laminas\EventManager\EventManagerInterface;
@@ -28,41 +25,45 @@ use Laminas\View\Resolver;
 use OutOfRangeException;
 use ReflectionClass;
 
+use function array_fill;
+use function array_keys;
+use function array_merge;
+use function array_search;
+use function class_exists;
+use function dirname;
+use function file_exists;
+use function file_put_contents;
+use function in_array;
+use function is_array;
+use function mkdir;
+use function preg_match;
+use function preg_quote;
+use function sprintf;
+use function ucfirst;
+use function unlink;
+use function vsprintf;
+
 class DoctrineRestServiceModel implements EventManagerAwareInterface
 {
-    /**
-     * @var ConfigResource
-     */
+    /** @var ConfigResource */
     protected $configResource;
 
-    /**
-     * @var EventManagerInterface
-     */
+    /** @var EventManagerInterface */
     protected $events;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $module;
 
-    /**
-     * @var ModuleEntity
-     */
+    /** @var ModuleEntity */
     protected $moduleEntity;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $modulePath;
 
-    /**
-     * @var ModulePathSpec
-     */
+    /** @var ModulePathSpec */
     protected $modules;
 
-    /**
-     * @var PhpRenderer
-     */
+    /** @var PhpRenderer */
     protected $renderer;
 
     /**
@@ -90,9 +91,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
         'entityHttpMethods'        => 'entity_http_methods',
     ];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $doctrineHydratorOptions = [
         'entityClass'          => 'entity_class',
         'objectManager'        => 'object_manager',
@@ -101,21 +100,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
         'hydratorStrategies'   => 'strategies',
     ];
 
-    /**
-     * @var FilterChain
-     */
+    /** @var FilterChain */
     protected $routeNameFilter;
 
-    /**
-     * @var ServiceManager
-     */
+    /** @var ServiceManager */
     protected $serviceManager;
 
-    /**
-     * @param ModuleEntity $moduleEntity
-     * @param ModulePathSpec $modules
-     * @param ConfigResource $config
-     */
     public function __construct(ModuleEntity $moduleEntity, ModulePathSpec $modules, ConfigResource $config)
     {
         $this->module         = $moduleEntity->getName();
@@ -128,7 +118,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Determine if the given entity is doctrine-connected, and, if so, recast to a DoctrineRestServiceEntity
      *
-     * @param \Laminas\EventManager\EventInterface $event
+     * @param EventInterface $event
      * @return null|DoctrineRestServiceEntity
      */
     public static function onFetch($event)
@@ -150,7 +140,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
         if (isset($config['doctrine-hydrator']) && isset($config['doctrine-hydrator'][$configResource['hydrator']])) {
             $configHydrator = $config['doctrine-hydrator'][$configResource['hydrator']];
-            $config = array_merge($configResource, $configHydrator);
+            $config         = array_merge($configResource, $configHydrator);
         } else {
             $config = $configResource;
         }
@@ -193,7 +183,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Set service manager
      *
-     * @param ServiceManager $serviceManager
      * @return DoctrineRestServiceModel
      */
     public function setServiceManager(ServiceManager $serviceManager)
@@ -205,14 +194,13 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Set the EventManager instance
      *
-     * @param EventManagerInterface $events
      * @return self
      */
     public function setEventManager(EventManagerInterface $events)
     {
         $events->setIdentifiers([
-            __CLASS__,
-            get_class($this),
+            self::class,
+            static::class,
         ]);
         $this->events = $events;
         return $this;
@@ -249,7 +237,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
             ), 404);
         }
 
-        $restConfig = $config['api-tools-rest'][$controllerService];
+        $restConfig                          = $config['api-tools-rest'][$controllerService];
         $restConfig['controllerServiceName'] = $controllerService;
         $restConfig['module']                = $this->module;
         $restConfig['resource_class']        = $restConfig['listener'];
@@ -264,15 +252,17 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
         if (empty($entity->serviceName)) {
             $serviceName = $controllerService;
-            $q = preg_quote('\\');
-            if (preg_match(
-                vsprintf(
-                    '#%sV[^%s]+%sRest%s(?<service>[^%s]+)%sController#',
-                    array_fill(0, 6, $q)
-                ),
-                $controllerService,
-                $matches
-            )) {
+            $q           = preg_quote('\\');
+            if (
+                preg_match(
+                    vsprintf(
+                        '#%sV[^%s]+%sRest%s(?<service>[^%s]+)%sController#',
+                        array_fill(0, 6, $q)
+                    ),
+                    $controllerService,
+                    $matches
+                )
+            ) {
                 $serviceName = $matches['service'];
             }
 
@@ -291,7 +281,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
                 'config' => $config,
             ],
             function ($r) {
-                return ($r instanceof DoctrineRestServiceEntity);
+                return $r instanceof DoctrineRestServiceEntity;
             }
         );
         if ($eventResults->stopped()) {
@@ -327,7 +317,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
                 ), 400);
             }
             $namespaceSep = preg_quote('\\');
-            $pattern = sprintf(
+            $pattern      = sprintf(
                 '#%s%sV%s#',
                 $this->module,
                 $namespaceSep,
@@ -371,7 +361,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Create a new service using the details provided
      *
-     * @param NewDoctrineServiceEntity $details
      * @return DoctrineRestServiceEntity
      * @throws CreationException
      */
@@ -395,9 +384,9 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
         $mediaType = $this->createMediaType();
 
-        $resourceClass = $details->resourceClass ?: $this->createResourceClass($resourceName, $details);
+        $resourceClass   = $details->resourceClass ?: $this->createResourceClass($resourceName, $details);
         $collectionClass = $details->collectionClass ?: $this->createCollectionClass($resourceName);
-        $serviceName = $details->serviceName ?: $resourceName;
+        $serviceName     = $details->serviceName ?: $resourceName;
 
         $entityClass = $details->entityClass;
         if (! $entityClass || ! class_exists($entityClass)) {
@@ -407,7 +396,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
         $controllerService = $details->controllerServiceName ?: $this->createControllerServiceName($resourceName);
 
-        $routeName = $details->routeName ?: $this->createRoute(
+        $routeName     = $details->routeName ?: $this->createRoute(
             $resourceName,
             $details->routeMatch,
             $details->routeIdentifierName,
@@ -434,7 +423,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
                 $mediaType,
                 'application/json',
             ],
-            'object_manager' => $objectManager,
+            'object_manager'          => $objectManager,
         ]);
 
         $this->createRestConfig($entity, $controllerService, $resourceClass, $routeName);
@@ -447,7 +436,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
             __FUNCTION__,
             $this,
             [
-                'entity' => $entity,
+                'entity'         => $entity,
                 'configResource' => $this->configResource,
             ]
         );
@@ -458,7 +447,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Update an existing service
      *
-     * @param DoctrineRestServiceEntity $update
      * @return DoctrineRestServiceEntity
      */
     public function updateService(DoctrineRestServiceEntity $update)
@@ -568,15 +556,13 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
             ));
         }
 
-        $fullClassName = sprintf(
+        return sprintf(
             '%s\\V%s\\Rest\\%s\\%s',
             $module,
             $this->moduleEntity->getLatestVersion(),
             $resourceName,
             $className
         );
-
-        return $fullClassName;
     }
 
     /**
@@ -587,8 +573,8 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      */
     public function createCollectionClass($resourceName)
     {
-        $module    = $this->module;
-        $srcPath   = $this->getSourcePath($resourceName);
+        $module  = $this->module;
+        $srcPath = $this->getSourcePath($resourceName);
 
         $className = sprintf('%sCollection', $resourceName);
         $classPath = sprintf('%s/%s.php', $srcPath, $className);
@@ -614,15 +600,13 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
             ));
         }
 
-        $fullClassName = sprintf(
+        return sprintf(
             '%s\\V%s\\Rest\\%s\\%s',
             $module,
             $this->moduleEntity->getLatestVersion(),
             $resourceName,
             $className
         );
-
-        return $fullClassName;
     }
 
     /**
@@ -644,12 +628,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
         );
 
         $config = [
-            'router' => [
+            'router'               => [
                 'routes' => [
                     $routeName => [
-                        'type' => 'Segment',
+                        'type'    => 'Segment',
                         'options' => [
-                            'route' => sprintf('%s[/:%s]', $route, $identifier),
+                            'route'    => sprintf('%s[/:%s]', $route, $identifier),
                             'defaults' => [
                                 'controller' => $controllerService,
                             ],
@@ -689,30 +673,31 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Creates REST configuration
      *
-     * @param DoctrineRestServiceEntity $details
      * @param string $controllerService
      * @param string $resourceClass
      * @param string $routeName
      */
     public function createRestConfig(DoctrineRestServiceEntity $details, $controllerService, $resourceClass, $routeName)
     {
-        $config = ['api-tools-rest' => [
-            $controllerService => [
-                'listener'                   => $resourceClass,
-                'route_name'                 => $routeName,
-                'route_identifier_name'      => $details->routeIdentifierName,
-                'entity_identifier_name'     => $details->entityIdentifierName,
-                'collection_name'            => $details->collectionName,
-                'entity_http_methods'        => $details->entityHttpMethods,
-                'collection_http_methods'    => $details->collectionHttpMethods,
-                'collection_query_whitelist' => $details->collectionQueryWhitelist ?: [],
-                'page_size'                  => $details->pageSize,
-                'page_size_param'            => $details->pageSizeParam,
-                'entity_class'               => $details->entityClass,
-                'collection_class'           => $details->collectionClass,
-                'service_name'               => $details->serviceName,
+        $config = [
+            'api-tools-rest' => [
+                $controllerService => [
+                    'listener'                   => $resourceClass,
+                    'route_name'                 => $routeName,
+                    'route_identifier_name'      => $details->routeIdentifierName,
+                    'entity_identifier_name'     => $details->entityIdentifierName,
+                    'collection_name'            => $details->collectionName,
+                    'entity_http_methods'        => $details->entityHttpMethods,
+                    'collection_http_methods'    => $details->collectionHttpMethods,
+                    'collection_query_whitelist' => $details->collectionQueryWhitelist ?: [],
+                    'page_size'                  => $details->pageSize,
+                    'page_size_param'            => $details->pageSizeParam,
+                    'entity_class'               => $details->entityClass,
+                    'collection_class'           => $details->collectionClass,
+                    'service_name'               => $details->serviceName,
+                ],
             ],
-        ]];
+        ];
         $this->configResource->patch($config, true);
     }
 
@@ -720,12 +705,11 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * Create content negotiation configuration based on payload and discovered
      * controller service name
      *
-     * @param DoctrineRestServiceEntity $details
      * @param string $controllerService
      */
     public function createContentNegotiationConfig(DoctrineRestServiceEntity $details, $controllerService)
     {
-        $config = [
+        $config    = [
             'controllers' => [
                 $controllerService => $details->selector,
             ],
@@ -745,7 +729,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Create Doctrine configuration
      *
-     * @param DoctrineRestServiceEntity $details
      * @param string $entityClass
      * @param string $collectionClass
      * @param string $routeName
@@ -762,7 +745,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
                 'doctrine-connected' => [
                     $details->resourceClass => [
                         'object_manager' => $details->objectManager,
-                        'hydrator' => $details->hydratorName,
+                        'hydrator'       => $details->hydratorName,
                     ],
                 ],
             ],
@@ -774,7 +757,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Create Doctrine hydrator configuration
      *
-     * @param DoctrineRestServiceEntity $details
      * @param string $entityClass
      * @param string $collectionClass
      * @param string $routeName
@@ -790,7 +772,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
         // Verify the object manager exists
         $objectManager      = $this->getServiceManager()->get($details->objectManager);
-        $hydratorStrategies = isset($entityValue['strategies']) ? $entityValue['strategies'] : [];
+        $hydratorStrategies = $entityValue['strategies'] ?? [];
 
         foreach ($hydratorStrategies as $strategy) {
             if (! $this->getServiceManager()->has($strategy)) {
@@ -817,7 +799,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Create HAL configuration
      *
-     * @param DoctrineRestServiceEntity $details
      * @param string $entityClass
      * @param string $collectionClass
      * @param string $routeName
@@ -827,7 +808,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
         $config = [
             'api-tools-hal' => [
                 'metadata_map' => [
-                    $entityClass => [
+                    $entityClass     => [
                         'route_identifier_name'  => $details->routeIdentifierName,
                         'entity_identifier_name' => $details->entityIdentifierName,
                         'route_name'             => $routeName,
@@ -850,9 +831,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update the route for an existing service
-     *
-     * @param DoctrineRestServiceEntity $original
-     * @param DoctrineRestServiceEntity $update
      */
     public function updateRoute(DoctrineRestServiceEntity $original, DoctrineRestServiceEntity $update)
     {
@@ -862,7 +840,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
         }
 
         $routeName = $original->routeName;
-        $config = [
+        $config    = [
             'router' => [
                 'routes' => [
                     $routeName => [
@@ -879,9 +857,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update REST configuration
-     *
-     * @param DoctrineRestServiceEntity $original
-     * @param DoctrineRestServiceEntity $update
      */
     public function updateRestConfig(DoctrineRestServiceEntity $original, DoctrineRestServiceEntity $update)
     {
@@ -893,16 +868,14 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
             $patch[$configKey] = $update->$property;
         }
 
-        if (empty($patch)) {
-            goto updateArrayOptions;
+        if (! empty($patch)) {
+            $config = [
+                'api-tools-rest' => [
+                    $original->controllerServiceName => $patch,
+                ],
+            ];
+            $this->configResource->patch($config, true);
         }
-
-        $config = ['api-tools-rest' => [
-            $original->controllerServiceName => $patch,
-        ]];
-        $this->configResource->patch($config, true);
-
-        updateArrayOptions:
 
         foreach ($this->restArrayUpdateOptions as $property => $configKey) {
             if ($update->$property === null) {
@@ -915,9 +888,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update Doctrine hydrator configuration
-     *
-     * @param DoctrineRestServiceEntity $original
-     * @param DoctrineRestServiceEntity $update
      */
     public function updateDoctrineHydratorConfig(DoctrineRestServiceEntity $original, DoctrineRestServiceEntity $update)
     {
@@ -933,9 +903,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update the content negotiation configuration for the service
-     *
-     * @param DoctrineRestServiceEntity $original
-     * @param DoctrineRestServiceEntity $update
      */
     public function updateContentNegotiationConfig(
         DoctrineRestServiceEntity $original,
@@ -964,9 +931,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Update Doctrine configuration
-     *
-     * @param DoctrineRestServiceEntity $original
-     * @param DoctrineRestServiceEntity $update
      */
     public function updateDoctrineConfig(DoctrineRestServiceEntity $original, DoctrineRestServiceEntity $update)
     {
@@ -981,8 +945,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Delete the files which were automatically created
-     *
-     * @param DoctrineRestServiceEntity $entity
      */
     public function deleteFiles(DoctrineRestServiceEntity $entity)
     {
@@ -1000,8 +962,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
 
     /**
      * Delete the route associated with the given service
-     *
-     * @param DoctrineRestServiceEntity $entity
      */
     public function deleteRoute(DoctrineRestServiceEntity $entity)
     {
@@ -1021,14 +981,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Delete the REST configuration associated with the given
      * service
-     *
-     * @param DoctrineRestServiceEntity $entity
      */
     public function deleteDoctrineRestConfig(DoctrineRestServiceEntity $entity)
     {
         // Get hydrator name
-        $config = $this->configResource->fetch(true);
-        $hydratorName = $config['api-tools-hal']['metadata_map'][$entity->entityClass]['hydrator'];
+        $config             = $this->configResource->fetch(true);
+        $hydratorName       = $config['api-tools-hal']['metadata_map'][$entity->entityClass]['hydrator'];
         $objectManagerClass = $config['doctrine-hydrator'][$hydratorName]['object_manager'];
 
         $key = ['doctrine-hydrator', $hydratorName];
@@ -1068,7 +1026,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * Creates a class file based on the view model passed, the type of resource,
      * and writes it to the path provided.
      *
-     * @param ViewModel $model
      * @param string $type
      * @param string $classPath
      * @return bool
@@ -1079,10 +1036,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
         $template = $this->injectResolver($renderer, $type);
         $model->setTemplate($template);
 
-        if (file_put_contents(
-            $classPath,
-            '<' . "?php\n" . $renderer->render($model)
-        )) {
+        if (
+            file_put_contents(
+                $classPath,
+                '<' . "?php\n" . $renderer->render($model)
+            )
+        ) {
             return true;
         }
 
@@ -1111,7 +1070,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * Seed the resolver with a template name and path based on the $type passed, and inject it
      * into the renderer.
      *
-     * @param PhpRenderer $renderer
      * @param string $type
      * @return string Template name
      */
@@ -1170,13 +1128,13 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
     /**
      * Retrieve route information for a given service based on the configuration available
      *
-     * @param DoctrineRestServiceEntity $metadata
      * @param array $config
      */
     protected function getRouteInfo(DoctrineRestServiceEntity $metadata, array $config)
     {
         $routeName = $metadata->routeName;
-        if (! $routeName
+        if (
+            ! $routeName
             || ! isset($config['router']['routes'][$routeName]['options']['route'])
         ) {
             return;
@@ -1192,7 +1150,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * service into the REST metadata
      *
      * @param string $controllerServiceName
-     * @param DoctrineRestServiceEntity $metadata
      * @param array $config
      */
     protected function mergeContentNegotiationConfig(
@@ -1229,7 +1186,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * Merge entity and collection class into metadata, if found
      *
      * @param string $controllerServiceName
-     * @param DoctrineRestServiceEntity $metadata
      * @param array $config
      */
     protected function mergeHalConfig($controllerServiceName, DoctrineRestServiceEntity $metadata, array $config)
@@ -1259,7 +1215,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * Derive the name of the entity class from the controller service name
      *
      * @param string $controllerServiceName
-     * @param DoctrineRestServiceEntity $metadata
      * @param array $config
      * @return string
      */
@@ -1269,20 +1224,22 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
             return $config['api-tools-rest'][$controllerServiceName]['entity_class'];
         }
 
-        $module = $metadata->module == $this->module ? $this->module : $metadata->module;
-        $q = preg_quote('\\');
-        if (! preg_match(
-            sprintf(
-                '#%s%sRest%s(?P<service>[^%s]+)%sController#',
-                $module,
-                $q,
-                $q,
-                $q,
-                $q
-            ),
-            $controllerServiceName,
-            $matches
-        )) {
+        $module = $metadata->module === $this->module ? $this->module : $metadata->module;
+        $q      = preg_quote('\\');
+        if (
+            ! preg_match(
+                sprintf(
+                    '#%s%sRest%s(?P<service>[^%s]+)%sController#',
+                    $module,
+                    $q,
+                    $q,
+                    $q,
+                    $q
+                ),
+                $controllerServiceName,
+                $matches
+            )
+        ) {
             return null;
         }
 
@@ -1293,7 +1250,6 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      * Derive the name of the collection class from the controller service name
      *
      * @param string $controllerServiceName
-     * @param DoctrineRestServiceEntity $metadata
      * @param array $config
      * @return string
      */
@@ -1303,16 +1259,18 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
             return $config['api-tools-rest'][$controllerServiceName]['collection_class'];
         }
 
-        $module = $metadata->module == $this->module ? $this->module : $metadata->module;
-        if (! preg_match(
-            '#'
-            . preg_quote($module . '\\Rest\\')
-            . '(?P<service>[^\\\\]+)'
-            . preg_quote('\\Controller')
-            . '#',
-            $controllerServiceName,
-            $matches
-        )) {
+        $module = $metadata->module === $this->module ? $this->module : $metadata->module;
+        if (
+            ! preg_match(
+                '#'
+                . preg_quote($module . '\\Rest\\')
+                . '(?P<service>[^\\\\]+)'
+                . preg_quote('\\Controller')
+                . '#',
+                $controllerServiceName,
+                $matches
+            )
+        ) {
             return null;
         }
 

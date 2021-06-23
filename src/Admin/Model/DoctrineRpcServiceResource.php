@@ -1,13 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
+use Exception;
 use Laminas\ApiTools\Admin\Model\DocumentationModel;
 use Laminas\ApiTools\Admin\Model\InputFilterModel;
 use Laminas\ApiTools\Admin\Model\RpcServiceResource;
@@ -15,14 +12,12 @@ use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\Exception\CreationException;
 use Laminas\Mvc\Controller\ControllerManager;
 
+use function is_array;
+use function is_object;
+use function is_string;
+
 class DoctrineRpcServiceResource extends RpcServiceResource
 {
-    /**
-     * @param DoctrineRpcServiceModelFactory $rpcFactory
-     * @param InputFilterModel $inputFilterModel
-     * @param ControllerManager $controllerManager
-     * @param DocumentationModel $documentationModel
-     */
     public function __construct(
         DoctrineRpcServiceModelFactory $rpcFactory,
         InputFilterModel $inputFilterModel,
@@ -36,6 +31,7 @@ class DoctrineRpcServiceResource extends RpcServiceResource
      * Set module name
      *
      * @deprecated since 2.1.0, and no longer used internally.
+     *
      * @param string $moduleName
      * @return DoctrineRpcServiceResource
      */
@@ -77,7 +73,8 @@ class DoctrineRpcServiceResource extends RpcServiceResource
             'selector'     => null,
         ];
 
-        if (empty($data['service_name'])
+        if (
+            empty($data['service_name'])
             || ! is_string($data['service_name'])
         ) {
             throw new CreationException('Unable to create RPC service; missing service_name');
@@ -90,20 +87,23 @@ class DoctrineRpcServiceResource extends RpcServiceResource
             throw new CreationException('Service by that name already exists', 409);
         }
 
-        if (empty($data['route_match'])
+        if (
+            empty($data['route_match'])
             || ! is_string($data['route_match'])
         ) {
             throw new CreationException('Unable to create RPC service; missing route');
         }
         $creationData['route_match'] = $data['route_match'];
 
-        if (! empty($data['http_methods'])
+        if (
+            ! empty($data['http_methods'])
             && (is_string($data['http_methods']) || is_array($data['http_methods']))
         ) {
             $creationData['http_methods'] = $data['http_methods'];
         }
 
-        if (! empty($data['selector'])
+        if (
+            ! empty($data['selector'])
             && is_string($data['selector'])
         ) {
             $creationData['selector'] = $data['selector'];
@@ -119,7 +119,7 @@ class DoctrineRpcServiceResource extends RpcServiceResource
                 $creationData['selector'],
                 $creationData['options']
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e->getCode() !== 500) {
                 return new ApiProblem($e->getCode(), $e->getMessage());
             }

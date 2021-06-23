@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTestApiToolsDb\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+use LaminasTestApiToolsDb\Entity\Album;
 
 class Artist
 {
@@ -42,7 +47,7 @@ class Artist
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $value)
+    public function setCreatedAt(DateTime $value)
     {
         $this->createdAt = $value;
 
@@ -61,16 +66,16 @@ class Artist
      *
      * @param Album $album
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     public function addAlbum($album)
     {
-        if ($album instanceof \LaminasTestApiToolsDb\Entity\Album) {
+        if ($album instanceof Album) {
             $this->album[] = $album;
         } elseif ($album instanceof ArrayCollection) {
             foreach ($album as $a) {
-                if (! $a instanceof \LaminasTestApiToolsDb\Entity\Album) {
-                    throw new \Exception('Invalid type in addAlbum');
+                if (! $a instanceof Album) {
+                    throw new Exception('Invalid type in addAlbum');
                 }
                 $this->album->add($a);
             }
@@ -83,16 +88,16 @@ class Artist
      * Remove album
      *
      * @param Album $album
-     * @throws \Exception
+     * @throws Exception
      */
     public function removeAlbum($album)
     {
-        if ($album instanceof \LaminasTestApiToolsDb\Entity\Album) {
+        if ($album instanceof Album) {
             $this->album[] = $album;
         } elseif ($album instanceof ArrayCollection) {
             foreach ($album as $a) {
-                if (! $a instanceof \LaminasTestApiToolsDb\Entity\Album) {
-                    throw new \Exception('Invalid type remove addAlbum');
+                if (! $a instanceof Album) {
+                    throw new Exception('Invalid type remove addAlbum');
                 }
                 $this->album->removeElement($a);
             }

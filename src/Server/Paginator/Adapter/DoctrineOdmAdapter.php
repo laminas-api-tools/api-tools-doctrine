@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Paginator\Adapter;
 
@@ -13,9 +9,7 @@ use Laminas\Paginator\Adapter\AdapterInterface;
 
 class DoctrineOdmAdapter implements AdapterInterface
 {
-    /**
-     * @var Builder $queryBuilder
-     */
+    /** @var Builder $queryBuilder */
     protected $queryBuilder;
 
     /**
@@ -27,7 +21,7 @@ class DoctrineOdmAdapter implements AdapterInterface
     }
 
     /**
-     * @param \Doctrine\Odm\MongoDB\Query\Builder $queryBuilder
+     * @param Builder $queryBuilder
      */
     public function setQueryBuilder($queryBuilder)
     {
@@ -35,7 +29,7 @@ class DoctrineOdmAdapter implements AdapterInterface
     }
 
     /**
-     * @return \Doctrine\Odm\MongoDB\Query\Builder
+     * @return Builder
      */
     public function getQueryBuilder()
     {
@@ -43,8 +37,8 @@ class DoctrineOdmAdapter implements AdapterInterface
     }
 
     /**
-     * @param $offset
-     * @param $itemCountPerPage
+     * @param int $offset
+     * @param int $itemCountPerPage
      * @return array
      */
     public function getItems($offset, $itemCountPerPage)

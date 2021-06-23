@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\Provider\Service;
 
@@ -12,11 +8,14 @@ use Laminas\ApiTools\Doctrine\Server\Query\Provider\QueryProviderInterface;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception;
 
+use function get_class;
+use function gettype;
+use function is_object;
+use function sprintf;
+
 class QueryProviderManager extends AbstractPluginManager
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $instanceOf = QueryProviderInterface::class;
 
     /**
@@ -32,7 +31,7 @@ class QueryProviderManager extends AbstractPluginManager
         if (! $instance instanceof $this->instanceOf) {
             throw new Exception\InvalidServiceException(sprintf(
                 '%s can only create instances of %s; %s is invalid',
-                get_class($this),
+                static::class,
                 $this->instanceOf,
                 is_object($instance) ? get_class($instance) : gettype($instance)
             ));

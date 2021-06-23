@@ -1,13 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
+use Doctrine\MongoDB\Query\Builder;
+use Doctrine\ORM\QueryBuilder;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use Laminas\ApiTools\Rest\ResourceEvent;
 use Laminas\Paginator\Adapter\AdapterInterface;
@@ -15,7 +13,6 @@ use Laminas\Paginator\Adapter\AdapterInterface;
 interface QueryProviderInterface extends ObjectManagerAwareInterface
 {
     /**
-     * @param ResourceEvent $event
      * @param string $entityClass
      * @param array $parameters
      * @return mixed This will return an ORM or ODM Query\Builder
@@ -27,7 +24,7 @@ interface QueryProviderInterface extends ObjectManagerAwareInterface
      * In order to provide a single QueryProvider service this is
      * included in this interface.
      *
-     * @param $queryBuilder
+     * @param QueryBuilder|Builder $queryBuilder
      * @return AdapterInterface
      */
     public function getPaginatedQuery($queryBuilder);
@@ -37,7 +34,7 @@ interface QueryProviderInterface extends ObjectManagerAwareInterface
      * In order to provide a single QueryProvider service this is
      * included in this interface.
      *
-     * @param $entityClass
+     * @param string $entityClass
      * @return int
      */
     public function getCollectionTotal($entityClass);

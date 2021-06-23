@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
@@ -14,6 +10,9 @@ use LaminasTestApiToolsDb\Entity\Album;
 use LaminasTestApiToolsDb\Entity\Artist;
 use LaminasTestApiToolsDb\Entity\Product;
 use LaminasTestApiToolsDbMongo\Document\Meta;
+
+use function strcasecmp;
+use function usort;
 
 class DoctrineAutodiscoveryModelTest extends TestCase
 {

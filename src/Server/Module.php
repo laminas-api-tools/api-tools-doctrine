@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server;
 
@@ -26,12 +22,10 @@ class Module
 
     /**
      * Module init
-     *
-     * @param ModuleManager $moduleManager
      */
     public function init(ModuleManager $moduleManager)
     {
-        $sm = $moduleManager->getEvent()->getParam('ServiceManager');
+        $sm              = $moduleManager->getEvent()->getParam('ServiceManager');
         $serviceListener = $sm->get('ServiceListener');
 
         $serviceListener->addServiceManager(

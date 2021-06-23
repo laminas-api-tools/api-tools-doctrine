@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
@@ -21,9 +17,7 @@ use Prophecy\Prophecy\ProphecyInterface;
 
 class DoctrineRpcServiceResourceFactoryTest extends TestCase
 {
-    /**
-     * @var ProphecyInterface|ContainerInterface
-     */
+    /** @var ProphecyInterface|ContainerInterface */
     private $container;
 
     protected function setUp()
@@ -33,48 +27,57 @@ class DoctrineRpcServiceResourceFactoryTest extends TestCase
         $this->container = $this->prophesize(ContainerInterface::class);
     }
 
-    public function missingDependencies()
+    /** @psalm-return array<string, array{0: array<non-empty-string|class-string, bool>}> */
+    public function missingDependencies(): array
     {
         return [
-            'all' => [[
-                DoctrineRpcServiceModelFactory::class => false,
-                InputFilterModel::class => false,
-                'ControllerManager' => false,
-                DocumentationModel::class => false,
-            ]],
-            'DoctrineRpcServiceModelFactory' => [[
-                DoctrineRpcServiceModelFactory::class => false,
-                InputFilterModel::class => true,
-                'ControllerManager' => true,
-                DocumentationModel::class => true,
-            ]],
-            'InputFilterModel' => [[
-                DoctrineRpcServiceModelFactory::class => true,
-                InputFilterModel::class => false,
-                'ControllerManager' => true,
-                DocumentationModel::class => true,
-            ]],
-            'ControllerManager' => [[
-                DoctrineRpcServiceModelFactory::class => true,
-                InputFilterModel::class => true,
-                'ControllerManager' => false,
-                DocumentationModel::class => true,
-            ]],
-            'DocumentationModel' => [[
-                DoctrineRpcServiceModelFactory::class => true,
-                InputFilterModel::class => true,
-                'ControllerManager' => true,
-                DocumentationModel::class => false,
-            ]],
+            'all'                            => [
+                [
+                    DoctrineRpcServiceModelFactory::class => false,
+                    InputFilterModel::class               => false,
+                    'ControllerManager'                   => false,
+                    DocumentationModel::class             => false,
+                ],
+            ],
+            'DoctrineRpcServiceModelFactory' => [
+                [
+                    DoctrineRpcServiceModelFactory::class => false,
+                    InputFilterModel::class               => true,
+                    'ControllerManager'                   => true,
+                    DocumentationModel::class             => true,
+                ],
+            ],
+            'InputFilterModel'               => [
+                [
+                    DoctrineRpcServiceModelFactory::class => true,
+                    InputFilterModel::class               => false,
+                    'ControllerManager'                   => true,
+                    DocumentationModel::class             => true,
+                ],
+            ],
+            'ControllerManager'              => [
+                [
+                    DoctrineRpcServiceModelFactory::class => true,
+                    InputFilterModel::class               => true,
+                    'ControllerManager'                   => false,
+                    DocumentationModel::class             => true,
+                ],
+            ],
+            'DocumentationModel'             => [
+                [
+                    DoctrineRpcServiceModelFactory::class => true,
+                    InputFilterModel::class               => true,
+                    'ControllerManager'                   => true,
+                    DocumentationModel::class             => false,
+                ],
+            ],
         ];
     }
 
     /**
      * @dataProvider missingDependencies
-     *
-     * @var array $dependencies
      */
-    public function testFactoryRaisesExceptionIfDependenciesAreMissing($dependencies)
+    public function testFactoryRaisesExceptionIfDependenciesAreMissing(array $dependencies)
     {
         $factory = new DoctrineRpcServiceResourceFactory();
 

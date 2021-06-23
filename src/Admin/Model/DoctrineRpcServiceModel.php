@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-doctrine for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-doctrine/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
@@ -18,39 +14,39 @@ use Laminas\Filter\FilterChain;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
 use Laminas\View\Resolver;
+use ReflectionClass;
+
+use function array_keys;
+use function array_search;
+use function file_exists;
+use function file_put_contents;
+use function in_array;
+use function is_array;
+use function mkdir;
+use function preg_match;
+use function preg_quote;
+use function sprintf;
+use function str_replace;
+use function ucfirst;
+use function unlink;
 
 class DoctrineRpcServiceModel
 {
-    /**
-     * @var ConfigResource
-     */
+    /** @var ConfigResource */
     protected $configResource;
 
-    /**
-     * @var FilterChain
-     */
+    /** @var FilterChain */
     protected $filter;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $module;
 
-    /**
-     * @var ModuleEntity
-     */
+    /** @var ModuleEntity */
     protected $moduleEntity;
 
-    /**
-     * @var ModulePathSpec
-     */
+    /** @var ModulePathSpec */
     protected $modules;
 
-    /**
-     * @param ModuleEntity $moduleEntity
-     * @param ModulePathSpec $modules
-     * @param ConfigResource $config
-     */
     public function __construct(ModuleEntity $moduleEntity, ModulePathSpec $modules, ConfigResource $config)
     {
         $this->module         = $moduleEntity->getName();
@@ -134,7 +130,7 @@ class DoctrineRpcServiceModel
                 );
             }
             $namespaceSep = preg_quote('\\');
-            $pattern = sprintf(
+            $pattern      = sprintf(
                 '#%s%sV%s#',
                 $this->module,
                 $namespaceSep,
@@ -167,6 +163,7 @@ class DoctrineRpcServiceModel
      * @param string $route
      * @param array $httpMethods
      * @param null|string $selector
+     * @param array $options
      * @return DoctrineRpcServiceEntity
      */
     public function createService($serviceName, $route, $httpMethods, $selector, $options)
@@ -191,7 +188,7 @@ class DoctrineRpcServiceModel
     /**
      * Delete a service
      *
-     * @param DoctrineRpcServiceEntity $entity
+     * @param bool $deleteFiles
      * @return true
      */
     public function deleteService(DoctrineRpcServiceEntity $entity, $deleteFiles = true)
@@ -211,14 +208,12 @@ class DoctrineRpcServiceModel
 
     /**
      * Delete the files which were automatically created
-     *
-     * @param DoctrineRpcServiceEntity $entity
      */
     public function deleteFiles(DoctrineRpcServiceEntity $entity)
     {
         $config = $this->configResource->fetch(true);
 
-        $reflector = new \ReflectionClass($entity->controllerClass);
+        $reflector = new ReflectionClass($entity->controllerClass);
         unlink($reflector->getFileName());
     }
 
@@ -230,8 +225,8 @@ class DoctrineRpcServiceModel
      */
     public function createController($serviceName)
     {
-        $module     = $this->module;
-        $version    = $this->moduleEntity->getLatestVersion();
+        $module      = $this->module;
+        $version     = $this->moduleEntity->getLatestVersion();
         $serviceName = str_replace("\\", "/", $serviceName);
 
         $srcPath = $this->modules->getRpcPath($module, $version, $serviceName);
@@ -266,10 +261,12 @@ class DoctrineRpcServiceModel
         $renderer = new PhpRenderer();
         $renderer->setResolver($resolver);
 
-        if (! file_put_contents(
-            $classPath,
-            "<" . "?php\n" . $renderer->render($view)
-        )) {
+        if (
+            ! file_put_contents(
+                $classPath,
+                "<" . "?php\n" . $renderer->render($view)
+            )
+        ) {
             return false;
         }
 
@@ -277,7 +274,7 @@ class DoctrineRpcServiceModel
         $this->configResource->patch(
             [
                 'controllers' => [
-                    'aliases' => [
+                    'aliases'   => [
                         $controllerService => $fullClassName,
                     ],
                     'factories' => [
@@ -313,12 +310,12 @@ class DoctrineRpcServiceModel
         $action    = 'index';
 
         $config = [
-            'router' => [
+            'router'               => [
                 'routes' => [
                     $routeName => [
-                        'type' => 'Segment',
+                        'type'    => 'Segment',
                         'options' => [
-                            'route' => $route,
+                            'route'    => $route,
                             'defaults' => [
                                 'controller' => $controllerService,
                                 'action'     => $action,
@@ -342,15 +339,17 @@ class DoctrineRpcServiceModel
     /**
      * Create the api-tools-rpc configuration for the controller service
      *
-     * @param $controllerService
-     * @param $options
+     * @param string $controllerService
+     * @param array $options
      * @return array
      */
     public function createDoctrineRpcConfig($controllerService, $options)
     {
-        $config = ['api-tools-rpc-doctrine-controller' => [
-            $controllerService => $options,
-        ]];
+        $config = [
+            'api-tools-rpc-doctrine-controller' => [
+                $controllerService => $options,
+            ],
+        ];
 
         return $this->configResource->patch($config, true);
     }
@@ -397,10 +396,10 @@ class DoctrineRpcServiceModel
 
         $config = [
             'api-tools-content-negotiation' => [
-                'controllers' => [
+                'controllers'            => [
                     $controllerService => $selector,
                 ],
-                'accept_whitelist' => [
+                'accept_whitelist'       => [
                     $controllerService => [
                         'application/json',
                         'application/*+json',
@@ -490,7 +489,7 @@ class DoctrineRpcServiceModel
         }
 
         $headerType .= '_whitelist';
-        $config = $this->configResource->fetch(true);
+        $config      = $this->configResource->fetch(true);
         $config['api-tools-content-negotiation'][$headerType][$controllerService] = $whitelist;
         $this->configResource->overwrite($config);
 
@@ -610,7 +609,8 @@ class DoctrineRpcServiceModel
         }
 
         $config = $config['router']['routes'];
-        if (! isset($config[$routeName])
+        if (
+            ! isset($config[$routeName])
             || ! is_array($config[$routeName])
         ) {
             return false;
