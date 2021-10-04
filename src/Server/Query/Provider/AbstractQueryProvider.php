@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ORM\QueryBuilder;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;

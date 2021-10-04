@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;

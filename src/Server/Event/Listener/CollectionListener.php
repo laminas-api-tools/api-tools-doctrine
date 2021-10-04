@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Event\Listener;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
@@ -19,7 +19,7 @@ use Laminas\InputFilter\InputFilterInterface;
 use Laminas\InputFilter\InputInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\ArrayObject;
-use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
+use ApiSkeletons\DoctrineORMHydrationModule\Service\DoctrineHydratorFactory;
 use Traversable;
 
 use function array_key_exists;

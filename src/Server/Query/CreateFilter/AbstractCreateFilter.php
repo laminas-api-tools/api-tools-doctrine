@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\CreateFilter;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use Laminas\ApiTools\Rest\ResourceEvent;
 
