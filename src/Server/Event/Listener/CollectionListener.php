@@ -399,7 +399,7 @@ class CollectionListener implements ListenerAggregateInterface
     /**
      * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
@@ -407,11 +407,9 @@ class CollectionListener implements ListenerAggregateInterface
     /**
      * @return $this
      */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
-
-        return $this;
     }
 
     /**

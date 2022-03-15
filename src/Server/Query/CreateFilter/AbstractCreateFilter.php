@@ -25,7 +25,7 @@ abstract class AbstractCreateFilter implements ObjectManagerAwareInterface, Quer
      *
      * @return void
      */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
     }
@@ -35,7 +35,7 @@ abstract class AbstractCreateFilter implements ObjectManagerAwareInterface, Quer
      *
      * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }

@@ -51,7 +51,7 @@ class DoctrineResourceEvent extends Event
     /**
      * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
@@ -59,11 +59,9 @@ class DoctrineResourceEvent extends Event
     /**
      * @return $this
      */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
-
-        return $this;
     }
 
     /**

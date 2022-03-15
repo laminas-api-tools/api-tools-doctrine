@@ -22,7 +22,7 @@ abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, Que
      *
      * @return void
      */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
     }
@@ -32,7 +32,7 @@ abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, Que
      *
      * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
