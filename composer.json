@@ -42,10 +42,10 @@
         "api-skeletons/doctrine-orm-hydration-module": "^1.0"
     },
     "require-dev": {
-        "doctrine/doctrine-module": "^4.0 || ^5.1",
-        "doctrine/doctrine-mongo-odm-module": "^0.11.0 || ^1.0.0 || ^2.0.0",
-        "doctrine/doctrine-orm-module": "^4.0 || ^5.1",
-        "doctrine/mongodb-odm": "^1.1.0",
+        "doctrine/common": "^2.1",
+        "doctrine/dbal": "^2.10",
+        "doctrine/doctrine-module": "^5.1",
+        "doctrine/doctrine-orm-module": "^5.1",
         "laminas-api-tools/api-tools-admin": "^1.5.7",
         "laminas-api-tools/api-tools-hal": "^1.6.1",
         "laminas/laminas-coding-standard": "~2.3.0",

@@ -46,23 +46,4 @@ class DoctrineAutodiscoveryModelTest extends TestCase
         $this->assertEquals('Product', $result[2]['service_name']);
         $this->assertCount(1, $result[2]['fields']);
     }
-
-    public function testODMAutodiscoveryEntitiesWithFields(): void
-    {
-        $this->setApplicationConfig(
-            include __DIR__ . '/../../../config/ODM/application.config.php'
-        );
-
-        $model = new DoctrineAutodiscoveryModel([]);
-        $model->setServiceLocator($this->getApplicationServiceLocator());
-
-        $result = $model->fetchFields(null, null, 'doctrine.documentmanager.odm_default');
-
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-
-        $this->assertEquals(Meta::class, $result[0]['entity_class']);
-        $this->assertEquals('Meta', $result[0]['service_name']);
-        $this->assertCount(2, $result[0]['fields']);
-    }
 }
