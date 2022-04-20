@@ -42,7 +42,6 @@
         "api-skeletons/doctrine-orm-hydration-module": "^1.0"
     },
     "require-dev": {
-        "doctrine/common": "^2.1",
         "doctrine/dbal": "^2.10",
         "doctrine/doctrine-module": "^5.1",
         "doctrine/doctrine-orm-module": "^5.1",
