@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
-use Interop\Container\ContainerInterface;
+use interop\container\containerinterface;
 use Laminas\ApiTools\Admin\Model\DocumentationModel;
 use Laminas\ApiTools\Admin\Model\InputFilterModel;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceModelFactory;
@@ -21,14 +21,14 @@ class DoctrineRestServiceResourceFactoryTest extends TestCase
     use DeprecatedAssertionsTrait;
     use ProphecyTrait;
 
-    /** @var ProphecyInterface|ContainerInterface */
+    /** @var ProphecyInterface|containerinterface */
     private $container;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->container = $this->prophesize(containerinterface::class);
     }
 
     /**

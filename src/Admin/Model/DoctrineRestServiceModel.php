@@ -211,11 +211,12 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      *
      * Lazy instantiates one if none currently registered
      *
+     * @psalm-suppress DocblockTypeContradiction
      * @return EventManagerInterface
      */
     public function getEventManager()
     {
-        if (! $this->events) {
+        if (empty($this->events)) {
             $this->setEventManager(new EventManager());
         }
 

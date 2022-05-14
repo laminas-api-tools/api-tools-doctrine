@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
-use Interop\Container\ContainerInterface;
+use interop\container\containerinterface;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineAutodiscoveryModelFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
@@ -19,7 +19,7 @@ class DoctrineAutodiscoveryModelFactoryTest extends TestCase
     use DeprecatedAssertionsTrait;
     use ProphecyTrait;
 
-    /** @var ProphecyInterface|ServiceLocatorInterface|ContainerInterface */
+    /** @var ProphecyInterface|ServiceLocatorInterface|containerinterface */
     private $container;
 
     protected function setUp(): void
@@ -27,7 +27,7 @@ class DoctrineAutodiscoveryModelFactoryTest extends TestCase
         parent::setUp();
 
         $this->container = $this->prophesize(ServiceLocatorInterface::class);
-        $this->container->willImplement(ContainerInterface::class);
+        $this->container->willImplement(containerinterface::class);
     }
 
     public function testFactoryRaisesExceptionIfConfigServiceIsMissing(): void

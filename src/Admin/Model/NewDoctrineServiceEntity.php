@@ -32,6 +32,10 @@ class NewDoctrineServiceEntity extends LaminasNewRestServiceEntity implements Ar
     {
         parent::exchangeArray($data);
 
+        /**
+         * @var string $key
+         * @var mixed $value
+         */
         foreach ($data as $key => $value) {
             $key = strtolower($key);
             $key = str_replace('_', '', $key);

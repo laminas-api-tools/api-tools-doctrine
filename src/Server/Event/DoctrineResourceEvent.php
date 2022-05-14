@@ -48,20 +48,16 @@ class DoctrineResourceEvent extends Event
     /** @var ObjectManager */
     protected $objectManager;
 
-    /**
-     * @return ObjectManager
-     */
     public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
 
-    /**
-     * @return $this
-     */
-    public function setObjectManager(ObjectManager $objectManager): void
+    public function setObjectManager(ObjectManager $objectManager): DoctrineResourceEvent
     {
         $this->objectManager = $objectManager;
+
+        return $this;
     }
 
     /**

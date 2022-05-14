@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
-use Doctrine\MongoDB\Query\Builder;
 use Doctrine\ORM\QueryBuilder;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use Laminas\ApiTools\Rest\ResourceEvent;
@@ -15,7 +14,7 @@ interface QueryProviderInterface extends ObjectManagerAwareInterface
     /**
      * @param string $entityClass
      * @param array $parameters
-     * @return mixed This will return an ORM or ODM Query\Builder
+     * @return mixed This will return an ORM QueryBuilder
      */
     public function createQuery(ResourceEvent $event, $entityClass, $parameters);
 
@@ -24,7 +23,7 @@ interface QueryProviderInterface extends ObjectManagerAwareInterface
      * In order to provide a single QueryProvider service this is
      * included in this interface.
      *
-     * @param QueryBuilder|Builder $queryBuilder
+     * @param QueryBuilder $queryBuilder
      * @return AdapterInterface
      */
     public function getPaginatedQuery($queryBuilder);

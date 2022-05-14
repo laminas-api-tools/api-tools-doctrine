@@ -9,7 +9,6 @@ use LaminasTest\ApiTools\Doctrine\TestCase;
 use LaminasTestApiToolsDb\Entity\Album;
 use LaminasTestApiToolsDb\Entity\Artist;
 use LaminasTestApiToolsDb\Entity\Product;
-use LaminasTestApiToolsDbMongo\Document\Meta;
 
 use function strcasecmp;
 use function usort;

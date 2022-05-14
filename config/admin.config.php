@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin;
 
-use Laminas\ApiTools\Doctrine\Server;
-use ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineMetadataServiceResource;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceModelFactory;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory;
-use ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineMetadataServiceResource;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceModelFactory;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory;
+use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource;
 
 return [
     'router'                        => [
@@ -21,7 +19,7 @@ return [
                 'options'       => [
                     'route'    => '/api-tools/api/module[/:name]/doctrine-rpc[/:controller_service_name]',
                     'defaults' => [
-                        'controller' => Controller\DoctrineRpcService::class,
+                        'controller' => 'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRpcService',
                     ],
                 ],
                 'may_terminate' => true,
@@ -41,7 +39,7 @@ return [
                 'options'       => [
                     'route'    => '/api-tools/api/doctrine[/:object_manager_alias]/metadata[/:name]',
                     'defaults' => [
-                        'controller' => Controller\DoctrineMetadataService::class,
+                        'controller' => 'ZF\Apigility\Doctrine\Admin\Controller\DoctrineMetadataService',
                     ],
                 ],
                 'may_terminate' => true,
@@ -51,7 +49,7 @@ return [
                 'options' => [
                     'route'    => '/api-tools/api/module/:name/:version/autodiscovery/doctrine/:object_manager_alias',
                     'defaults' => [
-                        'controller' => Controller\DoctrineAutodiscovery::class,
+                        'controller' => 'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery',
                         'action'     => 'discover',
                     ],
                 ],
@@ -61,70 +59,70 @@ return [
     'service_manager'               => [
         // Legacy Zend Framework aliases
         'aliases'   => [
-            DoctrineAutodiscoveryModel::class      => Model\DoctrineAutodiscoveryModel::class,
-            DoctrineMetadataServiceResource::class => Model\DoctrineMetadataServiceResource::class,
-            DoctrineRestServiceModelFactory::class => Model\DoctrineRestServiceModelFactory::class,
-            DoctrineRestServiceResource::class     => Model\DoctrineRestServiceResource::class,
-            DoctrineRpcServiceModelFactory::class  => Model\DoctrineRpcServiceModelFactory::class,
-            DoctrineRpcServiceResource::class      => Model\DoctrineRpcServiceResource::class,
+            DoctrineAutodiscoveryModel::class      => DoctrineAutodiscoveryModel::class,
+            DoctrineMetadataServiceResource::class => DoctrineMetadataServiceResource::class,
+            DoctrineRestServiceModelFactory::class => DoctrineRestServiceModelFactory::class,
+            DoctrineRestServiceResource::class     => DoctrineRestServiceResource::class,
+            DoctrineRpcServiceModelFactory::class  => DoctrineRpcServiceModelFactory::class,
+            DoctrineRpcServiceResource::class      => DoctrineRpcServiceResource::class,
         ],
         'factories' => [
-            Model\DoctrineAutodiscoveryModel::class      => Model\DoctrineAutodiscoveryModelFactory::class,
-            Model\DoctrineMetadataServiceResource::class => Model\DoctrineMetadataServiceResourceFactory::class,
-            Model\DoctrineRestServiceModelFactory::class => Model\DoctrineRestServiceModelFactoryFactory::class,
-            Model\DoctrineRestServiceResource::class     => Model\DoctrineRestServiceResourceFactory::class,
-            Model\DoctrineRpcServiceModelFactory::class  => Model\DoctrineRpcServiceModelFactoryFactory::class,
-            Model\DoctrineRpcServiceResource::class      => Model\DoctrineRpcServiceResourceFactory::class,
+            DoctrineAutodiscoveryModel::class      => Model\DoctrineAutodiscoveryModelFactory::class,
+            DoctrineMetadataServiceResource::class => Model\DoctrineMetadataServiceResourceFactory::class,
+            DoctrineRestServiceModelFactory::class => Model\DoctrineRestServiceModelFactoryFactory::class,
+            DoctrineRestServiceResource::class     => Model\DoctrineRestServiceResourceFactory::class,
+            DoctrineRpcServiceModelFactory::class  => Model\DoctrineRpcServiceModelFactoryFactory::class,
+            DoctrineRpcServiceResource::class      => Model\DoctrineRpcServiceResourceFactory::class,
         ],
     ],
     'controllers'                   => [
         // Legacy Zend Framework aliases
         'aliases'   => [
-            DoctrineAutodiscovery::class => Controller\DoctrineAutodiscovery::class,
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery' => 'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery',
         ],
         'factories' => [
-            Controller\DoctrineAutodiscovery::class => Controller\DoctrineAutodiscoveryControllerFactory::class,
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery' => Controller\DoctrineAutodiscoveryControllerFactory::class,
         ],
     ],
     'api-tools-content-negotiation' => [
         'controllers'            => [
-            Controller\DoctrineAutodiscovery::class   => 'Json',
-            Controller\DoctrineRestService::class     => 'HalJson',
-            Controller\DoctrineRpcService::class      => 'HalJson',
-            Controller\DoctrineMetadataService::class => 'HalJson',
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery'   => 'Json',
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRestService'     => 'HalJson',
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRpcService'      => 'HalJson',
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineMetadataService' => 'HalJson',
         ],
         'accept_whitelist'       => [
-            Controller\DoctrineAutodiscovery::class   => [
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery'   => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineRpcService::class      => [
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRpcService'      => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineRestService::class     => [
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRestService'     => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineMetadataService::class => [
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineMetadataService' => [
                 'application/json',
                 'application/*+json',
             ],
         ],
         'content_type_whitelist' => [
-            Controller\DoctrineAutodiscovery::class   => [
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery'   => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineRpcService::class      => [
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRpcService'      => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineRestService::class     => [
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRestService'     => [
                 'application/json',
                 'application/*+json',
             ],
-            Controller\DoctrineMetadataService::class => [
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineMetadataService' => [
                 'application/json',
                 'application/*+json',
             ],
@@ -153,8 +151,8 @@ return [
         ],
     ],
     'api-tools-rest'                => [
-        Controller\DoctrineRpcService::class      => [
-            'listener'                   => Model\DoctrineRpcServiceResource::class,
+        'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRpcService'      => [
+            'listener'                   => DoctrineRpcServiceResource::class,
             'route_name'                 => 'api-tools-doctrine-rpc-service',
             'entity_class'               => Model\DoctrineRpcServiceEntity::class,
             'route_identifier_name'      => 'controller_service_name',
@@ -163,8 +161,8 @@ return [
             'collection_name'            => 'doctrine-rpc',
             'collection_query_whitelist' => ['version'],
         ],
-        Controller\DoctrineRestService::class     => [
-            'listener'                   => Model\DoctrineRestServiceResource::class,
+        'ZF\Apigility\Doctrine\Admin\Controller\DoctrineRestService'     => [
+            'listener'                   => DoctrineRestServiceResource::class,
             'route_name'                 => 'api-tools-doctrine-service',
             'entity_class'               => Model\DoctrineRestServiceEntity::class,
             'route_identifier_name'      => 'controller_service_name',
@@ -173,8 +171,8 @@ return [
             'collection_name'            => 'doctrine',
             'collection_query_whitelist' => ['version'],
         ],
-        Controller\DoctrineMetadataService::class => [
-            'listener'                   => Model\DoctrineMetadataServiceResource::class,
+        'ZF\Apigility\Doctrine\Admin\Controller\DoctrineMetadataService' => [
+            'listener'                   => DoctrineMetadataServiceResource::class,
             'route_name'                 => 'api-tools-doctrine-metadata-service',
             'entity_class'               => Model\DoctrineMetadataServiceEntity::class,
             'route_identifier_name'      => 'name',
@@ -185,17 +183,17 @@ return [
         ],
     ],
     'api-tools-rpc'                 => [
-        Controller\DoctrineAutodiscovery::class => [
+        'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery' => [
             'http_methods' => ['GET'],
             'route_name'   => 'api-tools-doctrine-autodiscovery',
         ],
     ],
     'validator_metadata'            => [
-        Server\Validator\ObjectExists::class   => [
+        'ZF\Apigility\Doctrine\Server\Validator\ObjectExists'   => [
             'entity_class' => 'string',
             'fields'       => 'string',
         ],
-        Server\Validator\NoObjectExists::class => [
+        'ZF\Apigility\Doctrine\Server\Validator\NoObjectExists' => [
             'entity_class' => 'string',
             'fields'       => 'string',
         ],

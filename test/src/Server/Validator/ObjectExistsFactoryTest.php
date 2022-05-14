@@ -24,7 +24,7 @@ class ObjectExistsFactoryTest extends TestCase
     /** @var ValidatorPluginManager */
     private $validators;
 
-    /** @var ObjectProphecy|EntityRepository */
+    /** @var ObjectProphecy<EntityRepository<object>> */
     private $objectRepository;
 
     protected function setUp(): void

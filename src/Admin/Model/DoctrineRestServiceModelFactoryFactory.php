@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use Interop\Container\ContainerInterface;
+use interop\container\containerinterface;
 use Laminas\ApiTools\Admin\Model\ModuleModel;
 use Laminas\ApiTools\Admin\Model\ModulePathSpec;
 use Laminas\ApiTools\Configuration\ConfigResourceFactory;
@@ -18,7 +18,7 @@ class DoctrineRestServiceModelFactoryFactory
     /**
      * @return DoctrineRestServiceModelFactory
      */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(containerinterface $container)
     {
         if (
             ! $container->has(ModulePathSpec::class)

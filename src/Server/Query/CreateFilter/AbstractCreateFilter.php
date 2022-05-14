@@ -22,8 +22,6 @@ abstract class AbstractCreateFilter implements ObjectManagerAwareInterface, Quer
 
     /**
      * Set the object manager
-     *
-     * @return void
      */
     public function setObjectManager(ObjectManager $objectManager): void
     {
@@ -32,8 +30,6 @@ abstract class AbstractCreateFilter implements ObjectManagerAwareInterface, Quer
 
     /**
      * Get the object manager
-     *
-     * @return ObjectManager
      */
     public function getObjectManager(): ObjectManager
     {

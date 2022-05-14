@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Server\Event\Listener;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -13,7 +12,6 @@ use Laminas\Hydrator\HydratorInterface;
 use LaminasTestApiToolsDb\Entity\Artist;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionMethod;
 use ReflectionProperty;
 
@@ -21,19 +19,16 @@ class CollectionListenerTest extends TestCase
 {
     /**
      * @dataProvider trueFalseProvider
-     *
      * @param bool $withEntityFactory
-     *
      * @return void
      */
     public function testProcessNewEntity($withEntityFactory)
     {
         $artist = $this->getMockBuilder(Artist::class)->getMock();
-        $data = [];
+        $data   = [];
 
-        /** @var EntityManager|MockObject $om */
-        $om = $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()->getMock();
+        /** @var EntityManager&MockObject $om */
+        $om            = $this->createMock(EntityManager::class);
         $classMetadata = $this->getMockBuilder(ClassMetadata::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -57,9 +52,8 @@ class CollectionListenerTest extends TestCase
             ->with($data, self::isInstanceOf(Artist::class));
 
         if ($withEntityFactory) {
-            /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactory */
-            $entityFactory = $this->getMockBuilder(InstantiatorInterface::class)
-                ->getMock();
+            /** @var InstantiatorInterface&MockObject $entityFactory */
+            $entityFactory = $this->createMock(InstantiatorInterface::class);
 
             $entityFactory->expects(self::once())
                 ->method('instantiate')
@@ -73,7 +67,8 @@ class CollectionListenerTest extends TestCase
         $listener->setObjectManager($om);
 
         $hydratorMapProperty = new ReflectionProperty(
-            $listener, 'entityHydratorMap'
+            $listener,
+            'entityHydratorMap'
         );
         $hydratorMapProperty->setAccessible(true);
         $hydratorMapProperty->setValue($listener, [Artist::class => $hydrator]);
