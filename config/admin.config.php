@@ -59,12 +59,12 @@ return [
     'service_manager'               => [
         // Legacy Zend Framework aliases
         'aliases'   => [
-            DoctrineAutodiscoveryModel::class      => DoctrineAutodiscoveryModel::class,
-            DoctrineMetadataServiceResource::class => DoctrineMetadataServiceResource::class,
-            DoctrineRestServiceModelFactory::class => DoctrineRestServiceModelFactory::class,
-            DoctrineRestServiceResource::class     => DoctrineRestServiceResource::class,
-            DoctrineRpcServiceModelFactory::class  => DoctrineRpcServiceModelFactory::class,
-            DoctrineRpcServiceResource::class      => DoctrineRpcServiceResource::class,
+            'ZF\Apigility\Doctrine\Admin\Model\DoctrineAutodiscoveryModel'      => DoctrineAutodiscoveryModel::class,
+            'ZF\Apigility\Doctrine\Admin\Model\DoctrineMetadataServiceResource' => DoctrineMetadataServiceResource::class,
+            'ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceModelFactory' => DoctrineRestServiceModelFactory::class,
+            'ZF\Apigility\Doctrine\Admin\Model\DoctrineRestServiceResource'     => DoctrineRestServiceResource::class,
+            'ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceModelFactory'  => DoctrineRpcServiceModelFactory::class,
+            'ZF\Apigility\Doctrine\Admin\Model\DoctrineRpcServiceResource'      => DoctrineRpcServiceResource::class,
         ],
         'factories' => [
             DoctrineAutodiscoveryModel::class      => Model\DoctrineAutodiscoveryModelFactory::class,
@@ -78,10 +78,10 @@ return [
     'controllers'                   => [
         // Legacy Zend Framework aliases
         'aliases'   => [
-            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery' => 'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery',
+            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery' => 'Laminas\ApiTools\Doctrine\Admin\Controller\DoctrineAutodiscovery',
         ],
         'factories' => [
-            'ZF\Apigility\Doctrine\Admin\Controller\DoctrineAutodiscovery' => Controller\DoctrineAutodiscoveryControllerFactory::class,
+            'Laminas\ApiTools\Doctrine\Admin\Controller\DoctrineAutodiscovery' => Controller\DoctrineAutodiscoveryControllerFactory::class,
         ],
     ],
     'api-tools-content-negotiation' => [
