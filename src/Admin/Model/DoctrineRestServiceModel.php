@@ -216,7 +216,7 @@ class DoctrineRestServiceModel implements EventManagerAwareInterface
      */
     public function getEventManager()
     {
-        if (empty($this->events)) {
+        if (! $this->events) {
             $this->setEventManager(new EventManager());
         }
 

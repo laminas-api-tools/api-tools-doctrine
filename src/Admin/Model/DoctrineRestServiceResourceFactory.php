@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use interop\container\containerinterface;
+use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\Admin\Model\DocumentationModel;
 use Laminas\ApiTools\Admin\Model\InputFilterModel;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
@@ -16,7 +16,7 @@ class DoctrineRestServiceResourceFactory
     /**
      * @return DoctrineRestServiceResource
      */
-    public function __invoke(containerinterface $container)
+    public function __invoke(ContainerInterface $container)
     {
         if (
             ! $container->has(DoctrineRestServiceModelFactory::class)

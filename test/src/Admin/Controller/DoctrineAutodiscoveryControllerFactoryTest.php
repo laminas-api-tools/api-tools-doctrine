@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Admin\Controller;
 
-use interop\container\containerinterface;
+use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\Doctrine\Admin\Controller\DoctrineAutodiscoveryController;
 use Laminas\ApiTools\Doctrine\Admin\Controller\DoctrineAutodiscoveryControllerFactory;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
-use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use LaminasTest\ApiTools\Doctrine\DeprecatedAssertionsTrait;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -19,7 +19,7 @@ class DoctrineAutodiscoveryControllerFactoryTest extends TestCase
     use DeprecatedAssertionsTrait;
     use ProphecyTrait;
 
-    /** @var ProphecyInterface|containerinterface */
+    /** @var ProphecyInterface|ContainerInterface */
     private $container;
 
     /** @var DoctrineAutodiscoveryModel */
@@ -30,7 +30,7 @@ class DoctrineAutodiscoveryControllerFactoryTest extends TestCase
         parent::setUp();
 
         $this->model     = $this->prophesize(DoctrineAutodiscoveryModel::class)->reveal();
-        $this->container = $this->prophesize(containerinterface::class);
+        $this->container = $this->prophesize(ContainerInterface::class);
         $this->container->get(DoctrineAutodiscoveryModel::class)->willReturn($this->model);
     }
 
@@ -45,11 +45,11 @@ class DoctrineAutodiscoveryControllerFactoryTest extends TestCase
 
     public function testLegacyFactoryReturnsDoctrineAutodiscoveryController(): void
     {
-        $controllers = $this->prophesize(AbstractPluginManager::class);
-        $controllers->getServiceLocator()->willReturn($this->container->reveal());
+        $this->container = $this->prophesize(ServiceLocatorInterface::class);
+        $this->container->get(DoctrineAutodiscoveryModel::class)->willReturn($this->model);
 
         $factory    = new DoctrineAutodiscoveryControllerFactory();
-        $controller = $factory->createService($controllers->reveal());
+        $controller = $factory->createService($this->container->reveal());
 
         $this->assertInstanceOf(DoctrineAutodiscoveryController::class, $controller);
         $this->assertAttributeSame($this->model, 'model', $controller);

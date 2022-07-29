@@ -64,9 +64,7 @@
     },
     "conflict": {
         "doctrine/dbal": "<2.12.0",
-        "doctrine/orm": "<2.6.3",
-        "doctrine/doctrine-module": "<4.0",
-        "doctrine/doctrine-orm-module": "<4.0"
+        "doctrine/orm": "<2.6.3"
     },
     "suggest": {
         "api-skeletons/zf-doctrine-hydrator": "Hydrator strategies for Doctrine in Laminas API Tools",

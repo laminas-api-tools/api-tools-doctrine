@@ -9,7 +9,7 @@ use DoctrineModule\Validator\ObjectExists;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\ArrayUtils;
-use Psr\Container\ContainerInterface;
+use Interop\Container\ContainerInterface;
 
 class ObjectExistsFactory implements FactoryInterface
 {

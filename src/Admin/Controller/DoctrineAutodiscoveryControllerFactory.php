@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Controller;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineAutodiscoveryModel;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Psr\Container\ContainerInterface;
 
 class DoctrineAutodiscoveryControllerFactory implements FactoryInterface
 {

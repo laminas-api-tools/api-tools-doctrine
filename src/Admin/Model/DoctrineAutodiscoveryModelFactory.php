@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use interop\container\containerinterface;
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 
 use function sprintf;
@@ -14,7 +14,7 @@ class DoctrineAutodiscoveryModelFactory
     /**
      * @return DoctrineAutodiscoveryModel
      */
-    public function __invoke(containerinterface $container)
+    public function __invoke(ContainerInterface $container)
     {
         if (! $container->has('config')) {
             throw new ServiceNotCreatedException(sprintf(
