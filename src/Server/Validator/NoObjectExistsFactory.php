@@ -9,7 +9,7 @@ use DoctrineModule\Validator\NoObjectExists;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\ArrayUtils;
-use Psr\Container\ContainerInterface;
+use Interop\Container\ContainerInterface;
 
 class NoObjectExistsFactory implements FactoryInterface
 {

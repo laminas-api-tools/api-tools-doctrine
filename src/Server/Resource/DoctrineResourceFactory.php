@@ -6,14 +6,14 @@ namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
+use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
 use Laminas\ApiTools\Hal\Plugin\Hal;
 use Laminas\Hydrator\HydratorInterface;
-use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Psr\Container\ContainerInterface;
 use RuntimeException;
 
 use function class_exists;
@@ -171,7 +171,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param string $requestedName
      * @return bool
      */
-    protected function isValidConfig(array $config, $requestedName, containerinterface $container)
+    protected function isValidConfig(array $config, $requestedName, ContainerInterface $container)
     {
         if (
             ! isset($config['object_manager'])
@@ -212,7 +212,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @return HydratorInterface
      */
     protected function loadHydrator(
-        containerinterface $container,
+        ContainerInterface $container,
         array $doctrineConnectedConfig,
         array $doctrineHydratorConfig
     ) {
@@ -248,7 +248,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param ObjectManager $objectManager
      * @return QueryCreateFilterInterface
      */
-    protected function loadQueryCreateFilter(containerinterface $container, array $config, $objectManager)
+    protected function loadQueryCreateFilter(ContainerInterface $container, array $config, $objectManager)
     {
         $createFilterManager = $container->get('LaminasApiToolsDoctrineQueryCreateFilterManager');
         $filterManagerAlias  = $config['query_create_filter'] ?? 'default';
@@ -268,7 +268,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @return array
      * @throws ServiceNotCreatedException
      */
-    protected function loadQueryProviders(containerinterface $serviceLocator, array $config, $objectManager)
+    protected function loadQueryProviders(ContainerInterface $serviceLocator, array $config, $objectManager)
     {
         $queryProviders = [];
         $queryManager   = $serviceLocator->get('LaminasApiToolsDoctrineQueryProviderManager');
@@ -302,7 +302,7 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
      * @param array $config
      * @return array
      */
-    protected function loadConfiguredListeners(containerinterface $container, array $config)
+    protected function loadConfiguredListeners(ContainerInterface $container, array $config)
     {
         if (! isset($config['listeners'])) {
             return [];
