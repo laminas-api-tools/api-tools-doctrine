@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Server\Validator;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use DoctrineModule\Validator\ObjectExists as ObjectExistsOrigin;
 use Laminas\ApiTools\Doctrine\Server\Validator\ObjectExists;
 use Laminas\ServiceManager\ServiceManager;
@@ -24,7 +24,7 @@ class ObjectExistsFactoryTest extends TestCase
     /** @var ValidatorPluginManager */
     private $validators;
 
-    /** @var ObjectProphecy|ObjectRepository */
+    /** @var ObjectProphecy<EntityRepository<object>> */
     private $objectRepository;
 
     protected function setUp(): void
@@ -34,7 +34,7 @@ class ObjectExistsFactoryTest extends TestCase
         $config           = include __DIR__ . '/../../../../config/server.config.php';
         $validatorsConfig = $config['validators'];
 
-        $this->objectRepository = $this->prophesize(ObjectRepository::class);
+        $this->objectRepository = $this->prophesize(EntityRepository::class);
         $this->serviceManager   = $this->prophesize(ServiceManager::class);
 
         $this->validators = new ValidatorPluginManager($this->serviceManager->reveal(), $validatorsConfig);

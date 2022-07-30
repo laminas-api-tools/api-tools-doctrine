@@ -23,7 +23,10 @@ class DoctrineAutodiscoveryModelFactory
             ));
         }
 
-        $instance = new DoctrineAutodiscoveryModel($container->get('config'));
+        /** @var array $config */
+        $config = $container->get('config');
+
+        $instance = new DoctrineAutodiscoveryModel($config);
         $instance->setServiceLocator($container);
 
         return $instance;

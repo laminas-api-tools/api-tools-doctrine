@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Instantiator\InstantiatorInterface;
-use Doctrine\ODM\MongoDB\Query\Builder as MongoDBQueryBuilder;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
-use DoctrineModule\Stdlib\Hydrator;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
@@ -29,6 +28,7 @@ use Laminas\EventManager\SharedEventManager;
 use Laminas\Hydrator\HydratorAwareInterface;
 use Laminas\Hydrator\HydratorInterface;
 use Laminas\Mvc\ModuleRouteListener;
+use Laminas\Stdlib\Parameters;
 use ReflectionClass;
 use Traversable;
 
@@ -159,10 +159,8 @@ class DoctrineResource extends AbstractResourceListener implements
 
     /**
      * Set the object manager
-     *
-     * @return void
      */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
     }
@@ -172,7 +170,7 @@ class DoctrineResource extends AbstractResourceListener implements
      *
      * @return ObjectManager|EntityManagerInterface
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
@@ -294,24 +292,16 @@ class DoctrineResource extends AbstractResourceListener implements
         return $this->multiKeyDelimiter;
     }
 
-    /**
-     * @return $this
-     */
-    public function setHydrator(HydratorInterface $hydrator)
+    public function setHydrator(HydratorInterface $hydrator): void
     {
         $this->hydrator = $hydrator;
-
-        return $this;
     }
 
-    /**
-     * @return HydratorInterface
-     */
-    public function getHydrator()
+    public function getHydrator(): HydratorInterface
     {
         if (! $this->hydrator) {
             // FIXME: find a way to test this line from a created API.  Shouldn't all created API's have a hydrator?
-            $this->hydrator = new Hydrator\DoctrineObject($this->getObjectManager(), $this->getEntityClass());
+            $this->hydrator = new DoctrineObject($this->getObjectManager(), $this->getEntityClass());
         }
 
         return $this->hydrator;
@@ -504,14 +494,14 @@ class DoctrineResource extends AbstractResourceListener implements
     /**
      * Fetch all or a subset of resources
      *
-     * @param array $data
+     * @param Parameters|array $data
      * @return ApiProblem|mixed
      */
     public function fetchAll($data = [])
     {
         // Build query
         $queryProvider = $this->getQueryProvider('fetch_all');
-        $queryBuilder  = $queryProvider->createQuery($this->getEvent(), $this->getEntityClass(), $data);
+        $queryBuilder  = $queryProvider->createQuery($this->getEvent(), $this->getEntityClass(), (array) $data);
 
         if ($queryBuilder instanceof ApiProblem) {
             return $queryBuilder;
@@ -654,7 +644,7 @@ class DoctrineResource extends AbstractResourceListener implements
      * It is also possible to throw Exceptions, which will result in an ApiProblem eventually.
      *
      * @param string $name
-     * @param object $entity
+     * @param mixed $entity
      * @param mixed $data The original data supplied to the resource method, if any
      * @return ResponseCollection
      */
@@ -699,7 +689,9 @@ class DoctrineResource extends AbstractResourceListener implements
             $criteria[$identifier] = $ids[$index];
         }
 
-        $classMetaData       = $this->getObjectManager()->getClassMetadata($this->getEntityClass());
+        /** @var class-string $entityClass */
+        $entityClass         = $this->getEntityClass();
+        $classMetaData       = $this->getObjectManager()->getClassMetadata($entityClass);
         $routeMatch          = $this->getEvent()->getRouteMatch();
         $associationMappings = $classMetaData->getAssociationNames();
         $fieldNames          = $classMetaData->getFieldNames();
@@ -737,13 +729,9 @@ class DoctrineResource extends AbstractResourceListener implements
 
         // Add criteria
         foreach ($criteria as $key => $value) {
-            if ($queryBuilder instanceof MongoDBQueryBuilder) {
-                $queryBuilder->field($key)->equals($value);
-            } else {
                 $parameterName = 'a' . md5((string) rand());
                 $queryBuilder->andwhere($queryBuilder->expr()->eq('row.' . $key, ":$parameterName"));
                 $queryBuilder->setParameter($parameterName, $value, $classMetaData->getTypeOfField($key));
-            }
         }
 
         try {

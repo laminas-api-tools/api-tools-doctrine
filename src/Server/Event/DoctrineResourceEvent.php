@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Event;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Laminas\ApiTools\Rest\ResourceEvent;
 use Laminas\EventManager\Event;
 
@@ -48,18 +48,12 @@ class DoctrineResourceEvent extends Event
     /** @var ObjectManager */
     protected $objectManager;
 
-    /**
-     * @return ObjectManager
-     */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
 
-    /**
-     * @return $this
-     */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): DoctrineResourceEvent
     {
         $this->objectManager = $objectManager;
 

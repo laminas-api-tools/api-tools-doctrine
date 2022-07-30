@@ -7,6 +7,7 @@ namespace Laminas\ApiTools\Doctrine\Admin\Model;
 use Exception;
 use Laminas\ApiTools\Admin\Model\DocumentationModel;
 use Laminas\ApiTools\Admin\Model\InputFilterModel;
+use Laminas\ApiTools\Admin\Model\RpcServiceEntity;
 use Laminas\ApiTools\Admin\Model\RpcServiceModel;
 use Laminas\ApiTools\Admin\Model\RpcServiceResource;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
@@ -61,7 +62,7 @@ class DoctrineRpcServiceResource extends RpcServiceResource
      * Create a new Doctrine RPC service
      *
      * @param array|object $data
-     * @return DoctrineRpcServiceEntity|ApiProblem
+     * @return RpcServiceEntity|ApiProblem|false
      * @throws CreationException
      */
     public function create($data)

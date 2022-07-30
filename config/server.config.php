@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server;
 
+use Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter;
+use Laminas\ApiTools\Doctrine\Server\Query\Provider\DefaultOrm;
 use Laminas\ServiceManager\Factory\InvokableFactory;
-use ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter;
-use ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOdm;
-use ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOrm;
-use ZF\Apigility\Doctrine\Server\Validator\NoObjectExists;
-use ZF\Apigility\Doctrine\Server\Validator\ObjectExists;
 
 return [
     'service_manager'                        => [
@@ -30,27 +27,24 @@ return [
     ],
     'api-tools-doctrine-query-provider'      => [
         'aliases'   => [
-            'default_odm' => Query\Provider\DefaultOdm::class,
-            'default_orm' => Query\Provider\DefaultOrm::class,
+            'default_orm' => DefaultOrm::class,
 
             // Legacy Zend Framework aliases
-            DefaultOdm::class => Query\Provider\DefaultOdm::class,
-            DefaultOrm::class => Query\Provider\DefaultOrm::class,
+            'ZF\Apigility\Doctrine\Server\Query\Provider\DefaultOrm' => DefaultOrm::class,
         ],
         'factories' => [
-            Query\Provider\DefaultOdm::class => InvokableFactory::class,
-            Query\Provider\DefaultOrm::class => InvokableFactory::class,
+            DefaultOrm::class => InvokableFactory::class,
         ],
     ],
     'api-tools-doctrine-query-create-filter' => [
         'aliases'   => [
-            'default' => Query\CreateFilter\DefaultCreateFilter::class,
+            'default' => DefaultCreateFilter::class,
 
             // Legacy Zend Framework aliases
-            DefaultCreateFilter::class => Query\CreateFilter\DefaultCreateFilter::class,
+            'ZF\Apigility\Doctrine\Server\Query\CreateFilter\DefaultCreateFilter' => DefaultCreateFilter::class,
         ],
         'factories' => [
-            Query\CreateFilter\DefaultCreateFilter::class => InvokableFactory::class,
+            DefaultCreateFilter::class => InvokableFactory::class,
         ],
     ],
     'view_manager'                           => [
@@ -61,12 +55,12 @@ return [
     'validators'                             => [
         // Legacy Zend Framework aliases
         'aliases'   => [
-            NoObjectExists::class => Validator\NoObjectExists::class,
-            ObjectExists::class   => Validator\ObjectExists::class,
+            'ZF\Apigility\Doctrine\Server\Validator\NoObjectExists' => 'Laminas\ApiTools\Doctrine\Server\Validator\NoObjectExists',
+            'ZF\Apigility\Doctrine\Server\Validator\ObjectExists'   => 'Laminas\ApiTools\Doctrine\Server\Validator\ObjectExists',
         ],
         'factories' => [
-            Validator\NoObjectExists::class => Validator\NoObjectExistsFactory::class,
-            Validator\ObjectExists::class   => Validator\ObjectExistsFactory::class,
+            'Laminas\ApiTools\Doctrine\Server\Validator\NoObjectExists' => Validator\NoObjectExistsFactory::class,
+            'Laminas\ApiTools\Doctrine\Server\Validator\ObjectExists'   => Validator\ObjectExistsFactory::class,
         ],
     ],
 ];
