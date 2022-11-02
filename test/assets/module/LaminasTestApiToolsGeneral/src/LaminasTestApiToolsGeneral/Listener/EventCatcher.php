@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTestApiToolsGeneral\Listener;
 
-use Laminas\ApiTools\Doctrine\DoctrineResource;
+use Laminas\ApiTools\Doctrine\Server\Resource\DoctrineResource;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
 
@@ -13,7 +13,7 @@ use function method_exists;
 
 class EventCatcher
 {
-    const EVENT_IDENTIFIER = DoctrineResource::class;
+    public const EVENT_IDENTIFIER = DoctrineResource::class;
 
     /** @var array */
     protected $listeners = [];

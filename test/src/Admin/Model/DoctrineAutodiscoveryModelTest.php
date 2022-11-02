@@ -14,6 +14,11 @@ use LaminasTestApiToolsDbMongo\Document\Meta;
 use function strcasecmp;
 use function usort;
 
+/**
+ * @group admin
+ * @group admin-model
+ * @group admin-model-autodiscovery
+ */
 class DoctrineAutodiscoveryModelTest extends TestCase
 {
     public function testORMAutodiscoveryEntitiesWithFields(): void

@@ -15,7 +15,7 @@ use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceEntity;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRpcServiceResource;
-use Laminas\ApiTools\Doctrine\DoctrineResource;
+use Laminas\ApiTools\Doctrine\Server\Resource\DoctrineResource;
 use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\ApiTools\Rest\ResourceEvent;
 use Laminas\Filter\FilterChain;
@@ -28,7 +28,7 @@ use LaminasTestApiToolsDb\Entity\Product;
 use LaminasTestApiToolsDbApi\V1\Rest\Artist\ArtistResource;
 use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 use PHPUnit\Framework\Assert;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 use function in_array;
 use function json_decode;
@@ -333,7 +333,7 @@ class CRUDTest extends TestCase
 
     public function testCreateByExplicitlySettingEntityFactoryInConstructor(): void
     {
-        /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
+        /** @var InstantiatorInterface|MockObject $entityFactoryMock */
         $entityFactoryMock = $this->getMockBuilder(InstantiatorInterface::class)->getMock();
         $entityFactoryMock->expects(self::once())
             ->method('instantiate')

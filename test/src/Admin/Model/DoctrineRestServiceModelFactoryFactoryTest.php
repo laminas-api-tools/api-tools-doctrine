@@ -6,7 +6,7 @@ namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
 use Laminas\ApiTools\Admin\Model\ModuleModel;
 use Laminas\ApiTools\Admin\Model\ModulePathSpec;
-use Laminas\ApiTools\Configuration\ConfigResourceFactory;
+use Laminas\ApiTools\Configuration\Factory\ConfigResourceFactory;
 use Laminas\ApiTools\Configuration\ResourceFactory;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceModel;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceModelFactory;

@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
 use Laminas\EventManager\EventManagerInterface;
@@ -19,7 +19,6 @@ use Laminas\InputFilter\InputFilterInterface;
 use Laminas\InputFilter\InputInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\ArrayObject;
-use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
 use Traversable;
 
 use function array_key_exists;
@@ -37,6 +36,8 @@ use function is_object;
  */
 class CollectionListener implements ListenerAggregateInterface
 {
+    public const CONFIG_NAMESPACE = 'doctrine-hydrator';
+
     /** @var array */
     protected $listeners = [];
 
@@ -341,7 +342,7 @@ class CollectionListener implements ListenerAggregateInterface
     {
         if ($this->entityHydratorMap === null) {
             $config = $this->getServiceManager()->get('config');
-            $config = $config[DoctrineHydratorFactory::FACTORY_NAMESPACE];
+            $config = $config[self::CONFIG_NAMESPACE];
 
             if (! empty($config)) {
                 $this->entityHydratorMap = [];

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ORM\QueryBuilder;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
@@ -17,22 +17,12 @@ abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, Que
     /** @var ObjectManager */
     protected $objectManager;
 
-    /**
-     * Set the object manager
-     *
-     * @return void
-     */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
     }
 
-    /**
-     * Get the object manager
-     *
-     * @return ObjectManager
-     */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
