@@ -229,7 +229,7 @@ class CollectionListener implements ListenerAggregateInterface
     protected function getEntityCollectionValuedAssociations($entity, $data = null, $stripEmptyAssociations = false)
     {
         if (is_object($entity)) {
-            $entity = $entity::class;
+            $entity = get_class($entity);
         }
         if (! array_key_exists($entity, $this->entityCollectionValuedAssociations)) {
             $collectionValuedAssociations = [];
