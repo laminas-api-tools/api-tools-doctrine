@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Doctrine\Server\Validator;
 
-use Doctrine\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ObjectRepository;
 use DoctrineModule\Validator\NoObjectExists as NoObjectExistsOrigin;
 use Laminas\ApiTools\Doctrine\Server\Validator\NoObjectExists;
 use Laminas\ServiceManager\ServiceManager;
