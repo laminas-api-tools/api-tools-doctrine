@@ -19,6 +19,8 @@ use LaminasTest\ApiTools\Doctrine\TestCase;
 use LaminasTestApiToolsDbMongo\Document\Meta;
 use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 use MongoClient;
+use MongoDB\Client;
+use MongoDB\Driver\Manager;
 use PHPUnit_Framework_MockObject_MockObject;
 
 use function json_decode;
@@ -79,10 +81,10 @@ class CRUDTest extends TestCase
         $config = $this->getApplication()->getConfig();
         $config = $config['doctrine']['connection']['odm_default'];
 
-        $connection = new MongoClient($config['connectionString']);
+        $connection = new Client($config['connectionString']);
         $db         = $connection->{$config['dbname']};
         $collection = $db->meta;
-        $collection->remove();
+        $collection->drop();
     }
 
     public function testCreate(): void

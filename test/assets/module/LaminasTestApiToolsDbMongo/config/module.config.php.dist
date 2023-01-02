@@ -2,12 +2,14 @@
 
 namespace LaminasTestApiToolsDbMongo;
 
+use Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver;
+
 return [
     'doctrine' => [
         'driver' => [
             'odm_driver' => [
-                'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\YamlDriver',
-                'paths' => [__DIR__ . '/yml'],
+                'class' => XmlDriver::class,
+                'paths' => [__DIR__ . '/xml'],
             ],
             'odm_default' => [
                 'drivers' => [

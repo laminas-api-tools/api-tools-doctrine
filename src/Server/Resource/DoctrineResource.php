@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ODM\MongoDB\Query\Builder as MongoDBQueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
-use DoctrineModule\Stdlib\Hydrator;
+use DoctrineModule\Persistence\ProvidesObjectManager;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
@@ -52,11 +51,10 @@ class DoctrineResource extends AbstractResourceListener implements
     EventManagerAwareInterface,
     HydratorAwareInterface
 {
+    use ProvidesObjectManager;
+
     /** @var SharedEventManager Interface */
     protected $sharedEventManager;
-
-    /** @var ObjectManager */
-    protected $objectManager;
 
     /** @var EventManagerInterface */
     protected $events;
@@ -155,26 +153,6 @@ class DoctrineResource extends AbstractResourceListener implements
         }
 
         return $this->events;
-    }
-
-    /**
-     * Set the object manager
-     *
-     * @return void
-     */
-    public function setObjectManager(ObjectManager $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    /**
-     * Get the object manager
-     *
-     * @return ObjectManager|EntityManagerInterface
-     */
-    public function getObjectManager()
-    {
-        return $this->objectManager;
     }
 
     /**
@@ -294,20 +272,12 @@ class DoctrineResource extends AbstractResourceListener implements
         return $this->multiKeyDelimiter;
     }
 
-    /**
-     * @return $this
-     */
-    public function setHydrator(HydratorInterface $hydrator)
+    public function setHydrator(HydratorInterface $hydrator): void
     {
         $this->hydrator = $hydrator;
-
-        return $this;
     }
 
-    /**
-     * @return HydratorInterface
-     */
-    public function getHydrator()
+    public function getHydrator(): ?HydratorInterface
     {
         if (! $this->hydrator) {
             // FIXME: find a way to test this line from a created API.  Shouldn't all created API's have a hydrator?

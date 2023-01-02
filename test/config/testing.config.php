@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use Doctrine\DBAL\Driver\PDOSqlite\Driver;
-use Doctrine\DBAL\Driver\PDOSqlite\Driver;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 
 return [
     'doctrine' => [
