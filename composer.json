@@ -32,7 +32,7 @@
         }
     },
     "require": {
-        "php": "^7.4 || ~8.0.0 || ~8.1.0 || ~8.2.0",
+        "php": "^7.4 || ~8.0.0 || ~8.1.0",
         "datasage/laminas-doctrine-hydration-module": "^5.0",
         "doctrine/persistence": "^2.0 || ^3.0",
         "laminas-api-tools/api-tools": "^1.3",
@@ -47,7 +47,7 @@
         "doctrine/doctrine-mongo-odm-module": "^3.0.0 || ^4.0.0",
         "doctrine/doctrine-orm-module": "^3.0.0 || ^4.0.0 || ^5.0.0",
         "doctrine/mongodb-odm": "^2.0.0",
-        "laminas-api-tools/api-tools-admin": "^1.5.7",
+        "laminas-api-tools/api-tools-admin": "^1.5.7 || ^2.0.1",
         "laminas-api-tools/api-tools-hal": "^1.6.1",
         "laminas/laminas-coding-standard": "~2.3.0",
         "laminas/laminas-form": "^2.9.2 || ^3.0.0",
