@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ODM\MongoDB\Query\Builder as MongoDBQueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
-use DoctrineModule\Stdlib\Hydrator;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
@@ -162,7 +162,7 @@ class DoctrineResource extends AbstractResourceListener implements
      *
      * @return void
      */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
     }
@@ -172,7 +172,7 @@ class DoctrineResource extends AbstractResourceListener implements
      *
      * @return ObjectManager|EntityManagerInterface
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
@@ -294,24 +294,19 @@ class DoctrineResource extends AbstractResourceListener implements
         return $this->multiKeyDelimiter;
     }
 
-    /**
-     * @return $this
-     */
-    public function setHydrator(HydratorInterface $hydrator)
+    public function setHydrator(?HydratorInterface $hydrator): void
     {
         $this->hydrator = $hydrator;
-
-        return $this;
     }
 
     /**
      * @return HydratorInterface
      */
-    public function getHydrator()
+    public function getHydrator(): ?HydratorInterface
     {
         if (! $this->hydrator) {
             // FIXME: find a way to test this line from a created API.  Shouldn't all created API's have a hydrator?
-            $this->hydrator = new Hydrator\DoctrineObject($this->getObjectManager(), $this->getEntityClass());
+            $this->hydrator = new DoctrineObject($this->getObjectManager());
         }
 
         return $this->hydrator;

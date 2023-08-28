@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\ApiTools\Doctrine\Admin\Model;
 
 use DateTime;
-use Db\Entity\Artist;
+use LaminasTestApiToolsDb\Entity\Artist;
 use Doctrine\ORM\Tools\SchemaTool;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;

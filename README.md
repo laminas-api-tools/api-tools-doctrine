@@ -38,8 +38,8 @@ The *Admin* module is used to create api-tools resources and the Server serves t
 created resources. Generally you would include *Admin* in your `config/development.config.php`
 and *Server* in your `config/application.config.php`.
 
-`Laminas\ApiTools\Doctrine\Server` has a dependency with `Phpro\DoctrineHydrationModule` to handle
-entity hydration. See [documentation and instructions](https://github.com/phpro/zf-doctrine-hydration-module)
+`Laminas\ApiTools\Doctrine\Server` has a dependency with `doctrine-laminas-hydrator` to handle
+entity hydration. See [documentation and instructions](https://github.com/doctrine/doctrine-laminas-hydrator)
 on how to set up this module.
 
 > ### laminas-component-installer

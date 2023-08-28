@@ -207,16 +207,11 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
         return '\\' . ltrim($className, '\\');
     }
 
-    /**
-     * @param array $doctrineConnectedConfig
-     * @param array $doctrineHydratorConfig
-     * @return HydratorInterface
-     */
     protected function loadHydrator(
         ContainerInterface $container,
         array $doctrineConnectedConfig,
         array $doctrineHydratorConfig
-    ) {
+    ): ?HydratorInterface {
         if (! isset($doctrineConnectedConfig['hydrator'])) {
             return null;
         }

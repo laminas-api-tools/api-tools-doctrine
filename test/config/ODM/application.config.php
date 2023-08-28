@@ -6,7 +6,6 @@ return [
     'modules'                 => [
         'DoctrineModule',
         'DoctrineMongoODMModule',
-        'Phpro\DoctrineHydrationModule',
         'Laminas\ApiTools',
         'Laminas\ApiTools\Admin',
         'Laminas\ApiTools\Hal',
