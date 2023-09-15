@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Admin\Model;
 
-use Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory;
+use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Exception;
 use Laminas\ApiTools\Admin\Model\RestServiceEntity;
 use Laminas\ApiTools\ApiProblem\ApiProblem;

@@ -18,7 +18,10 @@
         "forum": "https://discourse.laminas.dev"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "extra": {
         "laminas": {
@@ -29,33 +32,35 @@
         }
     },
     "require": {
-        "php": "^7.3 || ~8.0.0",
+        "php": "^7.4 || ~8.0.0 || ~8.1.0",
+        "datasage/laminas-doctrine-hydration-module": "^4.2 || ^5.0",
+        "doctrine/persistence": "^2.0 || ^3.0",
         "laminas-api-tools/api-tools": "^1.3",
-        "laminas-api-tools/api-tools-rest": "^1.3.2",
-        "laminas/laminas-hydrator": "^2.4.2 || ^3.0",
+        "laminas-api-tools/api-tools-rest": "^1.7.0",
+        "laminas/laminas-hydrator": "^3.0 || ^4.0",
         "laminas/laminas-stdlib": "^3.3",
         "laminas/laminas-view": "^2.11.3",
-        "laminas/laminas-zendframework-bridge": "^1.0",
-        "phpro/zf-doctrine-hydration-module": "^2.0.1 || ^3.0 || ^4.1"
+        "laminas/laminas-zendframework-bridge": "^1.0"
     },
     "require-dev": {
-        "doctrine/doctrine-module": "^1.2.0 || ^2.1.7",
-        "doctrine/doctrine-mongo-odm-module": "^0.11.0 || ^1.0.0 || ^2.0.0",
-        "doctrine/doctrine-orm-module": "^1.1.8 || ^2.1.3",
-        "doctrine/mongodb-odm": "^1.1.0",
-        "laminas-api-tools/api-tools-admin": "^1.5.7",
+        "doctrine/doctrine-module": "^3.0.0 || ^4.0.0 || ^5.0.0",
+        "doctrine/doctrine-mongo-odm-module": "^3.0.0 || ^4.0.0",
+        "doctrine/doctrine-orm-module": "^3.0.0 || ^4.0.0 || ^5.0.0",
+        "doctrine/mongodb-odm": "^2.0.0",
+        "laminas-api-tools/api-tools-admin": "^1.5.7 || ^2.0.1",
         "laminas-api-tools/api-tools-hal": "^1.6.1",
+        "laminas-api-tools/api-tools-content-negotiation": "^1.7",
         "laminas/laminas-coding-standard": "~2.3.0",
-        "laminas/laminas-form": "^2.9.2",
+        "laminas/laminas-form": "^2.9.2 || ^3.0.0",
         "laminas/laminas-i18n": "^2.7.3",
         "laminas/laminas-log": "^2.9.1",
         "laminas/laminas-mvc": "^2.7.13 || ^3.0.2",
         "laminas/laminas-serializer": "^2.8.0",
-        "laminas/laminas-test": "^2.6.1 || ^3.0.1",
+        "laminas/laminas-test": "^2.6.1 || ^3.0.1 || ^4.0.0",
         "mongodb/mongodb": "^1.1.0",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.3",
-        "psalm/plugin-phpunit": "^0.16.1",
+        "phpunit/phpunit": "^9.5.10",
+        "psalm/plugin-phpunit": "^0.16.1 || ^0.17.0 || ^0.18.0",
         "symfony/yaml": "^2.3 || ^3.0 || ^4.0 || ^5.0",
         "vimeo/psalm": "^4.8"
     },

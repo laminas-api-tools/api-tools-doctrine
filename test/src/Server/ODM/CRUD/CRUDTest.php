@@ -11,15 +11,15 @@ use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceEntity;
 use Laminas\ApiTools\Doctrine\Admin\Model\DoctrineRestServiceResource;
-use Laminas\ApiTools\Doctrine\DoctrineResource;
 use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
+use Laminas\ApiTools\Doctrine\Server\Resource\DoctrineResource;
 use Laminas\Http\Request;
 use Laminas\ServiceManager\ServiceManager;
 use LaminasTest\ApiTools\Doctrine\TestCase;
 use LaminasTestApiToolsDbMongo\Document\Meta;
 use LaminasTestApiToolsGeneral\Listener\EventCatcher;
-use MongoClient;
-use PHPUnit_Framework_MockObject_MockObject;
+use MongoDB\Client;
+use PHPUnit\Framework\MockObject\MockObject;
 
 use function json_decode;
 use function json_encode;
@@ -79,10 +79,10 @@ class CRUDTest extends TestCase
         $config = $this->getApplication()->getConfig();
         $config = $config['doctrine']['connection']['odm_default'];
 
-        $connection = new MongoClient($config['connectionString']);
+        $connection = new Client($config['connectionString']);
         $db         = $connection->{$config['dbname']};
         $collection = $db->meta;
-        $collection->remove();
+        $collection->drop();
     }
 
     public function testCreate(): void
@@ -134,7 +134,7 @@ class CRUDTest extends TestCase
 
     public function testCreateByExplicitlySettingEntityFactoryInConstructor(): void
     {
-        /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
+        /** @var InstantiatorInterface|MockObject $entityFactoryMock */
         $entityFactoryMock = $this->getMockBuilder(InstantiatorInterface::class)->getMock();
         $entityFactoryMock->expects(self::once())
             ->method('instantiate')

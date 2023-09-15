@@ -57,9 +57,10 @@ class DoctrineOdmAdapter implements AdapterInterface
     public function count()
     {
         $queryBuilder = clone $this->getQueryBuilder();
+        $queryBuilder->count();
         $queryBuilder->skip(0);
-        $queryBuilder->limit(null);
+        $queryBuilder->limit(0);
 
-        return $queryBuilder->getQuery()->execute()->count();
+        return $queryBuilder->getQuery()->execute();
     }
 }
