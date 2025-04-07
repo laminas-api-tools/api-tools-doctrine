@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Event\Listener;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\ObjectManager;
+use ApiSkeletons\DoctrineORMHydrationModule\Service\DoctrineHydratorFactory;
 use Doctrine\Instantiator\InstantiatorInterface;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\ObjectManager;
 use Laminas\ApiTools\Doctrine\Server\Event\DoctrineResourceEvent;
 use Laminas\ApiTools\Doctrine\Server\Exception\InvalidArgumentException;
+use Laminas\ApiTools\Rest\Exception\CreationException;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\Hydrator\HydratorInterface;
@@ -19,7 +21,6 @@ use Laminas\InputFilter\InputFilterInterface;
 use Laminas\InputFilter\InputInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\ArrayObject;
-use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
 use Traversable;
 
 use function array_key_exists;
@@ -120,7 +121,7 @@ class CollectionListener implements ListenerAggregateInterface
     }
 
     /**
-     * @param object|string $entity
+     * @param class-string|object $entity
      * @param array $data
      * @return mixed
      */
@@ -135,14 +136,23 @@ class CollectionListener implements ListenerAggregateInterface
                 if ($this->validateAssociationData($association, $data)) {
                     foreach ($data[$association] as &$subEntityData) {
                         $associationTargetClass = $metadata->getAssociationTargetClass($association);
+                        if (empty($associationTargetClass)) {
+                            throw new CreationException('associationTargetClass is required and must exist');
+                        }
+
                         // Handle nested / subresource by recursion
                         if (
                             $this
                                 ->getEntityCollectionValuedAssociations($associationTargetClass, $subEntityData, true)
                                 ->count() > 0
                         ) {
+                            $subresourceAssociationTargetClass = $metadata->getAssociationTargetClass($association);
+                            if (empty($subresourceAssociationTargetClass)) {
+                                throw new CreationException('subresourceAssociationTargetClass is required and must exist');
+                            }
+
                             $subEntityData = $this->iterateEntity(
-                                $metadata->getAssociationTargetClass($association),
+                                $subresourceAssociationTargetClass,
                                 $subEntityData,
                                 $this->getAssociatedEntityInputFilter($association, $inputFilter)
                             );
@@ -200,7 +210,7 @@ class CollectionListener implements ListenerAggregateInterface
     /**
      * Retrieve the Doctrine MetaData for whichever entity we are currently processing
      *
-     * @param string|object $entity
+     * @param class-string|object $entity
      * @return ClassMetadata
      */
     protected function getClassMetadata($entity)
@@ -208,11 +218,9 @@ class CollectionListener implements ListenerAggregateInterface
         if (is_object($entity)) {
             $entity = get_class($entity);
         }
+
         if (! array_key_exists($entity, $this->classMetadataMap)) {
             $metadata = $this->getObjectManager()->getClassMetadata($entity);
-            if (! $metadata || ! $metadata instanceof ClassMetadata) {
-                throw new InvalidArgumentException('Metadata could not be found for requested entity');
-            }
 
             $this->classMetadataMap[$entity] = $metadata;
         }
@@ -221,7 +229,7 @@ class CollectionListener implements ListenerAggregateInterface
     }
 
     /**
-     * @param string|object $entity
+     * @param class-string|object $entity
      * @param null|array $data
      * @param bool $stripEmptyAssociations
      * @return ArrayObject
@@ -396,18 +404,12 @@ class CollectionListener implements ListenerAggregateInterface
         return $this;
     }
 
-    /**
-     * @return ObjectManager
-     */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
 
-    /**
-     * @return $this
-     */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): CollectionListener
     {
         $this->objectManager = $objectManager;
 

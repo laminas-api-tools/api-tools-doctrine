@@ -28,7 +28,7 @@ use LaminasTestApiToolsDb\Entity\Product;
 use LaminasTestApiToolsDbApi\V1\Rest\Artist\ArtistResource;
 use LaminasTestApiToolsGeneral\Listener\EventCatcher;
 use PHPUnit\Framework\Assert;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 use function in_array;
 use function json_decode;
@@ -333,8 +333,8 @@ class CRUDTest extends TestCase
 
     public function testCreateByExplicitlySettingEntityFactoryInConstructor(): void
     {
-        /** @var InstantiatorInterface|PHPUnit_Framework_MockObject_MockObject $entityFactoryMock */
-        $entityFactoryMock = $this->getMockBuilder(InstantiatorInterface::class)->getMock();
+        /** @var InstantiatorInterface&MockObject $entityFactoryMock */
+        $entityFactoryMock = $this->createMock(InstantiatorInterface::class);
         $entityFactoryMock->expects(self::once())
             ->method('instantiate')
             ->with(Artist::class)

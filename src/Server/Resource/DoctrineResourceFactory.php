@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Resource;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ObjectManager;
 use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface;
 use Laminas\ApiTools\Hal\Plugin\Hal;
 use Laminas\Hydrator\HydratorInterface;
-use Laminas\ServiceManager\AbstractFactoryInterface;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
 
@@ -280,11 +279,6 @@ class DoctrineResourceFactory implements AbstractFactoryInterface
             && $objectManager instanceof EntityManager
         ) {
             $queryProviders['default'] = $queryManager->get('default_orm');
-        } elseif (
-            class_exists(DocumentManager::class)
-            && $objectManager instanceof DocumentManager
-        ) {
-            $queryProviders['default'] = $queryManager->get('default_odm');
         } else {
             throw new ServiceNotCreatedException('No valid doctrine module is found for objectManager.');
         }

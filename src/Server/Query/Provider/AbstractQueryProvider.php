@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Doctrine\Server\Query\Provider;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use Laminas\ApiTools\Doctrine\Server\Paginator\Adapter\DoctrineOrmAdapter;
 use Laminas\ApiTools\Rest\ResourceEvent;
@@ -19,20 +18,16 @@ abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, Que
 
     /**
      * Set the object manager
-     *
-     * @return void
      */
-    public function setObjectManager(ObjectManager $objectManager)
+    public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
     }
 
     /**
      * Get the object manager
-     *
-     * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
@@ -40,12 +35,12 @@ abstract class AbstractQueryProvider implements ObjectManagerAwareInterface, Que
     /**
      * @param string $entityClass
      * @param array $parameters
-     * @return mixed This will return an ORM or ODM Query\Builder
+     * @return mixed This will return an ORM QueryBuilder
      */
     abstract public function createQuery(ResourceEvent $event, $entityClass, $parameters);
 
     /**
-     * @param QueryBuilder|Builder $queryBuilder
+     * @param QueryBuilder $queryBuilder
      * @return AdapterInterface
      */
     public function getPaginatedQuery($queryBuilder)

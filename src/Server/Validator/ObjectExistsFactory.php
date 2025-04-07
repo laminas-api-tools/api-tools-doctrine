@@ -6,11 +6,10 @@ namespace Laminas\ApiTools\Doctrine\Server\Validator;
 
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Validator\ObjectExists;
-use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\ArrayUtils;
+use Interop\Container\ContainerInterface;
 
 class ObjectExistsFactory implements FactoryInterface
 {
@@ -48,10 +47,6 @@ class ObjectExistsFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        if ($container instanceof AbstractPluginManager) {
-            $container = $container->getServiceLocator() ?: $container;
-        }
-
         return $this($container, ObjectExists::class, $this->options);
     }
 
